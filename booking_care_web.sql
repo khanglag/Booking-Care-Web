@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 10, 2024 lúc 07:47 PM
+-- Thời gian đã tạo: Th10 14, 2024 lúc 10:09 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.1.25
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `dangkikhambenh`
+-- Cơ sở dữ liệu: `booking_care_web`
 --
 
 -- --------------------------------------------------------
@@ -42,7 +42,8 @@ INSERT INTO `account` (`account_id`, `username`, `password`, `role_id`) VALUES
 ('admin00', 'Admin', 'admin00', 'admin00'),
 ('doctor0', 'Minh Khang', 'doctor0', 'doctor0'),
 ('doctor1', 'Xuan Hoang', 'doctor1', 'doctor0'),
-('pt00001', 'Hoang Nguyen', 'pt00001', 'patient'),
+('doctor2', 'Hoang Nguyen', 'doctor2', 'doctor0'),
+('pt00001', 'Nguyen Van A', 'pt00001', 'patient'),
 ('support', 'Anh Thu', 'support', 'support');
 
 -- --------------------------------------------------------
@@ -67,7 +68,7 @@ CREATE TABLE `appointment` (
 --
 
 INSERT INTO `appointment` (`appointment_id`, `user_id`, `available_datetime`, `package_id`, `examination_day`, `time_start`, `time_end`, `status`) VALUES
-('0000001', 'pt00001', '2024-10-10 19:40:49', 'xnut000', '2024-10-13', '07:00:00', '09:00:00', 'DA DUYET');
+('0000001', 'pt00001', '2024-10-10 19:40:49', 'xnut000', '2024-10-13', '07:00:00', '07:30:00', 'DA DUYET');
 
 -- --------------------------------------------------------
 
@@ -103,16 +104,18 @@ INSERT INTO `checkup_packpage` (`package_id`, `name`, `description`, `amount`) V
 
 CREATE TABLE `doctor_info` (
   `doctor_id` char(7) NOT NULL,
-  `description` text NOT NULL
+  `description` text NOT NULL,
+  `identification_card` char(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `doctor_info`
 --
 
-INSERT INTO `doctor_info` (`doctor_id`, `description`) VALUES
-('doctor0', 'Da khoa'),
-('doctor1', 'Da khoa');
+INSERT INTO `doctor_info` (`doctor_id`, `description`, `identification_card`) VALUES
+('doctor0', 'Da khoa', '123456789100'),
+('doctor1', 'Da khoa', '123456789111'),
+('doctor2', 'Da khoa', '123456789101');
 
 -- --------------------------------------------------------
 
@@ -169,12 +172,25 @@ CREATE TABLE `time_frame` (
 --
 
 INSERT INTO `time_frame` (`time_start`, `time_end`) VALUES
-('07:00:00', '09:00:00'),
-('09:00:00', '11:00:00'),
-('11:00:00', '13:00:00'),
-('13:00:00', '15:00:00'),
-('15:00:00', '17:00:00'),
-('17:00:00', '19:00:00');
+('07:00:00', '07:30:00'),
+('07:30:00', '08:00:00'),
+('08:00:00', '08:30:00'),
+('08:30:00', '09:00:00'),
+('09:00:00', '09:30:00'),
+('09:30:00', '10:00:00'),
+('10:00:00', '10:30:00'),
+('10:30:00', '11:00:00'),
+('13:00:00', '13:30:00'),
+('13:30:00', '14:00:00'),
+('14:00:00', '14:30:00'),
+('14:30:00', '15:00:00'),
+('15:00:00', '15:30:00'),
+('15:30:00', '16:00:00'),
+('16:00:00', '16:30:00'),
+('16:30:00', '17:00:00'),
+('17:00:00', '17:30:00'),
+('17:30:00', '18:00:00'),
+('18:00:00', '18:30:00');
 
 -- --------------------------------------------------------
 
@@ -199,7 +215,8 @@ INSERT INTO `user` (`user_id`, `name`, `phone_number`, `email`, `gender`, `addre
 ('admin00', 'Admin', '0368779041', 'Admin@gmai.com', 'female', '1000 An Duong Vuong'),
 ('doctor0', 'Do Minh Khang', '0865674317', 'khanglag@gmail.com', 'male', 'Binh Tri Dong, Binh Tan'),
 ('doctor1', 'Vo Dinh Xuan Hoang', '0336065760', 'vodinhxuanhoang@gmail.com', 'male', 'Duong Ba Trac, Quan 8'),
-('pt00001', 'Vũ Hoàng Nguyên', '0392208279', 'ankhang18122003@gmail.com', 'male', 'Hoc Mon'),
+('doctor2', 'Vu Hoang Nguyen', '0392208279', 'ankhang18122003@gmail.com', 'male', 'Hoc Mon'),
+('pt00001', 'Nguyen Van A', '0368779041', 'nguyenvana@gmail.com', 'male', 'quan 8'),
 ('support', 'Nguyen Thi Anh Thu', '0368779041', 'nguyenanhthu15082003@gmail.com', 'female', '148 Luu Huu Phuoc');
 
 --
@@ -218,9 +235,9 @@ ALTER TABLE `account`
 --
 ALTER TABLE `appointment`
   ADD PRIMARY KEY (`appointment_id`),
-  ADD KEY `user_id` (`user_id`),
   ADD KEY `package_id` (`package_id`),
-  ADD KEY `time_start` (`time_start`,`time_end`);
+  ADD KEY `time_start` (`time_start`,`time_end`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Chỉ mục cho bảng `checkup_packpage`
@@ -250,7 +267,7 @@ ALTER TABLE `role`
 -- Chỉ mục cho bảng `time_frame`
 --
 ALTER TABLE `time_frame`
-  ADD PRIMARY KEY (`time_start`,`time_end`);
+  ADD PRIMARY KEY (`time_start`);
 
 --
 -- Chỉ mục cho bảng `user`
@@ -266,16 +283,16 @@ ALTER TABLE `user`
 -- Các ràng buộc cho bảng `account`
 --
 ALTER TABLE `account`
-  ADD CONSTRAINT `account_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `account_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`);
+  ADD CONSTRAINT `account_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`),
+  ADD CONSTRAINT `account_ibfk_3` FOREIGN KEY (`account_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Các ràng buộc cho bảng `appointment`
 --
 ALTER TABLE `appointment`
-  ADD CONSTRAINT `appointment_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`),
   ADD CONSTRAINT `appointment_ibfk_2` FOREIGN KEY (`package_id`) REFERENCES `checkup_packpage` (`package_id`),
-  ADD CONSTRAINT `appointment_ibfk_3` FOREIGN KEY (`time_start`,`time_end`) REFERENCES `time_frame` (`time_start`, `time_end`);
+  ADD CONSTRAINT `appointment_ibfk_3` FOREIGN KEY (`time_start`) REFERENCES `time_frame` (`time_start`),
+  ADD CONSTRAINT `appointment_ibfk_4` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Các ràng buộc cho bảng `doctor_info`

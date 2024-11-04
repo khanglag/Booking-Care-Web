@@ -1,15 +1,20 @@
 package com.example.Booking_Care_Web.Service;
 
+import com.example.Booking_Care_Web.Models.Dtos.User.UserDTO;
 import com.example.Booking_Care_Web.Models.Entities.User;
 import com.example.Booking_Care_Web.Repositories.UserRepository;
 import com.example.Booking_Care_Web.Services.UserService;
+import com.example.Booking_Care_Web.Services.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.verify;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 
 public class UserServiceTest {
@@ -18,7 +23,7 @@ public class UserServiceTest {
     private UserRepository userRepository;
 
     @InjectMocks
-    private UserService userService;
+    private UserServiceImpl userServiceImp;
 
     @BeforeEach
     public void setUp() {
@@ -28,26 +33,29 @@ public class UserServiceTest {
     @Test
     public void testCreateUser() {
 
-        String id = "U123456";
-        String name = "John Doe";
-        String phone = "0123456789";
-        String email = "john.doe@example.com";
-        String gt = "Male";
-        String address = "123 Main St";
-        String description= "New user";
-        String identificationCard = "123456789012";
-        User user = new User();
-        user.setUserId(id);
-        user.setName(name);
-        user.setPhoneNumber(phone);
-        user.setEmail(email);
-        user.setGender(gt);
-        user.setAddress(address);
-        user.setDescription(description);
-        user.setIdentificationCard(identificationCard);
+        User userDTO = new User();
+        userDTO.setUserId("000281");
+        userDTO.setName("John Doe");
+        userDTO.setPhoneNumber("1234567890");
+        userDTO.setEmail("johndoe@example.com");
+        userDTO.setGender("Male");
+        userDTO.setAddress("123 Street");
+        userDTO.setDescription("Test description");
+        userDTO.setIdentificationCard("ID123456");
 
-        userService.createUser(user);
-        verify(userRepository).save(user);
+        System.out.println(userDTO);
+        User savedUser = userServiceImp.saveUser(userDTO);
+        System.out.println(savedUser);
+
+
+    }
+
+    @Test
+    public void testFindByEmail() {
+
+//        String email ="Admin@gmai.com";
+//        Optional<UserDTO> userDTOOptional = userService.findByEmail(email);
+//        System.out.println(userDTOOptional.toString());
     }
 
 

@@ -3,10 +3,15 @@ package com.example.Booking_Care_Web.Models.Entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.time.Instant;
 import java.time.LocalDate;
-
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "appointment")
 public class Appointment {

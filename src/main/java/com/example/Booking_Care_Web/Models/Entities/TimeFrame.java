@@ -3,11 +3,16 @@ package com.example.Booking_Care_Web.Models.Entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.time.LocalTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "time_frame")
 public class TimeFrame {

@@ -1,4 +1,4 @@
-package com.example.Booking_Care_Web.Models.Dtos.User;
+package com.example.Booking_Care_Web.Models.Dtos;
 
 import lombok.*;
 

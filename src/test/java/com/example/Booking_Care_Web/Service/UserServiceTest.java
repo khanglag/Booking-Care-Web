@@ -1,20 +1,13 @@
 package com.example.Booking_Care_Web.Service;
 
-import com.example.Booking_Care_Web.Models.Dtos.User.UserDTO;
 import com.example.Booking_Care_Web.Models.Entities.User;
 import com.example.Booking_Care_Web.Repositories.UserRepository;
-import com.example.Booking_Care_Web.Services.UserService;
 import com.example.Booking_Care_Web.Services.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 
 public class UserServiceTest {

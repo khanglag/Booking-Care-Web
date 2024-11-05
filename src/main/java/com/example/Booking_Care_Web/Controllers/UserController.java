@@ -1,20 +1,15 @@
 package com.example.Booking_Care_Web.Controllers;
 
-import com.example.Booking_Care_Web.Models.Dtos.User.UserDTO;
+import com.example.Booking_Care_Web.Models.Dtos.UserDTO;
 import com.example.Booking_Care_Web.Models.Entities.User;
-import com.example.Booking_Care_Web.Services.UserService;
 import com.example.Booking_Care_Web.Services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @RestController

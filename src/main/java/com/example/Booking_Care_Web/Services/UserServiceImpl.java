@@ -1,17 +1,13 @@
 package com.example.Booking_Care_Web.Services;
 
-import com.example.Booking_Care_Web.Models.Dtos.User.UserDTO;
+import com.example.Booking_Care_Web.Models.Dtos.UserDTO;
 import com.example.Booking_Care_Web.Models.Entities.User;
 import com.example.Booking_Care_Web.Repositories.UserRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,9 +15,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @PersistenceContext
-    private EntityManager entityManager;
 
     @Override
     public User findByEmail(String email) {
@@ -48,11 +41,6 @@ public class UserServiceImpl implements UserService {
                 ))
                 .collect(Collectors.toList());
     }
-
-//    @Override
-//    public User saveUser(User user){
-//        return userRepository.save(user);
-//    }
 
     @Transactional
     @Override

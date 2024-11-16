@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Booking Care</title>
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+    <!-- Bootstrap CSS -->
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+    />
+    <!-- font awesome -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+            integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+</head>
+<body>
+        <header id="header" th:fragment="header">
+            <div class="header_logo">
+                <img th:src="@{assets/images/logo.png}" class="logo_img" />
+            </div>
+            <div class="header_content">
+                <ul class="navbar">
+                    <li>
+                        <a th:href="@{/}"  style="color: transparent;
+                           background: linear-gradient(45deg, #3700ff, #3700ff);
+                           -webkit-background-clip: text;
+                           background-clip: text;
+                           font-weight: bold;
+                           text-decoration: none;
+                           transition: opacity 0.3s ease;"
+                           onmouseover="this.style.opacity='0.8'"
+                           onmouseout="this.style.opacity='1'">Trang chủ</a>
+                    </li>
+                    <li> <a th:href="@{/instruct}" style="color: transparent;
+                           background: linear-gradient(45deg, #3700ff, #3700ff);
+                           -webkit-background-clip: text;
+                           background-clip: text;
+                           font-weight: bold;
+                           text-decoration: none;
+                           transition: opacity 0.3s ease;"
+                   .         onmouseover="this.style.opacity='0.8'"
+                            onmouseout="this.style.opacity='1'">Hướng dẫn</a></li>
+                    <li><a th:href="@{/contact}" style="color: transparent;
+                           background: linear-gradient(45deg, #3700ff, #3700ff);
+                           -webkit-background-clip: text;
+                           background-clip: text;
+                           font-weight: bold;
+                           text-decoration: none;
+                           transition: opacity 0.3s ease;"
+                           onmouseover="this.style.opacity='0.8'"
+                           onmouseout="this.style.opacity='1'">Liên hệ bác sĩ</a></li>
+                </ul>
+            </div>
+            <div class="header_login">
+                <a th:href="@{/signin}" class="active">
+                    <button class="btn btn-info btn_login">
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                        Đăng nhập
+                    </button>
+                </a>
+                <a th:href="@{/register}" class="active">
+                    <button class="btn btn-danger btn_register">
+                        <i class="fa-solid fa-user-plus"></i>
+                        Đăng kí
+                    </button>
+                </a>
+
+            </div>
+        </header>
+        <div id="content" class="mt-5">
+            <div class="styles_cashBackWrapper">
+                <p class="styles_cashBackContent">
+                    <span style="margin-right: 10px;">Chăm sóc sức khỏe của bạn – Sự an tâm của chúng tôi!💥</span>
+                    <span style="margin-right: 10px;">Chăm sóc sức khỏe của bạn – Sự an tâm của chúng tôi!💥</span>
+                    <span style="margin-right: 10px;">Chăm sóc sức khỏe của bạn – Sự an tâm của chúng tôi!💥</span>
+                    <span style="margin-right: 10px;">Chăm sóc sức khỏe của bạn – Sự an tâm của chúng tôi!💥</span>
+                    <span style="margin-right: 10px;">Chăm sóc sức khỏe của bạn – Sự an tâm của chúng tôi!💥</span>
+                </p>
+                <p class="styles_cashBackContent">
+                    <span style="margin-right: 10px;">Chăm sóc sức khỏe của bạn – Sự an tâm của chúng tôi!💥</span>
+                    <span style="margin-right: 10px;">Chăm sóc sức khỏe của bạn – Sự an tâm của chúng tôi!💥</span>
+                    <span style="margin-right: 10px;">Chăm sóc sức khỏe của bạn – Sự an tâm của chúng tôi!💥</span>
+                    <span style="margin-right: 10px;">Chăm sóc sức khỏe của bạn – Sự an tâm của chúng tôi!💥</span>
+                    <span style="margin-right: 10px;">Chăm sóc sức khỏe của bạn – Sự an tâm của chúng tôi!💥</span>
+                </p>
+            </div>
+            <div class="slider mt-2">
+                <div class="list">
+                    <div class="item">
+                        <img th:src="@{assets/images/mk.png}" class="logo_img" />
+                    </div>
+                    <div class="item">
+                        <img th:src="@{assets/images/kc.png}" class="logo_img" />
+                    </div>
+                    <div class="item">
+                        <img th:src="@{assets/images/ht.png}" class="logo_img" />
+                    </div>
+                    <div class="item">
+                        <img th:src="@{assets/images/xh.png}" class="logo_img" />
+                    </div>
+                    <div class="item">
+                        <img th:src="@{assets/images/ldk.png}" class="logo_img" />
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button id="prev" class="btn"><
+
+                    </button>
+                    <button id="next" class="btn">>
+
+                    </button>
+
+                </div>
+                <ul class="dots">
+                    <li class="actives"></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+            <div class="list_doctor mt-3">
+                <p class="d-flex justify-content-center" style="font-size: 30px; font-weight: bold;   background: linear-gradient(45deg, #9beaff 1%, #346fdb); /* Gradient màu */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-fill-color: transparent;">
+                    BÁC SĨ TƯ VẤN KHÁM BỆNH
+                </p>
+                <div id="carouselExample" class="carousel slide" >
+                    <!-- Bỏ tự động cuộn -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row justify-content-center">
+                                <div class="col-md-3 d-flex justify-content-center">
+                                    <div class="card">
+                                        <img
+                                                th:src="@{assets/images/doctor.png}"
+                                                class="card-img-top"
+                                                alt="Card image"
+                                        />
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                BS: ABC
+                                                Da liễu
+                                                Bác sĩ Chuyên Khoa
+                                            </p>
+                                            <p class="card-text">Thông tin thêm</p>
+                                            <button class="btn btn-primary">Đặt khám</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 d-flex justify-content-center">
+                                    <div class="card">
+                                        <img
+                                                th:src="@{assets/images/doctor.png}"
+                                                class="card-img-top"
+                                                alt="Card image"
+                                        />
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                BS: ABC
+                                                Da liễu
+                                                Bác sĩ Chuyên Khoa
+                                            </p>
+                                            <p class="card-text">Thông tin thêm</p>
+                                            <button class="btn btn-primary">Đặt khám</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 d-flex justify-content-center">
+                                    <div class="card">
+                                        <img
+                                                th:src="@{assets/images/doctor.png}"
+                                                class="card-img-top"
+                                                alt="Card image"
+                                        />
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                BS: ABC
+                                                Da liễu
+                                                Bác sĩ Chuyên Khoa
+                                            </p>
+                                            <p class="card-text">Thông tin thêm</p>
+                                            <button class="btn btn-primary">Đặt khám</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 d-flex justify-content-center">
+                                    <div class="card">
+                                        <img
+                                                th:src="@{assets/images/doctor.png}"
+                                                class="card-img-top"
+                                                alt="Card image"
+                                        />
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                BS: ABC
+                                                Da liễu
+                                                Bác sĩ Chuyên Khoa
+                                            </p>
+                                            <p class="card-text">Thông tin thêm</p>
+                                            <button class="btn btn-primary">Đặt khám</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row justify-content-center">
+                                <div class="col-md-3 d-flex justify-content-center">
+                                    <div class="card">
+                                        <img
+                                                th:src="@{assets/images/doctor.png}"
+                                                class="card-img-top"
+                                                alt="Card image"
+                                        />
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                BS: ABC
+                                                Da liễu
+                                                Bác sĩ Chuyên Khoa
+                                            </p>
+                                            <p class="card-text">Thông tin thêm</p>
+                                            <button class="btn btn-primary">Đặt khám</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 d-flex justify-content-center">
+                                    <div class="card">
+                                        <img
+                                                th:src="@{assets/images/doctor.png}"
+                                                class="card-img-top"
+                                                alt="Card image"
+                                        />
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                BS: ABC
+                                                Da liễu
+                                                Bác sĩ Chuyên Khoa
+                                            </p>
+                                            <p class="card-text">Thông tin thêm</p>
+                                            <button class="btn btn-primary">Đặt khám</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 d-flex justify-content-center">
+                                    <div class="card">
+                                        <img
+                                                th:src="@{assets/images/doctor.png}"
+                                                class="card-img-top"
+                                                alt="Card image"
+                                        />
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                BS: ABC
+                                                Da liễu
+                                                Bác sĩ Chuyên Khoa
+                                            </p>
+                                            <p class="card-text">Thông tin thêm</p>
+                                            <button class="btn btn-primary">Đặt khám</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 d-flex justify-content-center">
+                                    <div class="card">
+                                        <img
+                                                th:src="@{assets/images/doctor.png}"
+                                                class="card-img-top"
+                                                alt="Card image"
+                                        />
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                BS: ABC
+                                                Da liễu
+                                                Bác sĩ Chuyên Khoa
+                                            </p>
+                                            <p class="card-text">Thông tin thêm</p>
+                                            <button class="btn btn-primary">Đặt khám</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button
+                            class="carousel-control-prev btn btn_prev_in_list_doctor"
+                            type="button"
+                            data-target="#carouselExample"
+                            data-slide="prev"
+                    >
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </button>
+                    <button
+                            class="carousel-control-next btn btn_next_in_list_doctor"
+                            type="button"
+                            data-target="#carouselExample"
+                            data-slide="next"
+                    >
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </button>
+                </div>
+            </div>
+            <div class="customer_feedback mt-3">
+                <p class="d-flex justify-content-center" style="font-size: 30px; font-weight: bold;  background: linear-gradient(45deg, #9beaff 1%, #346fdb); /* Gradient màu */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-fill-color: transparent;">
+                    CẢM NHẬN TỪ KHÁCH HÀNG
+                </p>
+                <div class="d-flex justify-content-center">
+                        <div class="feedback">
+                            <div class="d-flex info-user">
+                                <img class="user_face" th:src="@{assets/images/male.png}">
+                                <b>Anh Nguyễn Trọng Nhân</b>
+                            </div>
+                            <hr>
+                            <div class="info_feedback">
+                                <p class="">Tôi rất hài lòng với dịch vụ tại phòng khám. Đội ngũ y bác sĩ rất tận tâm và chuyên nghiệp, khiến tôi cảm thấy yên tâm khi đến khám. Phòng khám sạch sẽ, trang thiết bị hiện đại và thời gian chờ đợi không lâu. </p>
+                            </div>
+                        </div>
+                        <div class="feedback">
+                            <div class="d-flex info-user">
+                                <img class="user_face" th:src="@{assets/images/female.png}">
+                                <b class="">Chị Lê Thị Thu Hằng</b>
+                            </div>
+                            <hr>
+                            <div class="info_feedback">
+                                <p class="">Dịch vụ ở đây rất tuyệt vời! Các bác sĩ và nhân viên rất chu đáo, lắng nghe kỹ càng và tư vấn rõ ràng. Không gian phòng khám thân thiện và thoải mái, giúp tôi cảm thấy dễ chịu khi đến khám. Cảm ơn phòng khám đã mang đến trải nghiệm tuyệt vời này!</p>
+                            </div>
+                        </div>
+                    <div class="feedback">
+                        <div class="d-flex info-user">
+                            <img class="user_face" th:src="@{assets/images/female.png}">
+                            <b class="">Chị Hồ Thị Loan</b>
+                        </div>
+                        <hr>
+                        <div class="info_feedback">
+                            <p class="">Mình thật sự rất hài lòng khi đến khám ở đây. Bác sĩ rất tâm lý, luôn lắng nghe và giải thích chi tiết từng vấn đề sức khỏe. Từ lúc bước vào cho đến khi kết thúc, mọi thứ đều rất chu đáo và dễ chịu.</p>
+                        </div>
+                    </div>
+                    <div class="feedback">
+                        <div class="d-flex info-user">
+                            <img class="user_face" th:src="@{assets/images/male.png}">
+                            <b class="">Anh Lê Gia Khang</b>
+                        </div>
+                        <hr>
+                        <div class="info_feedback">
+                            <p class="">Điều mình thích nhất là cách phòng khám chăm chút từng chi tiết nhỏ, từ không gian thoải mái cho đến sự tận tình của nhân viên. Đến đây khám mà cảm giác như được nghỉ ngơi, chứ không phải đi khám bệnh.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="statistical mt-3">
+                <p class="d-flex justify-content-center mb-2" style="font-size: 30px; font-weight: bold;  background: linear-gradient(45deg, #9beaff 1%, #346fdb); /* Gradient màu */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-fill-color: transparent;">
+                    THỐNG KÊ
+                </p>
+                <div class="d-flex statistical_content">
+                    <div class="text-center">
+                        <i class="fa-solid fa-stethoscope d-block" style="color: #74C0FC; font-size: 70px"></i>
+                        <b style="font-size: 30px">500k+</b>
+                        <p style="font-size: 20px">Lượt khám</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fa-solid fa-eye d-block" style="color: #74C0FC; font-size: 70px"></i>
+                        <b style="font-size: 30px">2k+</b>
+                        <p style="font-size: 20px">Truy cập trong ngày</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fa-solid fa-arrow-pointer d-block" style="color: #74C0FC; font-size: 70px"></i>
+                        <b style="font-size: 30px">60k+</b>
+                        <p style="font-size: 20px">Truy cập hằng tháng</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fa-solid fa-user-doctor d-block" style="color: #74C0FC; font-size: 70px"></i>
+                        <b style="font-size: 30px">10+</b>
+                        <p style="font-size: 20px">Năm kinh nghiệm</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fa-solid fa-bed-pulse d-block" style="color: #74C0FC; font-size: 70px"></i>
+                        <b style="font-size: 30px">500k+</b>
+                        <p style="font-size: 20px">Bệnh nhân được chữa trị</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer"  th:fragment="footer" class="row">
+            <div class="footer_info col-md-4">
+                <h4>Thông tin liên lạc</h4>
+                <p>Địa chỉ: 123 Đường ABC, Quận XYZ, Thành phố</p>
+                <p>Điện thoại: 0336065760</p>
+                <p>Email: xuanhoang@gmail.com</p>
+            </div>
+            <div class="footer_work_day col-md-4">
+                <h4>Lịch làm việc</h4>
+                <div class="d-flex">
+                    <div>
+                        <p>Thứ hai - Chủ nhật:&nbsp;</p>
+                    </div>
+                    <div>
+                        <p class="mb-0">Sáng 8:00 - 11h30</p>
+                        <p>Chiều 13:00 - 18:00</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer_contact col-md-4">
+                <h4>Kết nối với chúng tôi</h4>
+                <a href="https://www.facebook.com/profile.php?id=100025170306514" target="_blank"
+                   style="color: transparent;
+                   background: linear-gradient(45deg, #ff0055, #ff88aa);
+                   -webkit-background-clip: text;
+                   background-clip: text;
+                   font-weight: bold;
+                   text-decoration: none;
+                   transition: opacity 0.3s ease;"
+                   onmouseover="this.style.opacity='0.8'"
+                   onmouseout="this.style.opacity='1'">Facebook
+                </a>
+
+                <a target="_blank">| Zalo: 0336065760</a>
+            </div>
+        </footer>
+
+        <script th:src="@{/assets/js/index.js}"></script>
+        <script
+                src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+                crossorigin="anonymous"
+        ></script>
+        <script
+                src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+                crossorigin="anonymous"
+        ></script>
+        <script
+                src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+                integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+                crossorigin="anonymous"
+        ></script>
+</body>
+</html>

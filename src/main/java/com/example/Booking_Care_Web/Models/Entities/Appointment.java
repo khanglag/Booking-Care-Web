@@ -7,6 +7,8 @@ import lombok.*;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Date;
+
 @Getter
 @Setter
 @Builder
@@ -17,8 +19,42 @@ import java.time.LocalDate;
 public class Appointment {
     @Id
     @Size(max = 7)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "appointment_id", nullable = false, length = 7)
-    private String appointmentId;
+    private int appointmentId;
+
+    @NotNull
+    @Column(name ="patient_id", nullable = false)
+    private String patientId;
+
+    @NotNull
+    @Column(name = "doctor_id",nullable = false)
+    private String doctorId;
+
+    @NotNull
+    @Column(name = "available_datetime", nullable = false)
+    private LocalDate availableDatetime;
+
+    @Column(name = "package_id")
+    private String packageId;
+
+    @NotNull
+    @Column(name = "examination_day", nullable = false)
+    private Date examinationDay;
+
+    @NotNull
+    @Column(name = "time_id", nullable = false)
+    private String timeId;
+
+
+    @Lob
+    @Column(name = "note")
+    private String note;
+
+    @NotNull
+    @Lob
+    @Column(name = "status", nullable = false)
+    private String status;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -30,37 +66,20 @@ public class Appointment {
     @JoinColumn(name = "doctor_id", referencedColumnName = "user_id", nullable = false)
     private User doctor;
 
-    @NotNull
-    @Column(name = "available_datetime", nullable = false)
-    private Instant availableDatetime;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "package_id")
     private CheckupPackpage packageField;
-
-    @NotNull
-    @Column(name = "examination_day", nullable = false)
-    private LocalDate examinationDay;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "time_id", nullable = false)
     private TimeFrame time;
 
-    @Lob
-    @Column(name = "note")
-    private String note;
-
-    @NotNull
-    @Lob
-    @Column(name = "status", nullable = false)
-    private String status;
-
-    public String getAppointmentId() {
+    public int getAppointmentId() {
         return appointmentId;
     }
 
-    public void setAppointmentId(String appointmentId) {
+    public void setAppointmentId(int appointmentId) {
         this.appointmentId = appointmentId;
     }
 
@@ -80,11 +99,11 @@ public class Appointment {
         this.doctor = doctor;
     }
 
-    public Instant getAvailableDatetime() {
+    public LocalDate getAvailableDatetime() {
         return availableDatetime;
     }
 
-    public void setAvailableDatetime(Instant availableDatetime) {
+    public void setAvailableDatetime(LocalDate availableDatetime) {
         this.availableDatetime = availableDatetime;
     }
 
@@ -96,11 +115,11 @@ public class Appointment {
         this.packageField = packageField;
     }
 
-    public LocalDate getExaminationDay() {
+    public Date getExaminationDay() {
         return examinationDay;
     }
 
-    public void setExaminationDay(LocalDate examinationDay) {
+    public void setExaminationDay(Date examinationDay) {
         this.examinationDay = examinationDay;
     }
 

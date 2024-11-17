@@ -51,4 +51,28 @@ public class UserServiceImpl implements UserService {
                 user.getDescription(), user.getIdentificationCard());
         return user;  // Trả về người dùng đã lưu
     }
+
+    public  User updateUser(String id, User updateUser) {
+        User userExisting = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User không tồn tại ID"+id));
+
+        if (updateUser.getName() != null) {
+            userExisting.setName(updateUser.getName());
+        }
+        if (updateUser.getPhoneNumber() != null) {
+            userExisting.setPhoneNumber(updateUser.getPhoneNumber());
+        }
+        if (updateUser.getEmail() != null) {
+            userExisting.setEmail(updateUser.getEmail());
+        }
+        if (updateUser.getGender() != null) {
+            userExisting.setGender(updateUser.getGender());
+        }
+        if (updateUser.getAddress() != null) {
+            userExisting.setAddress(updateUser.getAddress());
+        }
+
+        // Lưu lại vào cơ sở dữ liệu
+        return userRepository.save(userExisting);
+
+    }
 }

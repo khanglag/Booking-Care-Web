@@ -64,4 +64,9 @@ public class UserController {
         User savedUser = userServiceImpl.saveUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedUser);
     }
+    @PostMapping("/edit/{id}")
+    public ResponseEntity<User> editUser(@PathVariable String id, @RequestBody User user) {
+        User savedUser = userServiceImpl.updateUser(id,user);
+        return ResponseEntity.ok(savedUser);
+    }
 }

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8"
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Booking Care</title>
+    <!-- css -->
+    <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/instruct.css}" />
+    <!-- Bootstrap CSS -->
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+    />
+    <!-- font awesome -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+            integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+  <header th:replace="index :: header"></header>
+  <div id="content">
+    <div class="title_content_instruct">
+        <h1 class="title_instruct">Hướng dẫn chi tiết</h1>
+        <div class="slogan_instruct">Trải nghiệm dịch vụ chăm sóc sức khỏe tối ưu và đặt lịch khám một cách dễ dàng, nhanh chóng với Booking Care</div>
+    </div>
+    <div class="instruct_detail">
+      <div class="instruct_detail_content">
+        <h3 class="title_detail_content">
+          <strong>CHỌN THÔNG TIN ĐẶT KHÁM</strong>
+        </h3>
+        <ul class="list_detail">
+          <li>&nbsp;&nbsp;Đăng kí hoặc đăng nhập tài khoản trên website hoặc ứng dụng di động.</li>
+          <li>&nbsp;&nbsp;Chọn đặt khám theo bác sĩ bất kì</li>
+          <li>&nbsp;&nbsp;Chọn ngày,buổi đặt khám</li>
+          <li>&nbsp;&nbsp;Nhập thông tin bệnh nhân, số điện thoại đặt khám</li>
+        </ul>
+        <h3 class="title_detail_content">
+          <strong>Chỉnh sửa hồ sơ cá nhân</strong>
+        </h3>
+        <ul class="list_detail">
+          <li>&nbsp;&nbsp;Chưa từng khám, đăng ký mới (nhập đầy đủ các thông tin: Họ và tên; Ngày sinh; Giới tính; Mã bảo hiểm y tế; CMND/Passport; Dân tộc; Nghề nghiệp; Số điện thoại; Email; Địa chỉ)</li>
+        </ul>
+        <h3 class="title_detail_content">
+          <strong>THANH TOÁN PHÍ KHÁM</strong>
+        </h3>
+        <ul class="list_detail">
+          <li>&nbsp;&nbsp;Chọn phương thức thanh toán: Quét mã QR, Chuyển khoản 24/7, Thẻ thanh toán quốc tế, Thẻ ATM nội địa hoặc Ví điện tử.</li>
+          <li>&nbsp;&nbsp;Kiểm tra thông tin thanh toán (phí khám bệnh, phí tiện ích và tổng tiền) và xác nhận thanh toán.</li>
+          <li>&nbsp;&nbsp;Thực hiện thanh toán trên Ví điện tử hoặc Ứng dụng Ngân hàng hoặc Cổng thanh toán.</li>
+        </ul>
+        <h3 class="title_detail_content">
+          <strong>Khám và thực hiện cận lâm sàng</strong>
+        </h3>
+        <ul class="list_detail">
+          <li>Đến ngày khám, người bệnh vui lòng đến trực tiếp phòng khám.</li>
+          <li>Người bệnh được khám lâm sàng theo quy trình.</li>
+          <li>Nếu có chỉ định cận lâm sàng của bác sĩ, người bệnh thanh toán phí trực tuyến hoặc tại quầy thu ngân của bệnh viện và vào phòng cận lâm sàng để được thực hiện.</li>
+          <li>Người bệnh quay lại phòng khám ban đầu, sau khi nhận đầy đủ kết quả cận lâm sàng, để được bác sĩ khám, tư vấn và trả kết quả khám (toa thuốc, giấy hẹn khám,...).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <footer th:replace="index :: footer"></footer>
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"
+    ></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"
+    ></script>
+    <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

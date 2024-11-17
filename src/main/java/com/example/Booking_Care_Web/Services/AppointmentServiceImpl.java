@@ -2,14 +2,11 @@ package com.example.Booking_Care_Web.Services;
 
 import com.example.Booking_Care_Web.Models.Dtos.AppointmentDTO;
 import com.example.Booking_Care_Web.Models.Entities.Appointment;
-import com.example.Booking_Care_Web.Models.Entities.User;
 import com.example.Booking_Care_Web.Repositories.AppointmentRepository;
 import com.example.Booking_Care_Web.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -42,11 +39,46 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public AppointmentDTO save(AppointmentDTO appointmentDTO) {
         Appointment appointment = new Appointment();
+
+        // Ánh xạ từ DTO sang Entity
         appointment.setAppointmentId(appointmentDTO.getAppointmentId());
-        appointment.setPatientId(appointmentDTO.getPatient_id());
-        appointment.setDoctorId(appointmentDTO.getDoctor_id());
-        appointment.setAvailableDatetime(LocalDate.now());
-        appointment.setPackageId(appointmentDTO.getPackage_id());
+        appointment.setAvailableDatetime(appointmentDTO.getAvailable_datetime());
+        appointment.setExaminationDay(appointmentDTO.getExamination_date());
+        appointment.setNote(appointmentDTO.getNote());
+        appointment.setStatus(appointmentDTO.getStatus());
+
+        // Lấy dữ liệu `User` cho `patient` và `doctor`
+        appointment.setPatient(userRepository.findById(appointmentDTO.getPatient_id())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid patient ID: " + appointmentDTO.getPatient_id())));
+
+        appointment.setDoctor(userRepository.findById(appointmentDTO.getDoctor_id())
+                .orElseThrow(() -> new IllegalArgumentException("Invalid doctor ID: " + appointmentDTO.getDoctor_id())));
+
+//        // Lấy dữ liệu `CheckupPackpage` nếu có
+//        if (appointmentDTO.getPackage_id() != null) {
+//            appointment.setPackageField(checkupPackageRepository.findById(appointmentDTO.getPackage_id())
+//                    .orElseThrow(() -> new IllegalArgumentException("Invalid package ID: " + appointmentDTO.getPackage_id())));
+//        }
+//
+//        // Lấy dữ liệu `TimeFrame`
+//        appointment.setTime(timeFrameRepository.findById(appointmentDTO.getTime_id())
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid time ID: " + appointmentDTO.getTime_id())));
+
+        // Lưu dữ liệu vào database
+        Appointment savedAppointment = appointmentRepository.save(appointment);
+
+        // Trả về DTO sau khi lưu
+        return AppointmentDTO.builder()
+                .appointmentId(savedAppointment.getAppointmentId())
+                .patient_id(savedAppointment.getPatient().getUserId())
+                .doctor_id(savedAppointment.getDoctor().getUserId())
+                .available_datetime(savedAppointment.getAvailableDatetime())
+                .package_id(savedAppointment.getPackageField() != null ? savedAppointment.getPackageField().getPackageId() : null)
+                .examination_date(savedAppointment.getExaminationDay())
+                .time_id(savedAppointment.getTime().getTimeId())
+                .note(savedAppointment.getNote())
+                .status(savedAppointment.getStatus())
+                .build();
     }
 
 

@@ -24,39 +24,6 @@ public class Appointment {
     private int appointmentId;
 
     @NotNull
-    @Column(name ="patient_id", nullable = false)
-    private String patientId;
-
-    @NotNull
-    @Column(name = "doctor_id",nullable = false)
-    private String doctorId;
-
-    @NotNull
-    @Column(name = "available_datetime", nullable = false)
-    private LocalDate availableDatetime;
-
-    @Column(name = "package_id")
-    private String packageId;
-
-    @NotNull
-    @Column(name = "examination_day", nullable = false)
-    private Date examinationDay;
-
-    @NotNull
-    @Column(name = "time_id", nullable = false)
-    private String timeId;
-
-
-    @Lob
-    @Column(name = "note")
-    private String note;
-
-    @NotNull
-    @Lob
-    @Column(name = "status", nullable = false)
-    private String status;
-
-    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "patient_id", referencedColumnName = "user_id", nullable = false)
     private User patient;
@@ -66,14 +33,31 @@ public class Appointment {
     @JoinColumn(name = "doctor_id", referencedColumnName = "user_id", nullable = false)
     private User doctor;
 
+    @NotNull
+    @Column(name = "available_datetime", nullable = false)
+    private LocalDate availableDatetime;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "package_id")
     private CheckupPackpage packageField;
 
     @NotNull
+    @Column(name = "examination_day", nullable = false)
+    private Date examinationDay;
+
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "time_id", nullable = false)
     private TimeFrame time;
+
+    @Lob
+    @Column(name = "note")
+    private String note;
+
+    @NotNull
+    @Lob
+    @Column(name = "status", nullable = false)
+    private String status;
 
     public int getAppointmentId() {
         return appointmentId;

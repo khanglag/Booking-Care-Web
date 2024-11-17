@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -27,12 +28,12 @@ public class AppointmentServiceTest {
     @Test
     public void testSaveAppointment() {
         AppointmentDTO appointmentDTO = AppointmentDTO.builder()
-                .patient_id("123") // Cần thay thế bằng giá trị thực
-                .doctor_id("456")  // Cần thay thế bằng giá trị thực
-                .available_datetime(LocalDateTime.now())
-                .package_id("pkg1")
+                .patient_id("pt00001") // Cần thay thế bằng giá trị thực
+                .doctor_id("doctor1")  // Cần thay thế bằng giá trị thực
+                .available_datetime(LocalDate.from(LocalDateTime.now()))
+                .package_id("xnut000")
                 .examination_date(new Date())
-                .time_id("time1")
+                .time_id("0000001")
                 .note("Test note")
                 .status("Scheduled")
                 .build();

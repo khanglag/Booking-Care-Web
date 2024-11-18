@@ -46,6 +46,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
         // Gọi phương thức tùy chỉnh để lưu người dùng
+
         userRepository.insertUser(user.getUserId(), user.getName(), user.getPhoneNumber(),
                 user.getEmail(), user.getGender(), user.getAddress(),
                 user.getDescription(), user.getIdentificationCard());

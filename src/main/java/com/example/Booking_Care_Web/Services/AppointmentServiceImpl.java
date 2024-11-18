@@ -4,6 +4,7 @@ import com.example.Booking_Care_Web.Models.Dtos.AppointmentDTO;
 import com.example.Booking_Care_Web.Models.Entities.Appointment;
 import com.example.Booking_Care_Web.Repositories.AppointmentRepository;
 import com.example.Booking_Care_Web.Repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +28,9 @@ public class AppointmentServiceImpl implements AppointmentService {
                         appointment.getPatient().getUserId(),
                         appointment.getDoctor().getUserId(),
                         appointment.getAvailableDatetime(),
-                        appointment.getPackageField().getPackageId(),
+                        appointment.getPackageId(),
                         appointment.getExaminationDay(),
-                        appointment.getTime().getTimeId(),
+                        appointment.getTimeId(),
                         appointment.getNote(),
                         appointment.getStatus()
                 ))
@@ -37,49 +38,45 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public AppointmentDTO save(AppointmentDTO appointmentDTO) {
-        Appointment appointment = new Appointment();
-
-        // Ánh xạ từ DTO sang Entity
-        appointment.setAppointmentId(appointmentDTO.getAppointmentId());
-        appointment.setAvailableDatetime(appointmentDTO.getAvailable_datetime());
-        appointment.setExaminationDay(appointmentDTO.getExamination_date());
-        appointment.setNote(appointmentDTO.getNote());
-        appointment.setStatus(appointmentDTO.getStatus());
-
-        // Lấy dữ liệu `User` cho `patient` và `doctor`
-        appointment.setPatient(userRepository.findById(appointmentDTO.getPatient_id())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid patient ID: " + appointmentDTO.getPatient_id())));
-
-        appointment.setDoctor(userRepository.findById(appointmentDTO.getDoctor_id())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid doctor ID: " + appointmentDTO.getDoctor_id())));
-
-//        // Lấy dữ liệu `CheckupPackpage` nếu có
-//        if (appointmentDTO.getPackage_id() != null) {
-//            appointment.setPackageField(checkupPackageRepository.findById(appointmentDTO.getPackage_id())
-//                    .orElseThrow(() -> new IllegalArgumentException("Invalid package ID: " + appointmentDTO.getPackage_id())));
-//        }
-//
-//        // Lấy dữ liệu `TimeFrame`
-//        appointment.setTime(timeFrameRepository.findById(appointmentDTO.getTime_id())
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid time ID: " + appointmentDTO.getTime_id())));
-
-        // Lưu dữ liệu vào database
-        Appointment savedAppointment = appointmentRepository.save(appointment);
-
-        // Trả về DTO sau khi lưu
-        return AppointmentDTO.builder()
-                .appointmentId(savedAppointment.getAppointmentId())
-                .patient_id(savedAppointment.getPatient().getUserId())
-                .doctor_id(savedAppointment.getDoctor().getUserId())
-                .available_datetime(savedAppointment.getAvailableDatetime())
-                .package_id(savedAppointment.getPackageField() != null ? savedAppointment.getPackageField().getPackageId() : null)
-                .examination_date(savedAppointment.getExaminationDay())
-                .time_id(savedAppointment.getTime().getTimeId())
-                .note(savedAppointment.getNote())
-                .status(savedAppointment.getStatus())
-                .build();
+    public Appointment save(Appointment appointment) {
+       return appointmentRepository.save(appointment);
     }
+
+    @Override
+    public Appointment findAppointmentById(int id) {
+        Appointment appointment = appointmentRepository.findById(id).orElse(null);
+        return appointment;
+    }
+
+    @Override
+    public List<Appointment> findAppointmentByPatientId(String id) {
+        return appointmentRepository.findByPatientId(id);
+    }
+
+    @Override
+    public List<Appointment> findAppointmentByDoctorId(String id) {
+        return appointmentRepository.findByDoctorId(id);
+    }
+
+    @Transactional
+    public Appointment updateAppointment(Appointment appointment) {
+        Appointment appointment1 = appointmentRepository.findById(appointment.getAppointmentId()).orElse(null);
+
+        if (appointment1 == null) {
+            throw new RuntimeException("Appointment not found with ID: " + appointment.getAppointmentId());
+        }
+        appointment1.setPatient(appointment.getPatient());
+        appointment1.setDoctor(appointment.getDoctor());
+        appointment1.setAvailableDatetime(appointment.getAvailableDatetime());
+        appointment1.setPackageField(appointment.getPackageField());
+        appointment1.setExaminationDay(appointment.getExaminationDay());
+        appointment1.setTime(appointment.getTime());
+        appointment1.setNote(appointment.getNote());
+        appointment1.setStatus(appointment.getStatus());
+
+        return appointmentRepository.save(appointment1);
+    }
+
 
 
 }

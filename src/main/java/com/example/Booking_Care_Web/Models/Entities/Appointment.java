@@ -18,10 +18,9 @@ import java.util.Date;
 @Table(name = "appointment")
 public class Appointment {
     @Id
-    @Size(max = 7)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "appointment_id", nullable = false, length = 7)
-    private int appointmentId;
+    private Integer appointmentId;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -59,76 +58,35 @@ public class Appointment {
     @Column(name = "status", nullable = false)
     private String status;
 
-    public int getAppointmentId() {
-        return appointmentId;
+    public String getPatientId(){
+        return patient != null ? patient.getUserId() : null;
     }
 
-    public void setAppointmentId(int appointmentId) {
-        this.appointmentId = appointmentId;
+    public String getDoctorId(){
+        return doctor != null ? doctor.getUserId() : null;
     }
 
-    public User getPatient() {
-        return patient;
+    public String getPackageId(){
+        return packageField != null ? packageField.getPackageId() : null;
     }
 
-    public void setPatient(User patient) {
-        this.patient = patient;
+    public String getTimeId(){
+        return time != null ? time.getTimeId() : null;
     }
 
-    public User getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(User doctor) {
-        this.doctor = doctor;
-    }
-
-    public LocalDate getAvailableDatetime() {
-        return availableDatetime;
-    }
-
-    public void setAvailableDatetime(LocalDate availableDatetime) {
-        this.availableDatetime = availableDatetime;
-    }
-
-    public CheckupPackpage getPackageField() {
-        return packageField;
-    }
-
-    public void setPackageField(CheckupPackpage packageField) {
-        this.packageField = packageField;
-    }
-
-    public Date getExaminationDay() {
-        return examinationDay;
-    }
-
-    public void setExaminationDay(Date examinationDay) {
-        this.examinationDay = examinationDay;
-    }
-
-    public TimeFrame getTime() {
-        return time;
-    }
-
-    public void setTime(TimeFrame time) {
-        this.time = time;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    @Override
+    public String toString(){
+        return "Appointment{ " +
+                "id='" + appointmentId + '\'' +
+                ", patient='" + patient.getUserId() + '\'' +
+                ", doctor='" + doctor.getUserId() + '\'' +
+                ", available date time='" + availableDatetime + '\'' +
+                ", package id='" + packageField.getPackageId() + '\'' +
+                ", examination_day='" + examinationDay + '\'' +
+                ", time id='" + time.getTimeId() + '\'' +
+                ", note='" + note + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 
 }

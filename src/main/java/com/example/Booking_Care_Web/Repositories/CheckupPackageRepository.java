@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 public interface CheckupPackageRepository extends JpaRepository<CheckupPackage, String>{
-    @Query("SELECT c FROM CheckupPackage c WHERE c.id = :id")
+    @Query("SELECT cp FROM CheckupPackage cp WHERE c.id = :id")
     Optional<CheckupPackage> findById(@Param("id") String id);
 
     @Modifying

@@ -25,7 +25,7 @@ public class CheckupPackageController {
         try {
             CheckupPackage cp = checkupPackageServiceImpl.findById(id);
             CheckupPackageDTO cpDTO = new CheckupPackageDTO(
-                    cp.getId(),
+                    cp.getPackageId(),
                     cp.getName(),
                     cp.getDescription(),
                     cp.getAmount()

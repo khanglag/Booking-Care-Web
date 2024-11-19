@@ -11,11 +11,11 @@ import java.util.Optional;
 
 @Repository
 public interface CheckupPackageRepository extends JpaRepository<CheckupPackage, String>{
-    @Query("SELECT cp FROM CheckupPackage cp WHERE c.id = :id")
+    @Query("SELECT cp FROM CheckupPackage cp WHERE c.package_id = :pakage_id")
     Optional<CheckupPackage> findById(@Param("id") String id);
 
     @Modifying
-    @Query(value = "INSERT INTO checkuppackage (id,name,description,amount) VALUES (:id, :name, :description, :amount)", nativeQuery = true)
-    void insertCheckupPackage(String id, String name, String description, double amount);
+    @Query(value = "INSERT INTO checkuppackage (package_id,name,description,amount) VALUES (:package_id, :name, :description, :amount)", nativeQuery = true)
+    void insertCheckupPackage(String package_id, String name, String description, double amount);
 
 }

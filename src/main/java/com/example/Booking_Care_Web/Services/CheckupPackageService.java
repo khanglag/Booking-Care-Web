@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public interface CheckupPackageService {
     @Autowired
-    CheckupPackage findById(String id);
+    CheckupPackage findById(String package_id);
     List<CheckupPackageDTO> findAll();
 
 }

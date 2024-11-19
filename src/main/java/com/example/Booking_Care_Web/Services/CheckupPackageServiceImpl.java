@@ -17,13 +17,13 @@ public class CheckupPackageServiceImpl implements CheckupPackageService{
     private CheckupPackageRepository checkupPackageRepository;
 
     @Override
-    public CheckupPackage findById(String id) { return checkupPackageRepository.findById(id).get();}
+    public CheckupPackage findById(String package_id) { return checkupPackageRepository.findById(package_id).get();}
 
     @Override
     public List<CheckupPackageDTO> findAll() {
         return checkupPackageRepository.findAll().stream()
                 .map(cp -> new CheckupPackageDTO(
-                        cp.getId(),
+                        cp.getPackageId(),
                         cp.getName(),
                         cp.getDescription(),
                         cp.getAmount()
@@ -35,7 +35,7 @@ public class CheckupPackageServiceImpl implements CheckupPackageService{
     @Override
     public CheckupPackage saveCP (CheckupPackage checkupPackage){
 
-        checkupPackageRepository.insertId(checkupPackage.getId(), checkupPackage.getName(),
+        checkupPackageRepository.insertId(checkupPackage.getPackageId(), checkupPackage.getName(),
                 checkupPackage.getDescription(),checkupPackage.getAmount());
         return checkupPackage;
     }

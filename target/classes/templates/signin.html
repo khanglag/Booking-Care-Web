@@ -26,7 +26,7 @@
 <body>
     <div class="signin-container">
         <h2>Đăng nhập</h2>
-        <form>
+        <form method="POST" th:action="@{/login}">
             <div class="form-group">
                 <label for="phone">Số điện thoại</label>
                 <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại" required>
@@ -37,6 +37,15 @@
             </div>
             <button type="submit" class="btn btn-info">Đăng nhập</button>
         </form>
+        <!-- Hiển thị lỗi nếu có -->
+        <div th:if="${param.error}">
+            <p style="color: red;">Tên đăng nhập hoặc mật khẩu không đúng!</p>
+        </div>
+
+        <div th:if="${param.logout}">
+            <p style="color: green;">Bạn đã đăng xuất thành công!</p>
+        </div>
+    </div>
     </div>
     <script
             src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

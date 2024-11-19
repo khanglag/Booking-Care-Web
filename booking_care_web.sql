@@ -53,7 +53,7 @@ INSERT INTO `account` (`account_id`, `username`, `password`, `role_id`) VALUES
 --
 
 CREATE TABLE `appointment` (
-  `appointment_id` char(7) NOT NULL,
+  `appointment_id` Integer NOT NULL AUTO_INCREMENT,
   `patient_id` char(7) NOT NULL,
   `doctor_id` char(7) NOT NULL,
   `available_datetime` datetime NOT NULL,

@@ -18,26 +18,27 @@ public class Account {
     @Column(name = "account_id", nullable = false, length = 7)
     private String accountId;
 
-    @MapsId
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "account_id",referencedColumnName = "user_id", nullable = false)
     private User user;
 
     @NotNull
-    @Lob
     @Column(name = "username", nullable = false)
     private String username;
 
-    @Size(max = 100)
+    @Size(max = 250)
     @NotNull
     @Column(name = "password", nullable = false, length = 20)
     private String password;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
+    public String getRoleId(){
+    return role != null ? role.getRoleId() : null;
+    }
 
     @Override
     public String toString() {

@@ -10,25 +10,26 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private AccountRepository accountRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public CustomUserDetailsService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println(username);
         Account account = accountRepository.findByUsername(username);
         if (account == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        System.out.println(account.getPassword());
-        System.out.println("================================");
-        System.out.println(account);
+
 
         return User.builder()
                 .username(account.getUsername())

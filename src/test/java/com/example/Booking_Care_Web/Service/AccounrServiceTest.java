@@ -45,4 +45,16 @@ public class AccounrServiceTest {
 
         System.out.println(accountServiceImp.findByUsername("Admin"));
     }
+
+    @Test
+    public void UpdateAccount() {
+        Account account = accountServiceImp.changePassword("MK","123");
+        System.out.println(account);
+
+    }
+    @Test
+    public void findById(){
+        Account account = accountServiceImp.findAccountById("000281");
+        System.out.println(account);
+    }
 }

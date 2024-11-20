@@ -25,7 +25,7 @@ public class UserServiceTest {
         userDTO.setUserId("000281");
         userDTO.setName("John Doe");
         userDTO.setPhoneNumber("1234567890");
-        userDTO.setEmail("johndoe@example.com");
+        userDTO.setEmail("khangminh.do2003@gmail.com");
         userDTO.setGender("Male");
         userDTO.setAddress("123 Street");
         userDTO.setDescription("Test description");

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AccountServiceImp implements AccountService {
 
@@ -26,9 +28,22 @@ public class AccountServiceImp implements AccountService {
         return account;
     }
 
+
     @Transactional
     public Account createAccount(Account account) {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         return accountRepository.save(account);
+    }
+
+    @Transactional
+    public Account changePassword(String username, String newPassword) {
+        Account accountExisting = accountRepository.findByUsername(username);
+        accountExisting.setPassword(passwordEncoder.encode(newPassword));
+        return accountRepository.save(accountExisting);
+    }
+
+    public Account findAccountById(String id) {
+        Optional<Account> accountOptional = accountRepository.findById(id);
+        return accountOptional.orElse(null);
     }
 }

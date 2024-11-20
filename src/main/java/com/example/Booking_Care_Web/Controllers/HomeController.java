@@ -45,6 +45,9 @@ public class HomeController {
         return "index";
     }
 
+    @RequestMapping("/reset-password")
+    public String resetPassword() {return "resetpassword";}
+
 
 
 }

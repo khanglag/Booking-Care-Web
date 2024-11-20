@@ -37,7 +37,7 @@ public class Appointment {
     private LocalDate availableDatetime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "package_id")
+    @JoinColumn(name = "package_id", referencedColumnName = "package_id", nullable = true)
     private CheckupPackpage packageField;
 
     @NotNull
@@ -46,7 +46,7 @@ public class Appointment {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "time_id", nullable = false)
+    @JoinColumn(name = "time_id",referencedColumnName = "time_id", nullable = false)
     private TimeFrame time;
 
     @Lob

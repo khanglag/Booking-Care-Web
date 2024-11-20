@@ -48,7 +48,7 @@ public class AccounrServiceTest {
 
     @Test
     public void UpdateAccount() {
-        Account account = accountServiceImp.changePassword("MK","123");
+        Account account = accountServiceImp.changePassword("Admin","123");
         System.out.println(account);
 
     }

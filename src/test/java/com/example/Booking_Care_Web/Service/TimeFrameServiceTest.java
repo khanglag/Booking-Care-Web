@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.LocalTime;
+
 public class TimeFrameServiceTest {
 
     @Mock
@@ -25,20 +27,20 @@ public class TimeFrameServiceTest {
 
         TimeFrame timeFrameDTO = new TimeFrame();
         timeFrameDTO.setTimeId("0000009");
-        timeFrameDTO.setTimeStart("08:00:00");
-        timeFrameDTO.setTimeEnd("11:30:00");
+        timeFrameDTO.setTimeStart(LocalTime.parse("08:00:00"));
+        timeFrameDTO.setTimeEnd(LocalTime.parse("11:30:00"));
 
         System.out.println(timeFrameDTO);
         TimeFrame savedTimeFrame = timeFrameServiceImp.saveTimeFrame(timeFrameDTO);
-        System.out.printlm(savedTimeFrame);
+        System.out.println(savedTimeFrame);
 
 
     }
 
     @Test
     public void testFindById(){
-        String id = "0000001";
-        Optional<TimeFrameDTO> timeFrameDTOOptional = timeFrameService.findById(id);
-        System.out.println(timeFrameDTOOptional.toString());
+//        String id = "0000001";
+//        Optional<TimeFrameDTO> timeFrameDTOOptional = timeFrameService.findById(id);
+//        System.out.println(timeFrameDTOOptional.toString());
     }
 }

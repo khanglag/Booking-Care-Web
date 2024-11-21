@@ -7,9 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CheckupPackageDTO {
+public class CheckupPackpageDTO {
 
-    private String id;
+    private String package_id;
 
     private String name;
 
@@ -17,10 +17,10 @@ public class CheckupPackageDTO {
 
     private Double amount;
 
-    @Overide
+    @Override
     public String toString() {
         return "CheckupPackpageDTO{" +
-                "id=' " + id + '\'' +
+                "packageid=' " + package_id + '\'' +
                 ", name='"+ name + '\''+
                 ", description='"+ description + '\'' +
                 ", amount=' " + amount + '\'' +

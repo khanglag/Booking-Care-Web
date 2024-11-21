@@ -12,6 +12,10 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.Optional;
 
+import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
+
 public class CheckupPackpageServiceTest {
 
     @Mock
@@ -38,10 +42,17 @@ public class CheckupPackpageServiceTest {
     }
 
     @Test
-    public void testFindById(){
+    public void testFindById() {
+        // Arrange (Chuẩn bị dữ liệu giả lập)
+        String id = "0000000";
+        CheckupPackpage expectedCheckupPackpage = new CheckupPackpage(); // Khởi tạo đối tượng mong đợi
+        when(checkupPackageRepository.findById(id)).thenReturn(Optional.of(expectedCheckupPackpage)); // Giả lập repository
 
-//        String package_id ="tq30000";
-//        Optional<CheckupPackpageDTO> checkupPackageDTOOptional = checkupPackpageServiceImp.findById(package_id);
-//        System.out.println(checkupPackageDTOOptional.toString());
+        // Act (Gọi phương thức cần kiểm tra)
+        CheckupPackpage checkupPackpage = checkupPackpageServiceImp.findById(id);
+
+        // Assert (Kiểm tra kết quả)
+        assertNotNull(checkupPackpage);
+        assertEquals(expectedCheckupPackpage, checkupPackpage);
     }
 }

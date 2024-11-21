@@ -29,7 +29,7 @@ public class TimeFrameController {
                     tf.getTimeStart(),
                     tf.getTimeEnd()
             );
-            return ResponseEntity.ok(TimeFrameDTO);
+            return ResponseEntity.ok(timeFrameDTO);
         } catch (NoSuchElementException e) {
             return ResponseEntity.notFound().build();
         }
@@ -37,6 +37,6 @@ public class TimeFrameController {
     @PostMapping("/create")
     public ResponseEntity<TimeFrame> createTimeFrame(@RequestBody TimeFrame timeFrame){
         TimeFrame savedTimeFrame = timeFrameServiceImpl.saveTimeFrame(timeFrame);
-        return ResponseEntity.status(HttpStatus,CREATED).body(savedTimeFrame);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedTimeFrame);
     }
 }

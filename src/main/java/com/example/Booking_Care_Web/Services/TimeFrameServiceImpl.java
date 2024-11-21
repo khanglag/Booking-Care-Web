@@ -3,6 +3,7 @@ package com.example.Booking_Care_Web.Services;
 import com.example.Booking_Care_Web.Models.Dtos.TimeFrameDTO;
 import com.example.Booking_Care_Web.Models.Entities.TimeFrame;
 import com.example.Booking_Care_Web.Repositories.TimeFrameRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,10 @@ public class TimeFrameServiceImpl implements TimeFrameService{
     private TimeFrameRepository timeFrameRepository;
 
     @Override
-    public TimeFrame findById(String timeId) {return timeFrameRepository.findById(timeId).get();}
+    public TimeFrame findById(String timeId) {
+        return timeFrameRepository.findById(timeId)
+                .orElseThrow(() -> new EntityNotFoundException("TimeFrame không tìm thấy với ID: " + timeId));
+    }
 
     @Override
     public List<TimeFrameDTO> findAll() {
@@ -33,7 +37,7 @@ public class TimeFrameServiceImpl implements TimeFrameService{
     @Transactional
     @Override
     public TimeFrame saveTimeFrame(TimeFrame tf){
-        timeFrameRepository.insertTimeFrame(tf.getTimeId, tf.getTimeStart, tf.getTimeEnd);
+        timeFrameRepository.insertTimeFrame(tf.getTimeId(), tf.getTimeStart(), tf.getTimeEnd());
     return tf;
     }
 }

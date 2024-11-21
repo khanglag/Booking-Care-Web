@@ -1,5 +1,7 @@
 package com.example.Booking_Care_Web.Models.Dtos;
 
+import com.example.Booking_Care_Web.Models.Entities.User;
+import com.example.Booking_Care_Web.Models.Entities.Role;
 import lombok.*;
 
 @Getter
@@ -22,6 +24,6 @@ public class AccountDTO {
                 ", username='"+ username+'\''+
                 ", password= '"+ password+'\''+
                 ",role='"+ role+ '\''+
-                '}'
+                '}';
     }
 }

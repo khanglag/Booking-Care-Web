@@ -11,7 +11,7 @@ public class RoleDTO {
     private String roleId;
     private String name;
 
-    @Overide
+    @Override
     public String toString(){
         return "RoleDTO{" +
                 "roleId='" + roleId +'\''+

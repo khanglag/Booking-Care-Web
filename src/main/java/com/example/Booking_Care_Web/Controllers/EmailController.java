@@ -5,6 +5,7 @@ import com.example.Booking_Care_Web.Models.Entities.User;
 import com.example.Booking_Care_Web.Services.AccountServiceImp;
 import com.example.Booking_Care_Web.Services.EmailService;
 import com.example.Booking_Care_Web.Services.UserServiceImpl;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,18 +32,21 @@ public class EmailController {
 
     @PostMapping("/reset-password")
     @ResponseBody
-    public String resetPassword(@RequestParam String email) {
-        User user = userService.findByEmail(email);
-        System.out.println(user);
-        if (user == null) {
-            return "User not found";
+    public String resetPassword(@RequestParam String email)  {
+        try {
+            User user = userService.findByEmail(email);
+            if (user == null) {
+                return "User not found";
+            }
+            Account account = accountService.findAccountById(user.getUserId());
+            String newPassword = generateNewPassword();
+            accountService.changePassword(account.getUsername(), newPassword);
+            emailService.sendNewPasswordEmail(email,user.getName(),newPassword);
+            return "Password reset successfully";
+        }catch (MessagingException e) {
+            e.printStackTrace();
+            return "Email could not be sent";
         }
-        Account account = accountService.findAccountById(user.getUserId());
-        String newPassword = generateNewPassword();
-        System.out.println(newPassword);
-        accountService.changePassword(account.getUsername(), newPassword);
-        emailService.sendSimpleEmail(email, "Password reset successfully", "New password:"+ newPassword);
-        return "Password reset successfully";
     }
 
 

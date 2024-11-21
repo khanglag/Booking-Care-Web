@@ -23,6 +23,7 @@ public class Account {
     private User user;
 
     @NotNull
+    @Size(max = 20)
     @Column(name = "username", nullable = false)
     private String username;
 

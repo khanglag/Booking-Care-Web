@@ -3,6 +3,7 @@ package com.example.Booking_Care_Web.Services;
 import com.example.Booking_Care_Web.Models.Dtos.CheckupPackpageDTO;
 import com.example.Booking_Care_Web.Models.Entities.CheckupPackpage;
 import com.example.Booking_Care_Web.Repositories.CheckupPackpageRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,10 @@ public class CheckupPackpageServiceImpl implements CheckupPackpageService {
     private CheckupPackpageRepository checkupPackageRepository;
 
     @Override
-    public CheckupPackpage findById(String package_id) { return checkupPackageRepository.findById(package_id).get();}
-
+    public CheckupPackpage findById(String package_id) {
+        return checkupPackageRepository.findById(package_id)
+                .orElseThrow(() -> new EntityNotFoundException("cp không tìm thấy với ID: " + package_id));
+    }
     @Override
     public List<CheckupPackpageDTO> findAll() {
         return checkupPackageRepository.findAll().stream()

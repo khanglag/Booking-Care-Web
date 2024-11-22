@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll().stream()
                 .map(user -> new UserDTO(
                         user.getUserId(),
-                        user.getName(),
+                        user.   getName(),
                         user.getPhoneNumber(),
                         user.getEmail(),
                         user.getGender(),

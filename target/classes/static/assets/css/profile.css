@@ -1,0 +1,54 @@
+.avt{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 5px;
+    border-radius: 50%;
+    animation: shining 1.6s ease-in-out infinite;
+}
+.profile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.text-name{
+    font-size: 1.25rem;
+}
+.member{
+    font-size: 1rem;
+    color: red;
+}
+.border-l{
+    border-left: 4px solid teal;
+}
+.menu{
+    padding-left: 50px;
+    margin-top: 20px;
+}
+.custom-list{
+    list-style: none;
+    padding: 0;
+    margin-left: 20px;
+}
+.custom-list li {
+    margin-bottom: 18px;
+}
+
+
+.custom-list li a {
+    text-decoration: none;
+    color: #333;
+    margin-left: 7px;
+}
+@keyframes shining {
+    0% {
+        box-shadow: 0 0 3px 1px red;
+    }
+    50% {
+        box-shadow: 0 0 10px 1px green;
+    }
+    100% {
+        box-shadow: 0 0 3px 1px blue;
+    }
+}

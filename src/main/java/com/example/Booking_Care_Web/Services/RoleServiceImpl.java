@@ -38,4 +38,14 @@ public class RoleServiceImpl implements RoleService{
         roleRepository.insertRole(role.getRoleId(),role.getName());
         return role;
     }
+
+    public Role updateRole(String id, Role updateRole){
+        Role roleExisting = roleRepository.findById(id).orElseThrow(() -> new RuntimeException("ko ton tai id"+id));
+
+        if (updateRole.getName() != null){
+            roleExisting.setName(updateRole.getName());
+        }
+
+        return roleRepository.save(roleExisting);
+    }
 }

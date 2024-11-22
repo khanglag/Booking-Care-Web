@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 22, 2024 lúc 11:00 AM
+-- Thời gian đã tạo: Th10 22, 2024 lúc 09:13 PM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.2.4
 
@@ -40,11 +40,10 @@ CREATE TABLE `account` (
 
 INSERT INTO `account` (`account_id`, `role_id`, `password`, `username`) VALUES
                                                                             ('admin00', 'admin00', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Admin'),
-                                                                            ('doctor0', 'doctor0', '$2a$10$JkkjUmk.eF/aVX2yVsZ9GOBhSPNQQTgR1Z.tN/siI8xwij7ac1bG.', 'Minh Khang'),
+                                                                            ('doctor0', 'doctor0', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Minh Khang'),
                                                                             ('doctor1', 'doctor0', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Xuan Hoang'),
                                                                             ('doctor2', 'doctor0', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Hoang Nguyen'),
-                                                                            ('pt00001', 'patient', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Nguyen Van A'),
-                                                                            ('support', 'support', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Anh Thu');
+                                                                            ('pt00001', 'patient', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Nguyen Van A');
 
 -- --------------------------------------------------------
 
@@ -63,6 +62,13 @@ CREATE TABLE `appointment` (
                                `note` tinytext DEFAULT NULL,
                                `status` tinytext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `appointment`
+--
+
+INSERT INTO `appointment` (`appointment_id`, `available_datetime`, `doctor_id`, `package_id`, `patient_id`, `time_id`, `examination_day`, `note`, `status`) VALUES
+    (1, '2024-11-22', 'doctor1', 'tq20000', 'pt00001', '0000001', '2024-11-22 17:04:19.000000', 'Test note', 'Scheduled');
 
 -- --------------------------------------------------------
 
@@ -157,12 +163,12 @@ INSERT INTO `time_frame` (`time_end`, `time_start`, `time_id`) VALUES
 
 CREATE TABLE `user` (
                         `user_id` varchar(7) NOT NULL,
-                        `phone_number` varchar(10) NOT NULL,
+                        `phone_number` varchar(10) DEFAULT NULL,
                         `identification_card` varchar(12) DEFAULT NULL,
-                        `address` varchar(255) NOT NULL,
+                        `address` varchar(255) DEFAULT NULL,
                         `description` varchar(255) DEFAULT NULL,
                         `email` varchar(255) NOT NULL,
-                        `gender` varchar(255) NOT NULL,
+                        `gender` varchar(255) DEFAULT NULL,
                         `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -176,7 +182,10 @@ INSERT INTO `user` (`user_id`, `phone_number`, `identification_card`, `address`,
                                                                                                                                ('doctor1', '0336065760', '123456789111', 'Duong Ba Trac, Quan 8', 'KHOA NGOAI', 'vodinhxuanhoang@gmail.com', 'male', 'Vo Dinh Xuan Hoang'),
                                                                                                                                ('doctor2', '0392208279', '123456789101', 'Hoc Mon', 'DA KHOA', 'ankhang18122003@gmail.com', 'male', 'Vu Hoang Nguyen'),
                                                                                                                                ('pt00001', '0368779041', '', 'quan 8', '', 'nguyenvana@gmail.com', 'male', 'Nguyen Van A'),
-                                                                                                                               ('support', '0368779041', '', '148 Luu Huu Phuoc', '', 'nguyenanhthu15082003@gmail.com', 'female', 'Nguyen Thi Anh Thu');
+                                                                                                                               ('pt00002', '1234567890', 'ID123456', '123 Street', 'Test description', 'khangminh.do23@gmail.com', 'Male', 'John Doe'),
+                                                                                                                               ('pt00003', '1234567890', 'ID123456', '123 Street', 'Test description', 'khangminh.do2@gmail.com', 'Male', 'John Doe'),
+                                                                                                                               ('pt00004', NULL, NULL, NULL, NULL, 'khangdo14042003@gmail.com', NULL, 'Minh Khang Đỗ'),
+                                                                                                                               ('sp00001', '0368779041', '', '148 Luu Huu Phuoc', '', 'nguyenanhthu15082003@gmail.com', 'female', 'Nguyen Thi Anh Thu');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -231,7 +240,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT cho bảng `appointment`
 --
 ALTER TABLE `appointment`
-    MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT;
+    MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

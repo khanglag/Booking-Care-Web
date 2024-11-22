@@ -22,10 +22,10 @@ public class UserServiceTest {
     public void testCreateUser() {
 
         User userDTO = new User();
-        userDTO.setUserId("000281");
+        userDTO.setUserId(userServiceImp.createNewUserId("pt"));
         userDTO.setName("John Doe");
         userDTO.setPhoneNumber("1234567890");
-        userDTO.setEmail("khangminh.do2003@gmail.com");
+        userDTO.setEmail("khangminh.do2@gmail.com");
         userDTO.setGender("Male");
         userDTO.setAddress("123 Street");
         userDTO.setDescription("Test description");
@@ -56,7 +56,7 @@ public class UserServiceTest {
     @Test
     public void testUpdateUser() {
         User userDTO = new User();
-        userDTO.setUserId("000281");
+        userDTO.setUserId("pt0281");
         userDTO.setName("John");
         userDTO.setPhoneNumber("1234567890");
         userDTO.setEmail("johndoe@example.com");
@@ -66,6 +66,11 @@ public class UserServiceTest {
         userDTO.setIdentificationCard("ID123456");
 
         User update = userServiceImp.updateUser("000281", userDTO);
+    }
+
+    @Test
+    public void testFindMaxPatientId(){
+        System.out.println(userServiceImp.createNewUserId("doctor"));
     }
 
 }

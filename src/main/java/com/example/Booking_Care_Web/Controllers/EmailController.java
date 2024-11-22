@@ -49,7 +49,6 @@ public class EmailController {
         }
     }
 
-
     private static String generateNewPassword() {
         int length = 8;
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

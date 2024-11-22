@@ -37,7 +37,7 @@ public class AccounrServiceTest {
         account.setRole(role);
         account.setUsername("MK");
         account.setPassword("1234");
-        accountServiceImp.createAccount(account);
+        accountServiceImp.saveAccount(account);
     }
 
     @Test

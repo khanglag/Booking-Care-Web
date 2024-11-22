@@ -26,7 +26,6 @@ public class User {
     private String name;
 
     @Size(max = 10)
-    @NotNull
     @Column(name = "phone_number", nullable = false, length = 10)
     private String phoneNumber;
 
@@ -34,11 +33,9 @@ public class User {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @NotNull
     @Column(name = "gender", nullable = false)
     private String gender;
 
-    @NotNull
     @Column(name = "address", nullable = false)
     private String address;
 

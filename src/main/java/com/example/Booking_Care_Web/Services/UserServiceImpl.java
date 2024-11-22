@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,12 +19,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email).get();
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        return userOptional.orElse(null);
     }
 
     @Override
     public User findById(String id) {
-        return userRepository.findById(id).get();
+        Optional<User> userOptional = userRepository.findById(id);
+        return userOptional.orElse(null);
     }
 
     @Override
@@ -43,14 +46,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    @Override
     public User saveUser(User user) {
-        // Gọi phương thức tùy chỉnh để lưu người dùng
+        return userRepository.save(user);  // Trả về người dùng đã lưu
+    }
 
-        userRepository.insertUser(user.getUserId(), user.getName(), user.getPhoneNumber(),
-                user.getEmail(), user.getGender(), user.getAddress(),
-                user.getDescription(), user.getIdentificationCard());
-        return user;  // Trả về người dùng đã lưu
+    @Override
+    public String findMaxUserId(String str) {
+        return userRepository.findMaxUserId(str);
     }
 
     public  User updateUser(String id, User updateUser) {
@@ -74,6 +76,29 @@ public class UserServiceImpl implements UserService {
 
         // Lưu lại vào cơ sở dữ liệu
         return userRepository.save(userExisting);
+    }
 
+    // Tạo userId
+    public String createNewUserId(String str){
+        String maxPatientId = userRepository.findMaxUserId(str);
+        String numberPart;
+        int newId;
+        if(str.equals("pt")){
+            numberPart = maxPatientId.substring(2);
+            newId = Integer.parseInt(numberPart) + 1;
+            return "pt" + String.format("%05d",newId);
+        } else if(str.equals("doctor")){
+            numberPart = maxPatientId.substring(6);
+            newId = Integer.parseInt(numberPart) + 1;
+            return "doctor" + newId;
+        } else if(str.equals("admin")){
+            numberPart = maxPatientId.substring(5);
+            newId = Integer.parseInt(numberPart) + 1;
+            return "admin" + String.format("%02d",newId);
+        } else {
+            numberPart = maxPatientId.substring(2);
+            newId = Integer.parseInt(numberPart) + 1;
+            return "sp" + String.format("%05d",newId);
+        }
     }
 }

@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, String> {
 
-    @Query("SELECT r FROM Role r WHERE r.roleId = :role_id")
+    @Query("SELECT r FROM Role r WHERE r.role_id = :role_id")
     Optional<Role> findById(@Param("role_id") String role_id);
 
     @Modifying

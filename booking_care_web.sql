@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 03, 2024 lúc 02:55 PM
--- Phiên bản máy phục vụ: 10.4.32-MariaDB
--- Phiên bản PHP: 8.1.25
+-- Thời gian đã tạo: Th10 22, 2024 lúc 11:00 AM
+-- Phiên bản máy phục vụ: 10.4.28-MariaDB
+-- Phiên bản PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Cơ sở dữ liệu: `booking_care_web`
+-- Cơ sở dữ liệu: `bookingcare`
 --
 
 -- --------------------------------------------------------
@@ -28,23 +28,23 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `account` (
-  `account_id` char(7) NOT NULL,
-  `username` text NOT NULL,
-  `password` varchar(20) NOT NULL,
-  `role_id` char(7) NOT NULL
+                           `account_id` varchar(7) NOT NULL,
+                           `role_id` varchar(7) NOT NULL,
+                           `password` varchar(250) NOT NULL,
+                           `username` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `account`
 --
 
-INSERT INTO `account` (`account_id`, `username`, `password`, `role_id`) VALUES
-('admin00', 'Admin', 'admin00', 'admin00'),
-('doctor0', 'Minh Khang', 'doctor0', 'doctor0'),
-('doctor1', 'Xuan Hoang', 'doctor1', 'doctor0'),
-('doctor2', 'Hoang Nguyen', 'doctor2', 'doctor0'),
-('pt00001', 'Nguyen Van A', 'pt00001', 'patient'),
-('support', 'Anh Thu', 'support', 'support');
+INSERT INTO `account` (`account_id`, `role_id`, `password`, `username`) VALUES
+                                                                            ('admin00', 'admin00', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Admin'),
+                                                                            ('doctor0', 'doctor0', '$2a$10$JkkjUmk.eF/aVX2yVsZ9GOBhSPNQQTgR1Z.tN/siI8xwij7ac1bG.', 'Minh Khang'),
+                                                                            ('doctor1', 'doctor0', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Xuan Hoang'),
+                                                                            ('doctor2', 'doctor0', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Hoang Nguyen'),
+                                                                            ('pt00001', 'patient', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Nguyen Van A'),
+                                                                            ('support', 'support', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Anh Thu');
 
 -- --------------------------------------------------------
 
@@ -53,23 +53,16 @@ INSERT INTO `account` (`account_id`, `username`, `password`, `role_id`) VALUES
 --
 
 CREATE TABLE `appointment` (
-  `appointment_id` Integer NOT NULL AUTO_INCREMENT,
-  `patient_id` char(7) NOT NULL,
-  `doctor_id` char(7) NOT NULL,
-  `available_datetime` datetime NOT NULL,
-  `package_id` char(7) NOT NULL,
-  `examination_day` date NOT NULL,
-  `time_id` char(7) NOT NULL,
-  `note` text NOT NULL,
-  `status` text NOT NULL
+                               `appointment_id` int(11) NOT NULL,
+                               `available_datetime` date NOT NULL,
+                               `doctor_id` varchar(7) NOT NULL,
+                               `package_id` varchar(7) DEFAULT NULL,
+                               `patient_id` varchar(7) NOT NULL,
+                               `time_id` varchar(7) NOT NULL,
+                               `examination_day` datetime(6) NOT NULL,
+                               `note` tinytext DEFAULT NULL,
+                               `status` tinytext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Đang đổ dữ liệu cho bảng `appointment`
---
-
-INSERT INTO `appointment` (`appointment_id`, `patient_id`, `doctor_id`, `available_datetime`, `package_id`, `examination_day`, `time_id`, `note`, `status`) VALUES
-('0000001', 'pt00001', 'doctor1', '2024-10-10 19:40:49', 'xnut000', '2024-10-13', '0000001', 'Triệu chứng: máu đen', 'DA DUYET');
 
 -- --------------------------------------------------------
 
@@ -78,24 +71,24 @@ INSERT INTO `appointment` (`appointment_id`, `patient_id`, `doctor_id`, `availab
 --
 
 CREATE TABLE `checkup_packpage` (
-  `package_id` char(7) NOT NULL,
-  `name` text NOT NULL,
-  `description` text NOT NULL,
-  `amount` double NOT NULL
+                                    `amount` double NOT NULL,
+                                    `package_id` varchar(7) NOT NULL,
+                                    `description` tinytext NOT NULL,
+                                    `name` tinytext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `checkup_packpage`
 --
 
-INSERT INTO `checkup_packpage` (`package_id`, `name`, `description`, `amount`) VALUES
-('tq10000', 'Gói khám tổng quát Sliver - 22 chỉ số', 'Xét nghiệm gan (9 Chỉ số)\n- Định lượng Bilirubin Trực Tiếp\n- Định lượng Bilirubin Gián Tiếp\n- Định lượng Bilirubin Toàn Phần\n- Định lượng men gan ALAT\n- Định lượng men gan ASAT\n- Định lượng men gan Gamma-Glutamyl Transferase\n- Định lượng men phosphatase kiềm trong máu\n- Đo Protein Toàn Phần [Huyết Thanh]\n- Định lượng albumin trong máu\nXét nghiệm tim mạch (7 Chỉ số)\n- Định lượng chất béo Triglycerides\n- Định lượng Cholesterol Toàn Phần\n- Đo nồng độ HDL Cholesterol (Cholesterol tốt)\n- Đo nồng độ LDL Cholesterol (Cholesterol xấu)\n- Tỷ lệ Cholesterol/HDL\n- Xét nghiệm protein Phản Ứng C Độ Nhạy Cao (hs CRP)\n- Đo nồng độ Homocysteine\nXét nghiệm tuyến giáp (2 Chỉ số)\n- Đo nồng độ nội tiết tố Kích Thích Tuyến Giáp (TSH)\n- Địnhh lượng nội tiết tố T4 Tự Do\nXét nghiệm huyết học (1 Chỉ số)\n- Công thức máu toàn bộ (CBC)\nXét nghiệm viêm gan (3 Chỉ số)\n- Kháng nguyên bề mặt Viêm gan B (HBsAg)Định tính\n- Kháng thể với Kháng nguyên bề mặt virus Viêm gan B (HBsAb)\n- Kháng thể Viêm gan C (HCV Ab)', 789),
-('tq20000', 'Gói khám tổng quát Gold - 28 chỉ số', 'Xét nghiệm vi chất (6 Chỉ số)\r\n- Đo nồng độ Canxi (Ca) trong huyết thanh\r\n- Đo nồng độ Sắt (Fe)\r\n- Đo nồng độ 25-OH Vitamin D\r\n- Đo nồng độ Phốt Pho (P) trong huyết thanh\r\n- Đo nồng độ Ferritin\r\n- Đo nồng độ Vitamin B12\r\nXét nghiệm gan (9 Chỉ số)\r\n- Định lượng Bilirubin Trực Tiếp\r\n- Định lượng Bilirubin Gián Tiếp\r\n- Định lượng Bilirubin Toàn Phần\r\n- Định lượng men gan ALAT\r\n- Định lượng men gan ASAT\r\n- Định lượng men gan Gamma-Glutamyl Transferase\r\n- Định lượng men phosphatase kiềm trong máu\r\n- Đo Protein Toàn Phần [Huyết Thanh]\r\n- Định lượng albumin trong máu\r\nXét nghiệm tim mạch (7 Chỉ số)\r\n- Định lượng chất béo Triglycerides\r\n- Định lượng Cholesterol Toàn Phần\r\n- Đo nồng độ HDL Cholesterol (Cholesterol tốt)\r\n- Đo nồng độ LDL Cholesterol (Cholesterol xấu)\r\n- Tỷ lệ Cholesterol/HDL\r\n- Xét nghiệm protein Phản Ứng C Độ Nhạy Cao (hs CRP)\r\n- Đo nồng độ Homocysteine\r\nXét nghiệm tuyến giáp (2 Chỉ số)\r\n- Đo nồng độ nội tiết tố Kích Thích Tuyến Giáp (TSH)\r\n- Địnhh lượng nội tiết tố T4 Tự Do\r\nXét nghiệm huyết học (1 Chỉ số)\r\n- Công thức máu toàn bộ (CBC)\r\nXét nghiệm viêm gan (3 Chỉ số)\r\n- Kháng nguyên bề mặt Viêm gan B (HBsAg)Định tính\r\n- Kháng thể với Kháng nguyên bề mặt virus Viêm gan B (HBsAb)\r\n- Kháng thể Viêm gan C (HCV Ab)', 1650),
-('tq30000', 'Gói khám tổng quát Diamond - 36 chỉ số', 'Xét nghiệm tiểu đường (3 Chỉ số)\r\n- Định lượng đường huyết đói - Glucose Fasting (Đường đói)\r\n- Đo mức đường huyết trung bình (HbA1c)\r\n- Ước Lượng Đường huyết Trung Bình (eAG)\r\nXét nghiệm thận (5 Chỉ số)\r\n- Định lượng Creatinin trong huyết thanh\r\n- Đo nồng độ Urê trong máu\r\n- Đo nồng độ Axit Uric huyết thanh\r\n- Tổng Phân Tích Nước Tiểu\r\n- Độ Lọc Cầu Thận Ước Tính (eGFR)\r\nXét nghiệm vi chất (6 Chỉ số)\r\n- Đo nồng độ Canxi (Ca) trong huyết thanh\r\n- Đo nồng độ Sắt (Fe)\r\n- Đo nồng độ 25-OH Vitamin D\r\n- Đo nồng độ Phốt Pho (P) trong huyết thanh\r\n- Đo nồng độ Ferritin\r\n- Đo nồng độ Vitamin B12\r\nXét nghiệm gan (9 Chỉ số)\r\n- Định lượng Bilirubin Trực Tiếp\r\n- Định lượng Bilirubin Gián Tiếp\r\n- Định lượng Bilirubin Toàn Phần\r\n- Định lượng men gan ALAT\r\n- Định lượng men gan ASAT\r\n- Định lượng men gan Gamma-Glutamyl Transferase\r\n- Định lượng men phosphatase kiềm trong máu\r\n- Đo Protein Toàn Phần [Huyết Thanh]\r\n- Định lượng albumin trong máu\r\nXét nghiệm tim mạch (7 Chỉ số)\r\n- Định lượng chất béo Triglycerides\r\n- Định lượng Cholesterol Toàn Phần\r\n- Đo nồng độ HDL Cholesterol (Cholesterol tốt)\r\n- Đo nồng độ LDL Cholesterol (Cholesterol xấu)\r\n- Tỷ lệ Cholesterol/HDL\r\n- Xét nghiệm protein Phản Ứng C Độ Nhạy Cao (hs CRP)\r\n- Đo nồng độ Homocysteine\r\nXét nghiệm tuyến giáp (2 Chỉ số)\r\n- Đo nồng độ nội tiết tố Kích Thích Tuyến Giáp (TSH)\r\n- Địnhh lượng nội tiết tố T4 Tự Do\r\nXét nghiệm huyết học (1 Chỉ số)\r\n- Công thức máu toàn bộ (CBC)\r\nXét nghiệm viêm gan (3 Chỉ số)\r\n- Kháng nguyên bề mặt Viêm gan B (HBsAg)Định tính\r\n- Kháng thể với Kháng nguyên bề mặt virus Viêm gan B (HBsAb)\r\n- Kháng thể Viêm gan C (HCV Ab)', 2401),
-('xnnm000', 'Xét nghiệm nhóm máu (ABO + Rhesus) tự động', 'Nhóm máu A+ nếu có kháng nguyên A và kháng nguyên Rh.\r\nNhóm máu A- nếu có kháng nguyên A nhưng không có kháng nguyên Rh.\r\nNhóm máu B+ nếu có kháng nguyên B và kháng nguyên Rh.\r\nNhóm máu B- nếu có kháng nguyên B nhưng không có kháng nguyên Rh.\r\nNhóm máu AB+ nếu có cả kháng nguyên A, B và Rh.\r\nNhóm máu AB- nếu có kháng nguyên A, B nhưng không có kháng nguyên Rh.\r\nNhóm máu O+ nếu không có kháng nguyên A hoặc B, nhưng có kháng nguyên Rh.\r\nNhóm máu O- nếu không có cả kháng nguyên A, B và Rh.', 110),
-('xnut000', 'Gói khám cho Nam giới - Xét nghiệm Tầm soát ung thư toàn diện - 7 chỉ số', 'Ung thư phổi (1 Chỉ số)\r\n- Dấu ấn ung thư Cyfra 21-1(Phổi)\r\nUng thư tuyến giáp (1 Chỉ số)\r\n- Đo nồng độ Thyroglobulin\r\nUng thư (2 Chỉ số)\r\n- Đo nồng độ Alpha-Fetoprotein (AFP)\r\n- Dấu ấn ung thư carcinoembryonic (CEA)\r\nUng thư tuyến tụy, mật (1 Chỉ số)\r\n- Dấu ấn ung thư CA 19-9\r\nUng thư da (1 Chỉ số)\r\n- Kháng Nguyên Ung Thư Biểu Mô Tế Bào Vảy (SCC)\r\nUng thư tuyến tiền liệt (1 Chỉ số)\r\n- Xét nghiệm PSA Toàn Phần', 1600),
-('xnut001', 'Gói khám cho Nữ giới (Cơ bản) - Xét nghiệm Tầm soát ung thư toàn diện - 8 chỉ số', 'Ung thư phổi (1 Chỉ số)\r\n- Dấu ấn ung thư Cyfra 21-1(Phổi)\r\nUng thư tuyến giáp (1 Chỉ số)\r\n- Đo nồng độ Thyroglobulin\r\nUng thư (2 Chỉ số)\r\n- Đo nồng độ Alpha-Fetoprotein (AFP)\r\n- Dấu ấn ung thư carcinoembryonic (CEA)\r\nUng thư tuyến tụy, mật (1 Chỉ số)\r\n- Dấu ấn ung thư CA 19-9\r\nUng thư da (1 Chỉ số)\r\n- Kháng Nguyên Ung Thư Biểu Mô Tế Bào Vảy (SCC)\r\nSản Phụ Khoa (1 Chỉ số)\r\n- Dấu ấn ung thư CA 125\r\nUng thư vú (1 Chỉ số)\r\n- Dấu ấn ung thư CA 15-3\r\n', 1803),
-('xnut002', 'Gói khám cho Nữ giới (Nâng cao) - Xét nghiệm Tầm soát ung thư toàn diện - 9 chỉ số', 'Ung thư phổi (1 Chỉ số)\r\n- Dấu ấn ung thư Cyfra 21-1(Phổi)\r\nUng thư tuyến giáp (1 Chỉ số)\r\n- Đo nồng độ Thyroglobulin\r\nUng thư (2 Chỉ số)\r\n- Đo nồng độ Alpha-Fetoprotein (AFP)\r\n- Dấu ấn ung thư carcinoembryonic (CEA)\r\nUng thư tuyến tụy, mật (1 Chỉ số)\r\n- Dấu ấn ung thư CA 19-9\r\nUng thư da (1 Chỉ số)\r\n- Kháng Nguyên Ung Thư Biểu Mô Tế Bào Vảy (SCC)\r\nSản Phụ Khoa (2 Chỉ số)\r\n- Dấu ấn ung thư CA 125\r\n- HPV 40 kèm bộ tự lấy mẫu\r\nUng thư vú (1 Chỉ số)\r\n- Dấu ấn ung thư CA 15-3\r\n', 2405);
+INSERT INTO `checkup_packpage` (`amount`, `package_id`, `description`, `name`) VALUES
+                                                                                   (789, 'tq10000', 'Xét nghiệm gan (9 Chỉ số)\n- Định lượng Bilirubin Trực Tiếp\n- Định lượng Bilirubin Gián Tiếp\n- Định lượng Bilirubin Toàn Phần\n- Định lượng men gan ALAT\n- Định lượng men gan ASAT\n- Định lượng men gan Gamm', 'Gói khám tổng quát Sliver - 22 chỉ số'),
+                                                                                   (1650, 'tq20000', 'Xét nghiệm vi chất (6 Chỉ số)\r\n- Đo nồng độ Canxi (Ca) trong huyết thanh\r\n- Đo nồng độ Sắt (Fe)\r\n- Đo nồng độ 25-OH Vitamin D\r\n- Đo nồng độ Phốt Pho (P) trong huyết thanh\r\n- Đo nồng độ Ferritin\r\n- Đo nồng ', 'Gói khám tổng quát Gold - 28 chỉ số'),
+                                                                                   (2401, 'tq30000', 'Xét nghiệm tiểu đường (3 Chỉ số)\r\n- Định lượng đường huyết đói - Glucose Fasting (Đường đói)\r\n- Đo mức đường huyết trung bình (HbA1c)\r\n- Ước Lượng Đường huyết Trung Bình (eAG)\r\nXét nghiệm thận (', 'Gói khám tổng quát Diamond - 36 chỉ số'),
+                                                                                   (110, 'xnnm000', 'Nhóm máu A+ nếu có kháng nguyên A và kháng nguyên Rh.\r\nNhóm máu A- nếu có kháng nguyên A nhưng không có kháng nguyên Rh.\r\nNhóm máu B+ nếu có kháng nguyên B và kháng nguyên Rh.\r\nNhóm máu B- nếu có kháng nguyên B nhưn', 'Xét nghiệm nhóm máu (ABO + Rhesus) tự động'),
+                                                                                   (1600, 'xnut000', 'Ung thư phổi (1 Chỉ số)\r\n- Dấu ấn ung thư Cyfra 21-1(Phổi)\r\nUng thư tuyến giáp (1 Chỉ số)\r\n- Đo nồng độ Thyroglobulin\r\nUng thư (2 Chỉ số)\r\n- Đo nồng độ Alpha-Fetoprotein (AFP)\r\n- Dấu ấn ung thư carcinoembryonic ', 'Gói khám cho Nam giới - Xét nghiệm Tầm soát ung thư toàn diện - 7 chỉ số'),
+                                                                                   (1803, 'xnut001', 'Ung thư phổi (1 Chỉ số)\r\n- Dấu ấn ung thư Cyfra 21-1(Phổi)\r\nUng thư tuyến giáp (1 Chỉ số)\r\n- Đo nồng độ Thyroglobulin\r\nUng thư (2 Chỉ số)\r\n- Đo nồng độ Alpha-Fetoprotein (AFP)\r\n- Dấu ấn ung thư carcinoembryonic ', 'Gói khám cho Nữ giới (Cơ bản) - Xét nghiệm Tầm soát ung thư toàn diện - 8 chỉ số'),
+                                                                                   (2405, 'xnut002', 'Ung thư phổi (1 Chỉ số)\r\n- Dấu ấn ung thư Cyfra 21-1(Phổi)\r\nUng thư tuyến giáp (1 Chỉ số)\r\n- Đo nồng độ Thyroglobulin\r\nUng thư (2 Chỉ số)\r\n- Đo nồng độ Alpha-Fetoprotein (AFP)\r\n- Dấu ấn ung thư carcinoembryonic ', 'Gói khám cho Nữ giới (Nâng cao) - Xét nghiệm Tầm soát ung thư toàn diện - 9 chỉ số');
 
 -- --------------------------------------------------------
 
@@ -104,8 +97,8 @@ INSERT INTO `checkup_packpage` (`package_id`, `name`, `description`, `amount`) V
 --
 
 CREATE TABLE `medical_record` (
-  `patient_id` char(7) NOT NULL,
-  `description` text NOT NULL
+                                  `patient_id` char(7) NOT NULL,
+                                  `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -113,7 +106,7 @@ CREATE TABLE `medical_record` (
 --
 
 INSERT INTO `medical_record` (`patient_id`, `description`) VALUES
-('pt00001', 'Bệnh:...');
+    ('pt00001', 'Bệnh:...');
 
 -- --------------------------------------------------------
 
@@ -122,8 +115,8 @@ INSERT INTO `medical_record` (`patient_id`, `description`) VALUES
 --
 
 CREATE TABLE `role` (
-  `role_id` char(7) NOT NULL,
-  `name` text NOT NULL
+                        `role_id` varchar(7) NOT NULL,
+                        `name` tinytext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -131,10 +124,10 @@ CREATE TABLE `role` (
 --
 
 INSERT INTO `role` (`role_id`, `name`) VALUES
-('admin00', 'Admin'),
-('doctor0', 'Doctor'),
-('patient', 'Patient'),
-('support', 'Supporter');
+                                           ('admin00', 'Admin'),
+                                           ('doctor0', 'Doctor'),
+                                           ('patient', 'Patient'),
+                                           ('support', 'Supporter');
 
 -- --------------------------------------------------------
 
@@ -143,18 +136,18 @@ INSERT INTO `role` (`role_id`, `name`) VALUES
 --
 
 CREATE TABLE `time_frame` (
-  `time_id` char(7) NOT NULL,
-  `time_start` time NOT NULL,
-  `time_end` time NOT NULL
+                              `time_end` time(6) NOT NULL,
+                              `time_start` time(6) NOT NULL,
+                              `time_id` varchar(7) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `time_frame`
 --
 
-INSERT INTO `time_frame` (`time_id`, `time_start`, `time_end`) VALUES
-('0000001', '08:00:00', '11:30:00'),
-('0000002', '13:30:00', '18:00:00');
+INSERT INTO `time_frame` (`time_end`, `time_start`, `time_id`) VALUES
+                                                                   ('11:30:00.000000', '08:00:00.000000', '0000001'),
+                                                                   ('18:00:00.000000', '13:30:00.000000', '0000002');
 
 -- --------------------------------------------------------
 
@@ -163,27 +156,27 @@ INSERT INTO `time_frame` (`time_id`, `time_start`, `time_end`) VALUES
 --
 
 CREATE TABLE `user` (
-  `user_id` char(7) NOT NULL,
-  `name` text NOT NULL,
-  `phone_number` char(10) NOT NULL,
-  `email` text NOT NULL,
-  `gender` text NOT NULL,
-  `address` text NOT NULL,
-  `description` text NOT NULL,
-  `identification_card` char(12) NOT NULL
+                        `user_id` varchar(7) NOT NULL,
+                        `phone_number` varchar(10) NOT NULL,
+                        `identification_card` varchar(12) DEFAULT NULL,
+                        `address` varchar(255) NOT NULL,
+                        `description` varchar(255) DEFAULT NULL,
+                        `email` varchar(255) NOT NULL,
+                        `gender` varchar(255) NOT NULL,
+                        `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `user`
 --
 
-INSERT INTO `user` (`user_id`, `name`, `phone_number`, `email`, `gender`, `address`, `description`, `identification_card`) VALUES
-('admin00', 'Admin', '0368779041', 'Admin@gmai.com', 'female', '1000 An Duong Vuong', '', ''),
-('doctor0', 'Do Minh Khang', '0865674317', 'khanglag@gmail.com', 'male', 'Binh Tri Dong, Binh Tan', 'KHOA NOI', '123456789100'),
-('doctor1', 'Vo Dinh Xuan Hoang', '0336065760', 'vodinhxuanhoang@gmail.com', 'male', 'Duong Ba Trac, Quan 8', 'KHOA NGOAI', '123456789111'),
-('doctor2', 'Vu Hoang Nguyen', '0392208279', 'ankhang18122003@gmail.com', 'male', 'Hoc Mon', 'DA KHOA', '123456789101'),
-('pt00001', 'Nguyen Van A', '0368779041', 'nguyenvana@gmail.com', 'male', 'quan 8', '', ''),
-('support', 'Nguyen Thi Anh Thu', '0368779041', 'nguyenanhthu15082003@gmail.com', 'female', '148 Luu Huu Phuoc', '', '');
+INSERT INTO `user` (`user_id`, `phone_number`, `identification_card`, `address`, `description`, `email`, `gender`, `name`) VALUES
+                                                                                                                               ('admin00', '0368779041', '', '1000 An Duong Vuong', '', 'Admin@gmai.com', 'female', 'Admin'),
+                                                                                                                               ('doctor0', '0865674317', '123456789100', 'Binh Tri Dong, Binh Tan', 'KHOA NOI', 'khangminh.do2003@gmail.com', 'male', 'Do Minh Khang'),
+                                                                                                                               ('doctor1', '0336065760', '123456789111', 'Duong Ba Trac, Quan 8', 'KHOA NGOAI', 'vodinhxuanhoang@gmail.com', 'male', 'Vo Dinh Xuan Hoang'),
+                                                                                                                               ('doctor2', '0392208279', '123456789101', 'Hoc Mon', 'DA KHOA', 'ankhang18122003@gmail.com', 'male', 'Vu Hoang Nguyen'),
+                                                                                                                               ('pt00001', '0368779041', '', 'quan 8', '', 'nguyenvana@gmail.com', 'male', 'Nguyen Van A'),
+                                                                                                                               ('support', '0368779041', '', '148 Luu Huu Phuoc', '', 'nguyenanhthu15082003@gmail.com', 'female', 'Nguyen Thi Anh Thu');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -193,48 +186,52 @@ INSERT INTO `user` (`user_id`, `name`, `phone_number`, `email`, `gender`, `addre
 -- Chỉ mục cho bảng `account`
 --
 ALTER TABLE `account`
-  ADD PRIMARY KEY (`account_id`),
-  ADD KEY `role_id` (`role_id`);
+    ADD PRIMARY KEY (`account_id`),
+  ADD KEY `FKd4vb66o896tay3yy52oqxr9w0` (`role_id`);
 
 --
 -- Chỉ mục cho bảng `appointment`
 --
 ALTER TABLE `appointment`
-  ADD PRIMARY KEY (`appointment_id`),
-  ADD KEY `package_id` (`package_id`),
-  ADD KEY `time_id` (`time_id`),
-  ADD KEY `u_id` (`doctor_id`),
-  ADD KEY `user_id` (`patient_id`);
+    ADD PRIMARY KEY (`appointment_id`),
+  ADD KEY `FK1l62fhlqqc08wmgrvn7hjtfom` (`doctor_id`),
+  ADD KEY `FK6ri1gkarbuy1bw1fka0dvhugd` (`package_id`),
+  ADD KEY `FKg90ck1kd0p4rbamwc22jd2oql` (`patient_id`),
+  ADD KEY `FKcv7wswx3l4hpqev324jncdjw0` (`time_id`);
 
 --
 -- Chỉ mục cho bảng `checkup_packpage`
 --
 ALTER TABLE `checkup_packpage`
-  ADD PRIMARY KEY (`package_id`);
-
---
--- Chỉ mục cho bảng `medical_record`
---
-ALTER TABLE `medical_record`
-  ADD PRIMARY KEY (`patient_id`);
+    ADD PRIMARY KEY (`package_id`);
 
 --
 -- Chỉ mục cho bảng `role`
 --
 ALTER TABLE `role`
-  ADD PRIMARY KEY (`role_id`);
+    ADD PRIMARY KEY (`role_id`);
 
 --
 -- Chỉ mục cho bảng `time_frame`
 --
 ALTER TABLE `time_frame`
-  ADD PRIMARY KEY (`time_id`);
+    ADD PRIMARY KEY (`time_id`);
 
 --
 -- Chỉ mục cho bảng `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`user_id`);
+    ADD PRIMARY KEY (`user_id`);
+
+--
+-- AUTO_INCREMENT cho các bảng đã đổ
+--
+
+--
+-- AUTO_INCREMENT cho bảng `appointment`
+--
+ALTER TABLE `appointment`
+    MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -244,23 +241,17 @@ ALTER TABLE `user`
 -- Các ràng buộc cho bảng `account`
 --
 ALTER TABLE `account`
-  ADD CONSTRAINT `account_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`),
-  ADD CONSTRAINT `account_ibfk_3` FOREIGN KEY (`account_id`) REFERENCES `user` (`user_id`);
+    ADD CONSTRAINT `FKd4vb66o896tay3yy52oqxr9w0` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`),
+  ADD CONSTRAINT `FKoh0gud9ye26qi2hgbfquypb21` FOREIGN KEY (`account_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Các ràng buộc cho bảng `appointment`
 --
 ALTER TABLE `appointment`
-  ADD CONSTRAINT `appointment_ibfk_2` FOREIGN KEY (`package_id`) REFERENCES `checkup_packpage` (`package_id`),
-  ADD CONSTRAINT `appointment_ibfk_5` FOREIGN KEY (`time_id`) REFERENCES `time_frame` (`time_id`),
-  ADD CONSTRAINT `appointment_ibfk_6` FOREIGN KEY (`doctor_id`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `appointment_ibfk_7` FOREIGN KEY (`patient_id`) REFERENCES `user` (`user_id`);
-
---
--- Các ràng buộc cho bảng `medical_record`
---
-ALTER TABLE `medical_record`
-  ADD CONSTRAINT `medical_record_ibfk_1` FOREIGN KEY (`patient_id`) REFERENCES `user` (`user_id`);
+    ADD CONSTRAINT `FK1l62fhlqqc08wmgrvn7hjtfom` FOREIGN KEY (`doctor_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `FK6ri1gkarbuy1bw1fka0dvhugd` FOREIGN KEY (`package_id`) REFERENCES `checkup_packpage` (`package_id`),
+  ADD CONSTRAINT `FKcv7wswx3l4hpqev324jncdjw0` FOREIGN KEY (`time_id`) REFERENCES `time_frame` (`time_id`),
+  ADD CONSTRAINT `FKg90ck1kd0p4rbamwc22jd2oql` FOREIGN KEY (`patient_id`) REFERENCES `user` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

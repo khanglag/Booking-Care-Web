@@ -37,7 +37,7 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .collect(Collectors.toList());
     }
 
-    @Override
+    @Transactional
     public Appointment save(Appointment appointment) {
        return appointmentRepository.save(appointment);
     }
@@ -61,7 +61,6 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Transactional
     public Appointment updateAppointment(Appointment appointment) {
         Appointment appointment1 = appointmentRepository.findById(appointment.getAppointmentId()).orElse(null);
-
         if (appointment1 == null) {
             throw new RuntimeException("Appointment not found with ID: " + appointment.getAppointmentId());
         }
@@ -73,10 +72,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         appointment1.setTime(appointment.getTime());
         appointment1.setNote(appointment.getNote());
         appointment1.setStatus(appointment.getStatus());
-
         return appointmentRepository.save(appointment1);
     }
-
-
 
 }

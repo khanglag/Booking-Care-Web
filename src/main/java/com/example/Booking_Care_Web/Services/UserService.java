@@ -13,7 +13,6 @@ public interface UserService {
    User findByEmail(String email);
    User findById(String id);
    List<UserDTO> findAll();
-   User saveUser(User user);
-
+   String findMaxUserId(String str);
 
 }

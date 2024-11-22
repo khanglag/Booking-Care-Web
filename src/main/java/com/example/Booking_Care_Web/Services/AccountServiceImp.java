@@ -28,9 +28,8 @@ public class AccountServiceImp implements AccountService {
         return account;
     }
 
-
     @Transactional
-    public Account createAccount(Account account) {
+    public Account saveAccount(Account account) {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         return accountRepository.save(account);
     }

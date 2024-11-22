@@ -17,8 +17,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query("SELECT u FROM User u WHERE u.userId = :userId")
     Optional<User> findById(@Param("userId") String userId);
 
-    @Modifying
-    @Query(value = "INSERT INTO user (user_id, name, phone_number, email, gender, address, description, identification_card) VALUES (:userId, :name, :phoneNumber, :email, :gender, :address, :description, :identificationCard)", nativeQuery = true)
-    void insertUser(String userId, String name, String phoneNumber, String email, String gender, String address, String description, String identificationCard);
+    @Query("SELECT u.userId FROM User u WHERE u.userId LIKE :str% ORDER BY u.userId DESC LIMIT 1")
+    String findMaxUserId(String str);
 
 }

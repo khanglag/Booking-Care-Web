@@ -19,14 +19,15 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             throws IOException, ServletException {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
+        String userId = ((org.springframework.security.core.userdetails.User) authentication.getPrincipal()).getUsername();
+        request.getSession().setAttribute("userId", userId);
+        System.out.println("user id is " + userId);
         // Kiểm tra quyền của người dùng
         for (GrantedAuthority authority : authorities) {
             String role = authority.getAuthority();
-            System.out.println(role);
-
             // Điều hướng theo Role
             if (role.equals("ROLE_Admin")) {
-                response.sendRedirect("/booking");
+                response.sendRedirect("/dashboard");
                 return;
             } else if (role.equals("ROLE_Doctor")) {
                 response.sendRedirect("/contact");

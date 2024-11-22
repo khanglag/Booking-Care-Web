@@ -16,6 +16,6 @@ public interface TimeFrameRepository extends JpaRepository<TimeFrame, String> {
     Optional<TimeFrame> findById(@Param("timeId") String timeId);
 
     @Modifying
-    @Query(value ="INSERT INTO timeframe (timeId, timeStart, timeEnd) VALUES (:timeId, :timeStart, :timeEnd, :appointments)", nativeQuery = true)
-    void insertTimeFrame(String timeId, LocalTime timeStart, LocalTime timeEnd );
+    @Query(value = "INSERT INTO timeframe (time_id, time_start, time_end) VALUES (:timeId, :timeStart, :timeEnd)", nativeQuery = true)
+    void insertTimeFrame(String timeId, LocalTime timeStart, LocalTime timeEnd);
 }

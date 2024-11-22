@@ -1,6 +1,7 @@
 package com.example.Booking_Care_Web.Services;
 
 import com.example.Booking_Care_Web.Models.Dtos.TimeFrameDTO;
+import com.example.Booking_Care_Web.Models.Entities.Role;
 import com.example.Booking_Care_Web.Models.Entities.TimeFrame;
 import com.example.Booking_Care_Web.Repositories.TimeFrameRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,7 +21,7 @@ public class TimeFrameServiceImpl implements TimeFrameService{
     @Override
     public TimeFrame findById(String timeId) {
         return timeFrameRepository.findById(timeId)
-                .orElseThrow(() -> new EntityNotFoundException("TimeFrame không tìm thấy với ID: " + timeId));
+                .orElseThrow(() -> new EntityNotFoundException("cp không tìm thấy với ID: " + timeId));
     }
 
     @Override
@@ -36,8 +37,24 @@ public class TimeFrameServiceImpl implements TimeFrameService{
 
     @Transactional
     @Override
+//    public TimeFrame saveTimeFrame(TimeFrame tf){
+//        timeFrameRepository.insertTimeFrame(tf.getTimeId(), tf.getTimeStart(), tf.getTimeEnd());
+//    return tf;
+//    }
+
     public TimeFrame saveTimeFrame(TimeFrame tf){
-        timeFrameRepository.insertTimeFrame(tf.getTimeId(), tf.getTimeStart(), tf.getTimeEnd());
-    return tf;
+        return timeFrameRepository.save(tf);
+    }
+
+    public TimeFrame updateTF(String id, TimeFrame updateTF){
+        TimeFrame timeFrameExisting = timeFrameRepository.findById(id).orElseThrow(() -> new RuntimeException("ko ton tai"+id));
+
+        if (updateTF.getTimeStart() != null){
+            timeFrameExisting.setTimeStart(updateTF.getTimeStart());
+        }
+        if (updateTF.getTimeEnd() != null){
+            timeFrameExisting.setTimeEnd(updateTF.getTimeEnd());
+        }
+        return timeFrameRepository.save(timeFrameExisting);
     }
 }

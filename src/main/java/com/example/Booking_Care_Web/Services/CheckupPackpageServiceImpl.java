@@ -19,8 +19,7 @@ public class CheckupPackpageServiceImpl implements CheckupPackpageService {
 
     @Override
     public CheckupPackpage findById(String package_id) {
-        return checkupPackageRepository.findById(package_id)
-                .orElseThrow(() -> new EntityNotFoundException("cp không tìm thấy với ID: " + package_id));
+        return checkupPackageRepository.findById(package_id).orElseThrow(() -> new EntityNotFoundException("cp không tìm thấy với ID: " + package_id));
     }
     @Override
     public List<CheckupPackpageDTO> findAll() {
@@ -35,11 +34,30 @@ public class CheckupPackpageServiceImpl implements CheckupPackpageService {
     }
 
     @Transactional
+    @Override
+//    public CheckupPackpage saveCP(CheckupPackpage checkupPackpage){
+//
+//        checkupPackageRepository.insertCheckupPackage(checkupPackpage.getPackageId(), checkupPackpage.getName(), checkupPackpage.getDescription(), checkupPackpage.getAmount());
+//        return checkupPackpage;
+//    }
 
-    public CheckupPackpage saveCP (CheckupPackpage checkupPackpage){
+    public CheckupPackpage saveCheckupPackpage(CheckupPackpage checkupPackpage){
+        return checkupPackageRepository.save(checkupPackpage);
+    }
 
-        checkupPackageRepository.insertCheckupPackage(checkupPackpage.getPackageId(), checkupPackpage.getName(),
-                checkupPackpage.getDescription(),checkupPackpage.getAmount());
-        return checkupPackpage;
+
+    public CheckupPackpage updateCP (String id, CheckupPackpage updateCP){
+        CheckupPackpage checkuExisting = checkupPackageRepository.findById(id).orElseThrow(() -> new RuntimeException("CheckupPackage không tồn tại ID" + id));
+
+        if (updateCP.getName() != null) {
+            checkuExisting.setName(updateCP.getName());
+        }
+        if (updateCP.getDescription() != null){
+            checkuExisting.setDescription(updateCP.getDescription());
+        }
+        if (updateCP.getAmount() != null){
+            checkuExisting.setDescription(String.valueOf(updateCP.getAmount()));
+        }
+        return checkupPackageRepository.save(checkuExisting);
     }
 }

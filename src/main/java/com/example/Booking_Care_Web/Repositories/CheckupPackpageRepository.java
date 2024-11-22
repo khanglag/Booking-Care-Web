@@ -15,7 +15,7 @@ public interface CheckupPackpageRepository extends JpaRepository<CheckupPackpage
     Optional<CheckupPackpage> findById(@Param("package_id") String package_id);
 
     @Modifying
-    @Query(value = "INSERT INTO checkuppackpage (package_id,name,description,amount) VALUES (:package_id, :name, :description, :amount)", nativeQuery = true)
-    void insertCheckupPackage(String package_id, String name, String description, double amount);
+    @Query(value = "INSERT INTO checkuppackpage (package_id, name, description, amount) VALUES (:package_id, :name, :description, :amount)", nativeQuery = true)
+    void insertCheckupPackage(String package_id, String name, String description, Double amount);
 
 }

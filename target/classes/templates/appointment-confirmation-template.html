@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Appointment Confirmation</title>
+</head>
+<body>
+<h2>Hello, <span th:text="${patientName}">Patient</span>!</h2>
+<p>We have received your appointment request:</p>
+<ul>
+    <li><strong>Date:</strong> <span th:text="${appointmentDate}">[Appointment Date]</span></li>
+    <li><strong>Time:</strong> <span th:text="${appointmentTime}">[Appointment Time]</span></li>
+    <li><strong>Doctor:</strong> <span th:text="${doctorName}">[Doctor Name]</span></li>
+    <li><strong>Phone Number:</strong> <span th:text="${phoneNumber}">[Phone Number]</span></li>
+</ul>
+<p>Our team will contact you via the provided phone number to confirm your appointment.</p>
+<p>If you have any questions, please contact us at <strong>support@example.com</strong>.</p>
+<p>Thank you for choosing our service!</p>
+<p>Best regards,<br>Your Clinic Team</p>
+</body>
+</html>

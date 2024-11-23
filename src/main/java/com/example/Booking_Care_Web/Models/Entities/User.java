@@ -55,6 +55,11 @@ public class User {
     @OneToMany(mappedBy = "doctor")
     private Set<Appointment> appointmentsDoctor = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "patientMedicalRecords")
+    private Set<MedicalRecord> patientMedicalRecords = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "doctorMedicalRecords")
+    private Set<MedicalRecord> doctorMedicalRecords = new LinkedHashSet<>();
 
     public String getUserId() {
         return userId;

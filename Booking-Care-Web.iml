@@ -7,7 +7,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="Booking-Care-Web" value="21e53a93-6c4b-43c5-9f4b-634783a9179f" />
-          <factory-entry name="entityManagerFactory" value="21e53a93-6c4b-43c5-9f4b-634783a9179f" />
+          <factory-entry name="entityManagerFactory" value="768ec296-9313-48f3-872d-57367a07b215" />
         </datasource-mapping>
         <naming-strategy-map>
           <unit-entry name="entityManagerFactory" />

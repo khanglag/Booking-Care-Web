@@ -31,10 +31,10 @@ public class AppointmentServiceTest {
     @Test
     public void testSaveAppointment() {
         User patient = new User();  // Giả định User đã được tạo với ID "pt00001"
-        patient.setUserId("pt00001");
+        patient.setUserId("pt00002");
 
         User doctor = new User();  // Giả định User đã được tạo với ID "doctor1"
-        doctor.setUserId("doctor1");
+        doctor.setUserId("doctor2");
 
         CheckupPackpage checkupPackpage = new CheckupPackpage();
         checkupPackpage.setPackageId("tq20000");
@@ -106,6 +106,12 @@ public class AppointmentServiceTest {
         appointment.setStatus("DA DUYET");
         System.out.println(appointment);
         System.out.println(appointmentServiceImp.updateAppointment(appointment));
+    }
+
+    @Test
+    public void testFindAppointmentByStatus(){
+        List<Appointment> appointment = appointmentServiceImp.findApppontmentByStatus("Scheduled");
+        appointment.forEach(app -> System.out.println(app));
     }
 
 }

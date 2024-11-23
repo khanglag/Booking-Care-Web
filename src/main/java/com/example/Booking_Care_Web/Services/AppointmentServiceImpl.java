@@ -58,6 +58,11 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentRepository.findByDoctorId(id);
     }
 
+    @Override
+    public List<Appointment> findApppontmentByStatus(String status) {
+        return appointmentRepository.findByStatus(status);
+    }
+
     @Transactional
     public Appointment updateAppointment(Appointment appointment) {
         Appointment appointment1 = appointmentRepository.findById(appointment.getAppointmentId()).orElse(null);

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 22, 2024 lúc 09:13 PM
+-- Thời gian đã tạo: Th10 23, 2024 lúc 04:09 PM
 -- Phiên bản máy phục vụ: 10.4.28-MariaDB
 -- Phiên bản PHP: 8.2.4
 
@@ -68,7 +68,11 @@ CREATE TABLE `appointment` (
 --
 
 INSERT INTO `appointment` (`appointment_id`, `available_datetime`, `doctor_id`, `package_id`, `patient_id`, `time_id`, `examination_day`, `note`, `status`) VALUES
-    (1, '2024-11-22', 'doctor1', 'tq20000', 'pt00001', '0000001', '2024-11-22 17:04:19.000000', 'Test note', 'Scheduled');
+                                                                                                                                                                (1, '2024-11-22', 'doctor1', 'tq20000', 'pt00001', '0000001', '2024-11-22 17:04:19.000000', 'Test note', 'Scheduled'),
+                                                                                                                                                                (2, '2024-11-23', 'doctor1', 'tq20000', 'pt00001', '0000001', '2024-11-23 18:38:42.000000', 'Test note', 'Scheduled'),
+                                                                                                                                                                (3, '2024-11-23', 'doctor2', 'tq20000', 'pt00001', '0000001', '2024-11-23 18:39:11.000000', 'Test note', 'Scheduled'),
+                                                                                                                                                                (4, '2024-11-23', 'doctor2', 'tq20000', 'pt00002', '0000001', '2024-11-23 18:39:44.000000', 'Test note', 'Scheduled'),
+                                                                                                                                                                (5, '2024-11-23', 'doctor2', 'tq20000', 'pt00002', '0000001', '2024-11-23 18:40:13.000000', 'Test note', 'Scheduled');
 
 -- --------------------------------------------------------
 
@@ -88,7 +92,8 @@ CREATE TABLE `checkup_packpage` (
 --
 
 INSERT INTO `checkup_packpage` (`amount`, `package_id`, `description`, `name`) VALUES
-                                                                                   (789, 'tq10000', 'Xét nghiệm gan (9 Chỉ số)\n- Định lượng Bilirubin Trực Tiếp\n- Định lượng Bilirubin Gián Tiếp\n- Định lượng Bilirubin Toàn Phần\n- Định lượng men gan ALAT\n- Định lượng men gan ASAT\n- Định lượng men gan Gamm', 'Gói khám tổng quát Sliver - 22 chỉ số'),
+                                                                                   (223, '0000026', 'xet nghiem j do', 'Goi kham'),
+                                                                                   (789, 'tq10000', '100.0', 'Xuong khop'),
                                                                                    (1650, 'tq20000', 'Xét nghiệm vi chất (6 Chỉ số)\r\n- Đo nồng độ Canxi (Ca) trong huyết thanh\r\n- Đo nồng độ Sắt (Fe)\r\n- Đo nồng độ 25-OH Vitamin D\r\n- Đo nồng độ Phốt Pho (P) trong huyết thanh\r\n- Đo nồng độ Ferritin\r\n- Đo nồng ', 'Gói khám tổng quát Gold - 28 chỉ số'),
                                                                                    (2401, 'tq30000', 'Xét nghiệm tiểu đường (3 Chỉ số)\r\n- Định lượng đường huyết đói - Glucose Fasting (Đường đói)\r\n- Đo mức đường huyết trung bình (HbA1c)\r\n- Ước Lượng Đường huyết Trung Bình (eAG)\r\nXét nghiệm thận (', 'Gói khám tổng quát Diamond - 36 chỉ số'),
                                                                                    (110, 'xnnm000', 'Nhóm máu A+ nếu có kháng nguyên A và kháng nguyên Rh.\r\nNhóm máu A- nếu có kháng nguyên A nhưng không có kháng nguyên Rh.\r\nNhóm máu B+ nếu có kháng nguyên B và kháng nguyên Rh.\r\nNhóm máu B- nếu có kháng nguyên B nhưn', 'Xét nghiệm nhóm máu (ABO + Rhesus) tự động'),
@@ -103,16 +108,27 @@ INSERT INTO `checkup_packpage` (`amount`, `package_id`, `description`, `name`) V
 --
 
 CREATE TABLE `medical_record` (
-                                  `patient_id` char(7) NOT NULL,
-                                  `description` text NOT NULL
+                                  `record_id` int(11) NOT NULL,
+                                  `patient_id` varchar(7) NOT NULL,
+                                  `description` tinytext NOT NULL,
+                                  `updated_at` datetime(6) DEFAULT NULL,
+                                  `doctor_id` varchar(7) NOT NULL,
+                                  `diagnosis` varchar(255) NOT NULL,
+                                  `treatment_plan` varchar(255) DEFAULT NULL,
+                                  `create_at` datetime(6) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `medical_record`
 --
 
-INSERT INTO `medical_record` (`patient_id`, `description`) VALUES
-    ('pt00001', 'Bệnh:...');
+INSERT INTO `medical_record` (`record_id`, `patient_id`, `description`, `updated_at`, `doctor_id`, `diagnosis`, `treatment_plan`, `create_at`) VALUES
+                                                                                                                                                   (2, 'pt00004', 'hết cú', '2024-11-23 22:08:06.000000', 'doctor1', 'Test', 'chôn', '2024-11-23 21:26:06.000000'),
+                                                                                                                                                   (3, 'pt00003', 'Test', NULL, 'doctor2', 'Test', 'Test', '2024-11-23 21:50:39.000000'),
+                                                                                                                                                   (4, 'pt00004', 'Test', NULL, 'doctor2', 'Test', 'Test', '2024-11-23 21:50:57.000000'),
+                                                                                                                                                   (5, 'pt00004', 'Test', NULL, 'doctor0', 'Test', 'Test', '2024-11-23 21:51:34.000000'),
+                                                                                                                                                   (6, 'pt00004', 'Test', NULL, 'doctor1', 'Test', 'Test', '2024-11-23 21:51:53.000000'),
+                                                                                                                                                   (7, 'pt00004', 'Test', NULL, 'doctor1', 'Test', 'Test', '2024-11-23 21:52:04.000000');
 
 -- --------------------------------------------------------
 
@@ -132,6 +148,7 @@ CREATE TABLE `role` (
 INSERT INTO `role` (`role_id`, `name`) VALUES
                                            ('admin00', 'Admin'),
                                            ('doctor0', 'Doctor'),
+                                           ('hihe', 'hihihi'),
                                            ('patient', 'Patient'),
                                            ('support', 'Supporter');
 
@@ -153,7 +170,8 @@ CREATE TABLE `time_frame` (
 
 INSERT INTO `time_frame` (`time_end`, `time_start`, `time_id`) VALUES
                                                                    ('11:30:00.000000', '08:00:00.000000', '0000001'),
-                                                                   ('18:00:00.000000', '13:30:00.000000', '0000002');
+                                                                   ('18:00:00.000000', '13:30:00.000000', '0000002'),
+                                                                   ('11:30:00.000000', '08:00:00.000000', '0213928');
 
 -- --------------------------------------------------------
 
@@ -215,6 +233,14 @@ ALTER TABLE `checkup_packpage`
     ADD PRIMARY KEY (`package_id`);
 
 --
+-- Chỉ mục cho bảng `medical_record`
+--
+ALTER TABLE `medical_record`
+    ADD PRIMARY KEY (`record_id`),
+  ADD KEY `FKl2821tupt5erv541fbu9g72if` (`patient_id`),
+  ADD KEY `FKs0rupgcbopy2qyop8kpb7u884` (`doctor_id`);
+
+--
 -- Chỉ mục cho bảng `role`
 --
 ALTER TABLE `role`
@@ -240,7 +266,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT cho bảng `appointment`
 --
 ALTER TABLE `appointment`
-    MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+    MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT cho bảng `medical_record`
+--
+ALTER TABLE `medical_record`
+    MODIFY `record_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -261,11 +293,14 @@ ALTER TABLE `appointment`
   ADD CONSTRAINT `FK6ri1gkarbuy1bw1fka0dvhugd` FOREIGN KEY (`package_id`) REFERENCES `checkup_packpage` (`package_id`),
   ADD CONSTRAINT `FKcv7wswx3l4hpqev324jncdjw0` FOREIGN KEY (`time_id`) REFERENCES `time_frame` (`time_id`),
   ADD CONSTRAINT `FKg90ck1kd0p4rbamwc22jd2oql` FOREIGN KEY (`patient_id`) REFERENCES `user` (`user_id`);
-COMMIT;
 
+--
+-- Các ràng buộc cho bảng `medical_record`
+--
 ALTER TABLE `medical_record`
-    ADD CONSTRAINT `FK6ri1gret578yd9sdbkedvhugd` FOREIGN KEY (`patient_id`) REFERENCES `user` (`user_id`),
-    ADD CONSTRAINT `FK6ri1gret570yd9sdbkedvhugd` FOREIGN KEY (`doctor_id`) REFERENCES `user` (`user_id`);
+    ADD CONSTRAINT `FKl2821tupt5erv541fbu9g72if` FOREIGN KEY (`patient_id`) REFERENCES `user` (`user_id`),
+  ADD CONSTRAINT `FKs0rupgcbopy2qyop8kpb7u884` FOREIGN KEY (`doctor_id`) REFERENCES `user` (`user_id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

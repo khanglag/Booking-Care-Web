@@ -55,6 +55,22 @@ public class UserServiceImpl implements UserService {
         return userRepository.findMaxUserId(str);
     }
 
+    @Override
+    public List<UserDTO> findAllDoctors() {
+        return userRepository.findAllDoctors().stream()
+                .map(user -> new UserDTO(
+                        user.getUserId(),
+                        user.getName(),
+                        user.getPhoneNumber(),
+                        user.getEmail(),
+                        user.getGender(),
+                        user.getAddress(),
+                        user.getDescription(),
+                        user.getIdentificationCard()
+                ))
+                .collect(Collectors.toList());
+    }
+
     public  User updateUser(String id, User updateUser) {
         User userExisting = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User không tồn tại ID"+id));
 

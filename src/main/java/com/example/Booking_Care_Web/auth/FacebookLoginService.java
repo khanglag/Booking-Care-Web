@@ -1,4 +1,4 @@
-package com.example.Booking_Care_Web.Services;
+package com.example.Booking_Care_Web.auth;
 
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -20,13 +20,11 @@ public class FacebookLoginService extends DefaultOAuth2UserService {
         String facebookId = (String) attributes.get("id");
         String name = (String) attributes.get("name");
         String email = (String) attributes.get("email");
-        Map<String, Object> picture = (Map<String, Object>) attributes.get("picture");
 
         // In ra thông tin để kiểm tra
         System.out.println("Facebook ID: " + facebookId);
         System.out.println("Name: " + name);
         System.out.println("Email: " + email);
-        System.out.println("Picture URL: " + picture.get("url"));
 
 
         return oAuth2User;

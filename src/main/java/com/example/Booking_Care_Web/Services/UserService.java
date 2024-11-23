@@ -14,5 +14,6 @@ public interface UserService {
    User findById(String id);
    List<UserDTO> findAll();
    String findMaxUserId(String str);
+   List<UserDTO> findAllDoctors();
 
 }

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,5 +20,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Query("SELECT u.userId FROM User u WHERE u.userId LIKE :str% ORDER BY u.userId DESC LIMIT 1")
     String findMaxUserId(String str);
+
+    @Query("SELECT u FROM User u WHERE u.userId LIKE 'doctor%'")
+    List<User> findAllDoctors();
 
 }

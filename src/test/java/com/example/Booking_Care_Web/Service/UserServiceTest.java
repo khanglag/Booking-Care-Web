@@ -1,5 +1,6 @@
 package com.example.Booking_Care_Web.Service;
 
+import com.example.Booking_Care_Web.Models.Dtos.UserDTO;
 import com.example.Booking_Care_Web.Models.Entities.User;
 import com.example.Booking_Care_Web.Repositories.UserRepository;
 import com.example.Booking_Care_Web.Services.UserServiceImpl;
@@ -8,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
+
+import java.util.List;
 
 @SpringBootTest
 @SpringJUnitWebConfig
@@ -47,7 +50,7 @@ public class UserServiceTest {
     }
     @Test
     public void testFindById(){
-        String id ="1234567";
+        String id ="doctor1";
         User user = userServiceImp.findById(id);
         System.out.println("==========================");
         System.out.println(user.toString());
@@ -71,6 +74,12 @@ public class UserServiceTest {
     @Test
     public void testFindMaxPatientId(){
         System.out.println(userServiceImp.createNewUserId("doctor"));
+    }
+
+    @Test
+    public void testFindAllDoctor(){
+        List<UserDTO> listUser = userServiceImp.findAllDoctors();
+        listUser.forEach(list -> System.out.println(list));
     }
 
 }

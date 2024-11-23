@@ -4,6 +4,8 @@ import com.example.Booking_Care_Web.Models.Entities.User;
 import com.example.Booking_Care_Web.Services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -27,17 +29,19 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         String email = oAuth2User.getAttribute("email");
         String name = oAuth2User.getAttribute("name");
-
         // Xử lý logic thêm, ví dụ: lưu người dùng vào cơ sở dữ liệu
-        User checkUser = userService.findByEmail(email);
-        if (checkUser == null) {
-            User user = new User();
-            user.setUserId(userService.createNewUserId("pt"));
-            user.setEmail(email);
-            user.setName(name);
+        if(email != null){
+            User checkUser = userService.findByEmail(email);
+            if (checkUser == null) {
+                User user = new User();
+                user.setUserId(userService.createNewUserId("pt"));
+                user.setEmail(email);
+                user.setName(name);
 
-            userService.saveUser(user);
+                userService.saveUser(user);
+            }
         }
+
         response.sendRedirect("/dashboard"); // Chuyển hướng đến trang dashboard
     }
 }

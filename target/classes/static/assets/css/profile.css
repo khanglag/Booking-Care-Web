@@ -30,9 +30,11 @@
     list-style: none;
     padding: 0;
     margin-left: 20px;
+    width: 65%;
 }
 .custom-list li {
     margin-bottom: 18px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 
@@ -40,6 +42,23 @@
     text-decoration: none;
     color: #333;
     margin-left: 7px;
+}
+.custom-list li:hover {
+    background-color: #e6f7ff; /* Màu nền xanh nhạt khi hover */
+    color: #007bff; /* Màu chữ xanh đậm */
+}
+
+.custom-list li i,
+.custom-list li a {
+    color: inherit; /* Đồng bộ màu với màu của li */
+    margin-right: 10px; /* Khoảng cách giữa icon và text */
+    text-decoration: none; /* Loại bỏ gạch dưới cho liên kết */
+    transition: color 0.3s; /* Hiệu ứng mượt khi đổi màu */
+}
+
+.custom-list li:hover i,
+.custom-list li:hover a {
+    color: #0056b3; /* Màu xanh đậm khi hover */
 }
 @keyframes shining {
     0% {

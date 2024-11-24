@@ -53,7 +53,10 @@ public class HomeController {
     public String medicalRecord() {
         return "medicalRecord";
     }
-
+    @RequestMapping("/profile/appointment")
+    public String appointment() {
+        return "appointment";
+    }
     @RequestMapping("/index")
     public String index() {
         return "index";
@@ -134,5 +137,15 @@ public class HomeController {
             return "signin";
         }
         return "medicalRecord"; // Trả về trang profile
+    }
+    @GetMapping("/profile/appointment")
+    public String appointmentPage(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username != null) {
+            model.addAttribute("user", username);
+        } else {
+            return "signin";
+        }
+        return "appointment"; // Trả về trang profile
     }
 }

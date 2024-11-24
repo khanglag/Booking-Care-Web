@@ -69,4 +69,5 @@ public class UserController {
         User savedUser = userServiceImpl.updateUser(id,user);
         return ResponseEntity.ok(savedUser);
     }
+
 }

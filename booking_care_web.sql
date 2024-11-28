@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 23, 2024 lúc 04:09 PM
--- Phiên bản máy phục vụ: 10.4.28-MariaDB
--- Phiên bản PHP: 8.2.4
+-- Thời gian đã tạo: Th10 28, 2024 lúc 06:08 PM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,10 +40,14 @@ CREATE TABLE `account` (
 
 INSERT INTO `account` (`account_id`, `role_id`, `password`, `username`) VALUES
                                                                             ('admin00', 'admin00', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Admin'),
-                                                                            ('doctor0', 'doctor0', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Minh Khang'),
-                                                                            ('doctor1', 'doctor0', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Xuan Hoang'),
-                                                                            ('doctor2', 'doctor0', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Hoang Nguyen'),
-                                                                            ('pt00001', 'patient', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'Nguyen Van A');
+                                                                            ('doctor0', 'doctor0', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'minhkhang'),
+                                                                            ('doctor1', 'doctor0', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'xuanhoang'),
+                                                                            ('doctor2', 'doctor0', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'nguyenhoang'),
+                                                                            ('pt00001', 'patient', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'nguyenvana'),
+                                                                            ('pt00002', 'patient', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'vanminh'),
+                                                                            ('pt00003', 'patient', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'nguyeny'),
+                                                                            ('pt00004', 'patient', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'lyduong'),
+                                                                            ('pt00005', 'patient', '$2a$10$CIYqQbKa086yZDbUkuPP2u1zmS9TZR9zz34iQ5xuJQTY0U..HvQKS', 'nguyenvy');
 
 -- --------------------------------------------------------
 
@@ -53,12 +57,12 @@ INSERT INTO `account` (`account_id`, `role_id`, `password`, `username`) VALUES
 
 CREATE TABLE `appointment` (
                                `appointment_id` int(11) NOT NULL,
-                               `available_datetime` date NOT NULL,
+                               `available_datetime` datetime NOT NULL,
                                `doctor_id` varchar(7) NOT NULL,
                                `package_id` varchar(7) DEFAULT NULL,
                                `patient_id` varchar(7) NOT NULL,
                                `time_id` varchar(7) NOT NULL,
-                               `examination_day` datetime(6) NOT NULL,
+                               `examination_day` date NOT NULL,
                                `note` tinytext DEFAULT NULL,
                                `status` tinytext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -68,11 +72,13 @@ CREATE TABLE `appointment` (
 --
 
 INSERT INTO `appointment` (`appointment_id`, `available_datetime`, `doctor_id`, `package_id`, `patient_id`, `time_id`, `examination_day`, `note`, `status`) VALUES
-                                                                                                                                                                (1, '2024-11-22', 'doctor1', 'tq20000', 'pt00001', '0000001', '2024-11-22 17:04:19.000000', 'Test note', 'Scheduled'),
-                                                                                                                                                                (2, '2024-11-23', 'doctor1', 'tq20000', 'pt00001', '0000001', '2024-11-23 18:38:42.000000', 'Test note', 'Scheduled'),
-                                                                                                                                                                (3, '2024-11-23', 'doctor2', 'tq20000', 'pt00001', '0000001', '2024-11-23 18:39:11.000000', 'Test note', 'Scheduled'),
-                                                                                                                                                                (4, '2024-11-23', 'doctor2', 'tq20000', 'pt00002', '0000001', '2024-11-23 18:39:44.000000', 'Test note', 'Scheduled'),
-                                                                                                                                                                (5, '2024-11-23', 'doctor2', 'tq20000', 'pt00002', '0000001', '2024-11-23 18:40:13.000000', 'Test note', 'Scheduled');
+                                                                                                                                                                (1, '2024-11-29 15:23:19', 'doctor1', 'xnut000', 'pt00001', '0000002', '2024-12-03', 'Phoi kho tho', 'CONFIRMED'),
+                                                                                                                                                                (2, '2024-11-26 20:54:35', 'doctor2', 'tq20000', 'pt00002', '0000001', '2024-12-02', 'Toi muon kiem tra tong quat luon mot the', 'SCHEDULED'),
+                                                                                                                                                                (3, '2024-11-28 18:00:18', 'doctor0', 'tq10000', 'pt00003', '0000001', '2024-12-07', 'khong co', 'CONFIRMED'),
+                                                                                                                                                                (4, '2024-11-28 18:02:08', 'doctor1', 'tq10000', 'pt00004', '0000002', '2024-12-05', 'da toi dao nay noi man ngua nhieu qua', 'CONFIRMED'),
+                                                                                                                                                                (5, '2024-11-26 06:03:14', 'doctor2', 'tq30000', 'pt00005', '0000001', '2024-12-02', 'kiem tra tong quat', 'SCHEDULED'),
+                                                                                                                                                                (6, '2024-11-28 16:04:47', 'doctor0', 'xnnm000', 'pt00003', '0000001', '2024-12-06', 'toi muon hieu ro ve nhom mau cua minh', 'CONFIRMED'),
+                                                                                                                                                                (7, '2024-11-26 12:06:29', 'doctor2', 'xnut002', 'pt00004', '0000002', '2024-12-05', 'khong co', 'SCHEDULED');
 
 -- --------------------------------------------------------
 
@@ -92,9 +98,8 @@ CREATE TABLE `checkup_packpage` (
 --
 
 INSERT INTO `checkup_packpage` (`amount`, `package_id`, `description`, `name`) VALUES
-                                                                                   (223, '0000026', 'xet nghiem j do', 'Goi kham'),
-                                                                                   (789, 'tq10000', '100.0', 'Xuong khop'),
-                                                                                   (1650, 'tq20000', 'Xét nghiệm vi chất (6 Chỉ số)\r\n- Đo nồng độ Canxi (Ca) trong huyết thanh\r\n- Đo nồng độ Sắt (Fe)\r\n- Đo nồng độ 25-OH Vitamin D\r\n- Đo nồng độ Phốt Pho (P) trong huyết thanh\r\n- Đo nồng độ Ferritin\r\n- Đo nồng ', 'Gói khám tổng quát Gold - 28 chỉ số'),
+                                                                                   (803, 'tq10000', '- Đo nồng độ Canxi (Ca) trong huyết thanh\n- Đo nồng độ Sắt (Fe)\n- Đo nồng độ 25-OH Vitamin D\n- Đo nồng độ Phốt Pho (P) trong huyết thanh\n- Đo nồng độ Ferritin\n- Đo nồng ', 'Gói khám tổng quát Sliver - 22 chỉ số'),
+                                                                                   (1650, 'tq20000', 'Xét nghiệm vi chất (6 Chỉ số)\n- Đo nồng độ Canxi (Ca) trong huyết thanh\n- Đo nồng độ Sắt (Fe)\n- Đo nồng độ 25-OH Vitamin D\n- Đo nồng độ Phốt Pho (P) trong huyết thanh\n- Đo nồng độ Ferritin\n- Đo nồng ', 'Gói khám tổng quát Gold - 28 chỉ số'),
                                                                                    (2401, 'tq30000', 'Xét nghiệm tiểu đường (3 Chỉ số)\r\n- Định lượng đường huyết đói - Glucose Fasting (Đường đói)\r\n- Đo mức đường huyết trung bình (HbA1c)\r\n- Ước Lượng Đường huyết Trung Bình (eAG)\r\nXét nghiệm thận (', 'Gói khám tổng quát Diamond - 36 chỉ số'),
                                                                                    (110, 'xnnm000', 'Nhóm máu A+ nếu có kháng nguyên A và kháng nguyên Rh.\r\nNhóm máu A- nếu có kháng nguyên A nhưng không có kháng nguyên Rh.\r\nNhóm máu B+ nếu có kháng nguyên B và kháng nguyên Rh.\r\nNhóm máu B- nếu có kháng nguyên B nhưn', 'Xét nghiệm nhóm máu (ABO + Rhesus) tự động'),
                                                                                    (1600, 'xnut000', 'Ung thư phổi (1 Chỉ số)\r\n- Dấu ấn ung thư Cyfra 21-1(Phổi)\r\nUng thư tuyến giáp (1 Chỉ số)\r\n- Đo nồng độ Thyroglobulin\r\nUng thư (2 Chỉ số)\r\n- Đo nồng độ Alpha-Fetoprotein (AFP)\r\n- Dấu ấn ung thư carcinoembryonic ', 'Gói khám cho Nam giới - Xét nghiệm Tầm soát ung thư toàn diện - 7 chỉ số'),
@@ -123,12 +128,11 @@ CREATE TABLE `medical_record` (
 --
 
 INSERT INTO `medical_record` (`record_id`, `patient_id`, `description`, `updated_at`, `doctor_id`, `diagnosis`, `treatment_plan`, `create_at`) VALUES
-                                                                                                                                                   (2, 'pt00004', 'hết cú', '2024-11-23 22:08:06.000000', 'doctor1', 'Test', 'chôn', '2024-11-23 21:26:06.000000'),
-                                                                                                                                                   (3, 'pt00003', 'Test', NULL, 'doctor2', 'Test', 'Test', '2024-11-23 21:50:39.000000'),
-                                                                                                                                                   (4, 'pt00004', 'Test', NULL, 'doctor2', 'Test', 'Test', '2024-11-23 21:50:57.000000'),
-                                                                                                                                                   (5, 'pt00004', 'Test', NULL, 'doctor0', 'Test', 'Test', '2024-11-23 21:51:34.000000'),
-                                                                                                                                                   (6, 'pt00004', 'Test', NULL, 'doctor1', 'Test', 'Test', '2024-11-23 21:51:53.000000'),
-                                                                                                                                                   (7, 'pt00004', 'Test', NULL, 'doctor1', 'Test', 'Test', '2024-11-23 21:52:04.000000');
+                                                                                                                                                   (1, 'pt00001', 'dau oc hay dau nhuc, hay chong mat', '2024-11-28 09:34:38.000000', 'doctor0', 'Dau oc cang thang, met moi qua muc, tuan hoan mau nao khong tot', 'Kiem tra bo phan nao va cac day than kinh o nao', '2024-11-28 08:29:27.000000'),
+                                                                                                                                                   (2, 'pt00002', 'Di ve sinh ra mau, hay kho chiu tai bung', '2024-11-28 10:42:59.000000', 'doctor2', 'Benh soi than', 'Xet nghiem than', '2024-11-28 10:37:38.000000'),
+                                                                                                                                                   (3, 'pt00003', 'Dao nay da bong sam vang, hay kho chiu, rung toc nhieu', '2024-11-28 09:03:38.000000', 'doctor0', 'Gan co nguy co bi viem', 'Xet nghiem gan', '2024-11-28 08:29:27.000000'),
+                                                                                                                                                   (4, 'pt00004', 'Da xuat hien nhung vet san sui gay ngua', '2024-11-28 11:34:38.000000', 'doctor1', 'Viem da co dia', 'Xet nghiem Da lieu', '2024-11-28 11:29:27.000000'),
+                                                                                                                                                   (5, 'pt00005', 'Toi thoi gian kiem tra dinh ki hang nam', '2024-11-28 14:45:01.000000', 'doctor2', 'Kiem tra dinh ki', 'Xet nghiem tong quat', '2024-11-28 14:29:27.000000');
 
 -- --------------------------------------------------------
 
@@ -148,7 +152,6 @@ CREATE TABLE `role` (
 INSERT INTO `role` (`role_id`, `name`) VALUES
                                            ('admin00', 'Admin'),
                                            ('doctor0', 'Doctor'),
-                                           ('hihe', 'hihihi'),
                                            ('patient', 'Patient'),
                                            ('support', 'Supporter');
 
@@ -170,8 +173,7 @@ CREATE TABLE `time_frame` (
 
 INSERT INTO `time_frame` (`time_end`, `time_start`, `time_id`) VALUES
                                                                    ('11:30:00.000000', '08:00:00.000000', '0000001'),
-                                                                   ('18:00:00.000000', '13:30:00.000000', '0000002'),
-                                                                   ('11:30:00.000000', '08:00:00.000000', '0213928');
+                                                                   ('18:00:00.000000', '13:30:00.000000', '0000002');
 
 -- --------------------------------------------------------
 
@@ -196,14 +198,14 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `phone_number`, `identification_card`, `address`, `description`, `email`, `gender`, `name`) VALUES
                                                                                                                                ('admin00', '0368779041', '', '1000 An Duong Vuong', '', 'Admin@gmai.com', 'female', 'Admin'),
-                                                                                                                               ('doctor0', '0865674317', '123456789100', 'Binh Tri Dong, Binh Tan', 'KHOA NOI', 'khangminh.do2003@gmail.com', 'male', 'Do Minh Khang'),
+                                                                                                                               ('doctor0', '0865674317', '123456789100', 'Binh Tri Dong, Binh Tan', 'KHOA NOI', 'khangminh.do203@gmail.com', 'male', 'Do Minh Khang'),
                                                                                                                                ('doctor1', '0336065760', '123456789111', 'Duong Ba Trac, Quan 8', 'KHOA NGOAI', 'vodinhxuanhoang@gmail.com', 'male', 'Vo Dinh Xuan Hoang'),
                                                                                                                                ('doctor2', '0392208279', '123456789101', 'Hoc Mon', 'DA KHOA', 'ankhang18122003@gmail.com', 'male', 'Vu Hoang Nguyen'),
-                                                                                                                               ('pt00001', '0368779041', '', 'quan 8', '', 'nguyenvana@gmail.com', 'male', 'Nguyen Van A'),
-                                                                                                                               ('pt00002', '1234567890', 'ID123456', '123 Street', 'Test description', 'khangminh.do23@gmail.com', 'Male', 'John Doe'),
-                                                                                                                               ('pt00003', '1234567890', 'ID123456', '123 Street', 'Test description', 'khangminh.do2@gmail.com', 'Male', 'John Doe'),
-                                                                                                                               ('pt00004', NULL, NULL, NULL, NULL, 'khangdo14042003@gmail.com', NULL, 'Minh Khang Đỗ'),
-                                                                                                                               ('sp00001', '0368779041', '', '148 Luu Huu Phuoc', '', 'nguyenanhthu15082003@gmail.com', 'female', 'Nguyen Thi Anh Thu');
+                                                                                                                               ('pt00001', '0368779041', '123456789102', 'Quan 8', 'Benh ve than kinh\r\n', 'nguyenvana@gmail.com', 'male', 'Nguyen Van A'),
+                                                                                                                               ('pt00002', '1234567890', '123456789103', 'Go Vap', 'Benh than', 'khangminh.do23@gmail.com', 'male', 'Le Van Minh'),
+                                                                                                                               ('pt00003', '0336065760', '123456789104', 'Tan Binh', 'Benh gan', 'nguyeny21@gmail.com', 'female', 'Nguyen Thi Y'),
+                                                                                                                               ('pt00004', '0356728762', '123456789105', 'Quan 5', 'Be da lieu', 'vanminh3@gmail.com', 'male', 'Ly Duong'),
+                                                                                                                               ('pt00005', '0865674317', '123456789106', 'Binh Tan', 'Kiem tra tong quat dinh ki', 'nguyenthivy@gmail.com', 'female', 'Nguyen Thi Vy');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -266,7 +268,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT cho bảng `appointment`
 --
 ALTER TABLE `appointment`
-    MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+    MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT cho bảng `medical_record`

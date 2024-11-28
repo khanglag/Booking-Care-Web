@@ -18,7 +18,7 @@ public class Account {
     @Column(name = "account_id", nullable = false, length = 7)
     private String accountId;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "account_id",referencedColumnName = "user_id", nullable = false)
     private User user;
 

@@ -42,6 +42,8 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
 
+        System.out.println(oAuth2User);
+        System.out.println(oauthToken);
         String accessToken = getAccessToken(oauthToken);
         String provider = oauthToken.getAuthorizedClientRegistrationId();
         String email = oAuth2User.getAttribute("email");

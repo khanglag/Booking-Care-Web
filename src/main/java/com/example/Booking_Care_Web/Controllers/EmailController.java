@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.SecureRandom;
-import java.util.Optional;
 
 @RestController
 public class EmailController {
@@ -61,5 +60,16 @@ public class EmailController {
         return sb.toString();
     }
 
-
+    @GetMapping("/send-emailComponent")
+    public String sendEmail(@RequestParam String toEmail, @RequestParam String patientName,
+                            @RequestParam String appointmentDate, @RequestParam String appointmentTime,
+                            @RequestParam String doctorName, @RequestParam String location,
+                            @RequestParam String phoneNumber) {
+        try {
+            emailService.sendAppointmentConfirmationEmail(toEmail,patientName,appointmentDate,appointmentTime,doctorName,location,phoneNumber);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+        return "Email sent successfully to " + toEmail;
+    }
 }

@@ -23,10 +23,10 @@ public class AppointmentController {
     @Autowired
     private AppointmentServiceImpl appointmentService;
 
-    @GetMapping("/api/weekly-appointments-chart")
-    public List<Map<String, Object>> getWeeklyAppointmentsChart() {
-        return appointmentService.getAppointmentsByWeek();
-    }
+//    @GetMapping("/api/weekly-appointments-chart")
+//    public List<Map<String, Object>> getWeeklyAppointmentsChart() {
+//        return appointmentService.getAppointmentsByWeek();
+//    }
 
     @GetMapping("/weekly-appointments-chart")
     public String goWeekly(Model model) {
@@ -105,8 +105,4 @@ public class AppointmentController {
         return "appointmentsByDate"; // Tên view JSP hoặc Thymeleaf
     }
 
-    @GetMapping("/appointments")
-    public String goAppointments() {
-        return "appointmentsByDate";
-    }
 }

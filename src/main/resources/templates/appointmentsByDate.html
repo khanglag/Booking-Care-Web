@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thống kê số lượng cuộc hẹn theo ngày</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="container">
+    <h2 align="center">Thống kê số lượng cuộc hẹn từ <span th:text="${startDate}"></span> đến <span th:text="${endDate}"></span></h2>
+    <div>
+        <canvas id="appointmentChart" width="400" height="200"></canvas>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    $(document).ready(function() {
+        // Lấy dữ liệu từ server (được Thymeleaf render)
+        var dataList = /*[[${appointmentsByDate}]]*/ [];
+
+        // Lấy danh sách ngày và số cuộc hẹn
+        var labels = dataList.map(data => data.date);  // Danh sách ngày
+        var dataPoints = dataList.map(data => data.appointmentCount);  // Số cuộc hẹn
+
+        // Vẽ biểu đồ Line với Chart.js
+        var ctx = document.getElementById('appointmentChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Số Cuộc Hẹn',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    data: dataPoints,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

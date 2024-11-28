@@ -42,7 +42,19 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Nếu cần tắt CSRF, sử dụng cú pháp này
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/signin", "/register","/assets/**","/index","/reset-password").permitAll() // Cấu hình các URL không yêu cầu xác thực
+                        .requestMatchers("/signin",
+                                "/register",
+                                "/assets/**",
+                                "/index",
+                                "/reset-password",
+                                "/weekly-appointments-chart",
+                                "/api/weekly-appointments-chart",
+                                "/chart",
+                                "/api/appointments-by-date",
+                                "/appointments-by-year/**",
+                                "/appointmentByYear/**",
+                                "/appointmentByYear"
+                        ).permitAll() // Cấu hình các URL không yêu cầu xác thực
                         .anyRequest().authenticated() // Tất cả các URL khác đều yêu cầu đăng nhập
                 )
                 .formLogin(form -> form

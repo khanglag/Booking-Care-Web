@@ -45,9 +45,9 @@ public class AppointmentServiceTest {
         Appointment appointment = Appointment.builder()
                 .patient(patient)
                 .doctor(doctor)  // Cần thay thế bằng giá trị thực
-                .availableDatetime(LocalDate.now())
+                .availableDatetime(LocalDateTime.now())
                 .packageField(checkupPackpage)
-                .examinationDay(new Date())
+                .examinationDay(LocalDate.now())
                 .time(timeFrame)
                 .note("Test note")
                 .status("Scheduled")
@@ -98,9 +98,9 @@ public class AppointmentServiceTest {
         appointment.setAppointmentId(1);
         appointment.setPatient(patient);
         appointment.setDoctor(doctor);
-        appointment.setAvailableDatetime(LocalDate.now());
+        appointment.setAvailableDatetime(LocalDateTime.now());
         appointment.setPackageField(checkupPackpage);
-        appointment.setExaminationDay(new Date());
+        appointment.setExaminationDay(LocalDate.now());
         appointment.setTime(timeFrame);
         appointment.setNote("Test");
         appointment.setStatus("DA DUYET");

@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -34,7 +35,7 @@ public class Appointment {
 
     @NotNull
     @Column(name = "available_datetime", nullable = false)
-    private LocalDate availableDatetime;
+    private LocalDateTime availableDatetime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "package_id", referencedColumnName = "package_id", nullable = true)
@@ -42,7 +43,7 @@ public class Appointment {
 
     @NotNull
     @Column(name = "examination_day", nullable = false)
-    private Date examinationDay;
+    private LocalDate examinationDay;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

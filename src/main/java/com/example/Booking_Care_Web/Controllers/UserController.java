@@ -1,7 +1,10 @@
 package com.example.Booking_Care_Web.Controllers;
 
 import com.example.Booking_Care_Web.Models.Dtos.UserDTO;
+import com.example.Booking_Care_Web.Models.Entities.Account;
+import com.example.Booking_Care_Web.Models.Entities.Role;
 import com.example.Booking_Care_Web.Models.Entities.User;
+import com.example.Booking_Care_Web.Services.AccountServiceImp;
 import com.example.Booking_Care_Web.Services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,10 @@ public class UserController {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
+
+
+    @Autowired
+    private AccountServiceImp accountServiceImpl;
 
     @GetMapping("/users")
     public List<UserDTO> findAll() {
@@ -69,5 +76,28 @@ public class UserController {
         User savedUser = userServiceImpl.updateUser(id,user);
         return ResponseEntity.ok(savedUser);
     }
+    @PostMapping(value = "register",consumes = "application/json")
+    public Account register(@RequestBody User user) {
+        Role role = new Role();
+        role.setRoleId("patient");
 
+        String userID =   userServiceImpl.createNewUserId("pt");
+        user.setUserId(userID);
+
+        Account account = new Account();
+        account.setAccountId(userID);
+        account.setUsername(user.getAccount().getUsername());
+        account.setPassword(user.getAccount().getPassword());
+        account.setRole(role);
+        user.setAccount(account);
+        userServiceImpl.saveUser(user);
+
+//        System.out.println("=================================");
+//        System.out.println("===========user " + user);
+//        System.out.println("===========account " + user.getAccount().getUsername());
+//        System.out.println("===========pass " + user.getAccount().getPassword());
+//        System.out.println("===========account " + account);
+
+        return   accountServiceImpl.saveAccount(account);
+    }
 }

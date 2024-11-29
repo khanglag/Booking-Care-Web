@@ -1,7 +1,14 @@
 package com.example.Booking_Care_Web.Controllers;
 
+import com.example.Booking_Care_Web.Models.Dtos.UserDTO;
+import com.example.Booking_Care_Web.Models.Entities.Account;
+
+import com.example.Booking_Care_Web.Services.AccountService;
+import com.example.Booking_Care_Web.Services.UserService;
+import com.example.Booking_Care_Web.Services.UserServiceImpl;
 import jakarta.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
@@ -19,8 +26,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class HomeController {
+
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private AccountService accountService;
+    @Autowired
+    private UserServiceImpl userServiceImpl;
 
     @RequestMapping("/signin")
     public String signin() {
@@ -31,21 +48,6 @@ public class HomeController {
     public String register() {
         return "register";
     }
-
-    // @RequestMapping("/dashboard")
-    // public String dashboard(@AuthenticationPrincipal OAuth2User oAuth2User, Model
-    // model) {
-    // if (oAuth2User != null) {
-    // String email = oAuth2User.getAttribute("email");
-    // String name = oAuth2User.getAttribute("name");
-    // String gender = oAuth2User.getAttribute("gender");
-    // // Đưa thông tin vào model để hiển thị
-    // model.addAttribute("name", name);
-    // model.addAttribute("email", email);
-    // model.addAttribute("gender", gender);
-    // }
-    // return "dashboard";
-    // }
 
     @RequestMapping("/dashboard")
     public String dashboard(HttpSession session, Authentication authentication, Model model) {
@@ -63,10 +65,7 @@ public class HomeController {
         return "dashboard";
     }
 
-    @RequestMapping("/booking")
-    public String booking() {
-        return "booking";
-    }
+
 
     @RequestMapping("/instruct")
     public String instruct() {
@@ -108,6 +107,7 @@ public class HomeController {
         return "resetpassword";
     }
 
+    //Chỗ sửa username trong account thành name trong user
     @GetMapping("/index")
     public String checkLogin(Model model, Authentication authentication, HttpSession session) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -118,29 +118,11 @@ public class HomeController {
             session.setAttribute("authentication", authentication);
             model.addAttribute("user", username);
         }
+        List<UserDTO> doctors = userServiceImpl.findAllDoctors();
+        List<List<UserDTO>> doctorGroups = partition(doctors, 4);
+        model.addAttribute("doctorGroups", doctorGroups);
+        System.out.println(doctorGroups);
         return "index";
-    }
-
-    @GetMapping("/instruct")
-    public String instructPage(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username != null) {
-            model.addAttribute("user", username);
-        } else {
-            return "signin";
-        }
-        return "instruct"; // Trả về trang profile
-    }
-
-    @GetMapping("/contact")
-    public String contactPage(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username != null) {
-            model.addAttribute("user", username);
-        } else {
-            return "signin";
-        }
-        return "contact"; // Trả về trang profile
     }
 
     @GetMapping("/")
@@ -151,7 +133,39 @@ public class HomeController {
         } else {
             return "signin";
         }
-        return "index"; // Trả về trang profile
+        List<UserDTO> doctors = userServiceImpl.findAllDoctors();
+        List<List<UserDTO>> doctorGroups = partition(doctors, 4);
+        model.addAttribute("doctorGroups", doctorGroups);
+        return "index";
+    }
+
+    private List<List<UserDTO>> partition(List<UserDTO> list, int size) {
+        List<List<UserDTO>> partitions = new ArrayList<>();
+        for (int i = 0; i < list.size(); i += size) {
+            partitions.add(list.subList(i, Math.min(i + size, list.size())));
+        }
+        return partitions;
+    }
+    @GetMapping("/instruct")
+    public String instructPage(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username != null) {
+            model.addAttribute("user", username);
+        } else {
+            return "signin";
+        }
+        return "instruct";
+    }
+
+    @GetMapping("/contact")
+    public String contactPage(Model model, HttpSession session) {
+        String username = (String) session.getAttribute("username");
+        if (username != null) {
+            model.addAttribute("user", username);
+        } else {
+            return "signin";
+        }
+        return "contact";
     }
 
     @GetMapping("/profile")
@@ -162,40 +176,10 @@ public class HomeController {
         } else {
             return "signin";
         }
-        return "profile"; // Trả về trang profile
-    }
-
-    @GetMapping("/profile/individual")
-    public String individualPage(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username != null) {
-            model.addAttribute("user", username);
-        } else {
-            return "signin";
-        }
-        return "individual"; // Trả về trang profile
-    }
-
-    @GetMapping("/profile/medicalRecord")
-    public String medicalRecordPage(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username != null) {
-            model.addAttribute("user", username);
-        } else {
-            return "signin";
-        }
-        return "medicalRecord"; // Trả về trang profile
-    }
-
-    @GetMapping("/profile/appointment")
-    public String appointmentPage(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username != null) {
-            model.addAttribute("user", username);
-        } else {
-            return "signin";
-        }
-        return "appointment"; // Trả về trang profile
+        Account account = accountService.findByUsername(username);
+        com.example.Booking_Care_Web.Models.Entities.User user = account.getUser();
+        model.addAttribute("nameOfUser",user.getName());
+        return "profile";
     }
 
 }

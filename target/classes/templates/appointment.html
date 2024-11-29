@@ -8,6 +8,7 @@
   <!-- css -->
   <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
   <link rel="stylesheet" th:href="@{/assets/css/profile.css}" />
+  <link rel="stylesheet" th:href="@{/assets/css/appointment.css}" />
   <!-- Bootstrap CSS -->
   <link
           rel="stylesheet"
@@ -26,7 +27,7 @@
 </head>
 <body>
 <header th:replace="index :: header"></header>
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-5 mb-5">
   <div class="row mt-5">
     <div class="col-4" th:replace="profile :: menu"></div>
     <div class="col-8">
@@ -41,7 +42,61 @@
           </div>
         </div>
         <div class="content_post">
-
+          <div th:if="${appointments.size() > 0}">
+            <div th:each="appointment : ${appointments}" class="appointment-info">
+              <div class="row">
+                <div class="col-4">
+                  <label>Ngày đặt lịch khám</label>
+                </div>
+                <div class="col-8">
+                  <span th:text="${appointment.availableDatetime}" style="color: #67a508; font-weight: bold"></span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <label>Bác sĩ</label>
+                </div>
+                <div class="col-8">
+                  <span th:text="${appointment.doctorAppointment}"></span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <label>Gói khám đã chọn</label>
+                </div>
+                <div class="col-8">
+                  <span th:text="${appointment.packageField}"></span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <label>Ghi chú cho bác sĩ</label>
+                </div>
+                <div class="col-8">
+                  <span th:text="${appointment.note}"></span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <label>Ngày đi khám</label>
+                </div>
+                <div class="col-8">
+                  <span style="color: #67a508; font-weight: bold" th:text="${appointment.examinationDay != null ? #strings.concat(#dates.format(appointment.examinationDay, 'dd-MM-yyyy'), ' vào lúc ', #dates.format(appointment.examinationDay, 'HH:mm:ss')) : 'N/A'}"></span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <label>Trạng thái</label>
+                </div>
+                <div class="col-8">
+                  <span th:text="${appointment.status}" style="color: #25a7d2; font-weight: bold"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div th:if="${appointments.size() == 0}">
+            <p style="font-size: 20px; color: red;">Bạn chưa đặt lịch khám</p>
+          </div>
         </div>
       </div>
     </div>

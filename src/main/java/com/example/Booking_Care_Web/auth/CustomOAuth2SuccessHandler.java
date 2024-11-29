@@ -38,6 +38,6 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 
             userService.saveUser(user);
         }
-        response.sendRedirect("/dashboard"); // Chuyển hướng đến trang dashboard
+        response.sendRedirect("/index"); // Chuyển hướng đến trang dashboard
     }
 }

@@ -106,8 +106,9 @@ public class AppointmentController {
     }
 
 
-    @GetMapping("/VNPay")
-    public String VNPay() {
+    @GetMapping("/VNPay/{total}")
+    public String VNPay(ModelMap modelMap,@PathVariable String total) {
+        modelMap.addAttribute("total", total);
         return "orderCreate";
     }
 

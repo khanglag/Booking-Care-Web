@@ -43,12 +43,12 @@ public class EmailService {
         mailSender.send(mimeMessage);
     }
 
-    public void sendAppointmentConfirmationEmail(String toEmail, String patientName, String appointmentDate, String appointmentTime, String doctorName, String location, String phoneNumber) throws MessagingException {
+    public void sendAppointmentConfirmationEmail(String toEmail, String patientName, String appointmentDate, String doctorName, String phoneNumber) throws MessagingException {
         // Tạo context để truyền dữ liệu vào template
         Context context = new Context();
         context.setVariable("patientName", patientName);
         context.setVariable("appointmentDate", appointmentDate);
-        context.setVariable("appointmentTime", appointmentTime);
+
         context.setVariable("doctorName", doctorName);
         context.setVariable("phoneNumber", phoneNumber);
 

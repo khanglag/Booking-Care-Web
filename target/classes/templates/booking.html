@@ -92,7 +92,7 @@
                       <p style="font-weight: bold; font-size: 16px;" th:text="${package.name}"></p>
                       <p th:text="'Mô tả: ' + ${package.description}" style="font-weight: bold"></p>
                       <p th:text="'Giá tiền: ' + ${package.amount} + ' VND'" style="font-weight: bold"></p>
-                      <button class="btn btn-primary" onclick="choosePackage([[${package.package_id}]])" >Chọn gói</button>
+                      <button class="btn btn-primary"    th:attr="data-package-id=${package.package_id}"  onclick="choosePackage(this)">Chọn gói</button>
                     </div>
                   </div>
                 </div>
@@ -101,25 +101,41 @@
                     Ghi chú
                   </p>
                    <textarea placeholder="Ghi chú dấu hiệu, triệu chứng bệnh" class="note">
-
-                </textarea>
+                   </textarea>
                 </div>
-
               </div>
-              <button class="btn btn-primary btn-booking mt-3" >Đặt khám</button>
+              <button class="btn btn-primary btn-booking mt-3" onclick="booking()">Đặt khám</button>
             </div>
           </div>
           <div>
-            <p>available_datetime: <span class="available_datetime"></span></p>
-            <p>doctor_id: <span th:text="${doctor.name}" class="doctor_id"></span></p>
-            <p>package_id: <span class="package_id"></span></p>
-            <p>patient_id: <span class="patient_id"></span></p>
-            <p>time_id: <span class="time_id"></span></p>
-            <p>examination_day: <span class="examination_day"></span></p>
-            <p>note: <span class="note"></span></p>
-            <p>status: <span class="status"></span></p>
+            <p class="d-none">available_datetime: <span class="available_datetime"></span></p>
+            <p class="d-none">doctor_id: <span th:text="${doctor.userId}" class="doctor_id"></span></p>
+            <p class="d-none">package_id: <span class="package_id"></span></p>
+            <p class="d-none">patient_id: <span th:text="${user.userId}" class="patient_id"></span></p>
+            <p class="d-none">time_id: <span class="time_id"></span></p>
+            <p class="d-none">examination_day: <span class="examination_day"></span></p>
+            <p class="d-none">note: <span class="d_note"></span></p>
+          </div>
+
+        </div>
+        <!-- Modal Bootstrap -->
+        <div class="modal fade" id="bookingSuccessModal" tabindex="-1" aria-labelledby="bookingSuccessModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header" style="border-bottom: none !important;">
+                <h5 class="modal-title text-success" id="bookingSuccessModalLabel" style="font-weight: bold; text-align: center">Đặt khám thành công!</h5>
+                <button type="button" class="btn-close btn btn-danger"  data-dismiss="modal" aria-label="Close">X</button>
+              </div>
+              <div class="modal-body">
+                <p>Yêu cầu đặt lịch khám của bạn đã được gửi thành công. Hãy kiểm tra email</p>
+              </div>
+              <div class="modal-footer" style="border-top: none !important;">
+                <button type="button" class="btn btn-primary"  data-dismiss="modal">OK</button>
+              </div>
+            </div>
           </div>
         </div>
+
         <footer th:replace="index :: footer"></footer>
         <script th:src="@{/assets/js/booking.js}"></script>
         <script

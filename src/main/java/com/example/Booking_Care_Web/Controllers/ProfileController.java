@@ -25,6 +25,8 @@ public class ProfileController {
     private AccountService accountService;
 
     @Autowired
+    private AccountServiceImp accountServiceImp;
+    @Autowired
     private MedicalRecordService recordService;
 
     @Autowired
@@ -38,14 +40,14 @@ public class ProfileController {
 
     @GetMapping("/profile/individual")
     public String individualPage(org.springframework.ui.Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username != null) {
-            model.addAttribute("user", username);
+        String userID = (String) session.getAttribute("userID");
+        com.example.Booking_Care_Web.Models.Entities.User user = userServiceImpl.findById(userID);
+        if (user != null) {
+            model.addAttribute("user", user);
         } else {
             return "signin";
         }
-        Account account = accountService.findByUsername(username);
-        User user = account.getUser();
+
         model.addAttribute("userInfo",user);
         model.addAttribute("nameOfUser",user.getName());
         return "individual";
@@ -61,21 +63,21 @@ public class ProfileController {
     }
     @GetMapping("/profile/medicalRecord")
     public String medicalRecordPage(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username != null) {
-            model.addAttribute("user", username);
+        String userID = (String) session.getAttribute("userID");
+        com.example.Booking_Care_Web.Models.Entities.User user = userServiceImpl.findById(userID);
+        if (user != null) {
+            model.addAttribute("user", user);
         } else {
             return "signin";
         }
-
-        Account account = accountService.findByUsername(username);
-        com.example.Booking_Care_Web.Models.Entities.User userPT = account.getUser();
+        com.example.Booking_Care_Web.Models.Entities.User userPT ;
         com.example.Booking_Care_Web.Models.Entities.User userDT ;
-        List<MedicalRecord> medicalRecords = recordService.findMedicalRecordsByPatientId(account.getAccountId());
+        List<MedicalRecord> medicalRecords = recordService.findMedicalRecordsByPatientId(userID);
         List<Map<String, Object>> medicalRecordData = new ArrayList<>();
         if (medicalRecords != null && !medicalRecords.isEmpty()) {
             for (MedicalRecord record : medicalRecords) {
                 Map<String, Object> recordData = new HashMap<>();
+                userPT  = userService.findById(userID);
                 userDT   = userService.findById(record.getDoctorId());
                 recordData.put("id", record.getId());
                 recordData.put("patientMedicalRecords",userPT.getName());
@@ -89,28 +91,30 @@ public class ProfileController {
             }
         }
         model.addAttribute("medicalRecords", medicalRecordData);
-        model.addAttribute("nameOfUser", userPT.getName());
+        model.addAttribute("nameOfUser", user.getName());
         return "medicalRecord";
     }
     @GetMapping("/profile/appointment")
     public String appointmentPage(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username != null) {
-            model.addAttribute("user", username);
+        String userID = (String) session.getAttribute("userID");
+        com.example.Booking_Care_Web.Models.Entities.User user = userServiceImpl.findById(userID);
+        if (user != null) {
+            model.addAttribute("user", user);
         } else {
             return "signin";
         }
-        Account account = accountService.findByUsername(username);
-        com.example.Booking_Care_Web.Models.Entities.User userPT = account.getUser();
+
+        com.example.Booking_Care_Web.Models.Entities.User userPT ;
         com.example.Booking_Care_Web.Models.Entities.User userDT ;
         CheckupPackpage checkupPackpage;
-        List<Appointment> appointments= appointmentService.findAppointmentByPatientId(account.getAccountId());
+        List<Appointment> appointments= appointmentService.findAppointmentByPatientId(userID);
         List<Map<String, Object>> appointmentData = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         if (appointments != null && !appointments.isEmpty()) {
             for (Appointment appointment : appointments) {
                 Map<String, Object> apmData = new HashMap<>();
+                userPT = userService.findById(userID);
                 userDT   = userService.findById(appointment.getDoctorId());
                 checkupPackpage = checkupPackpageServiceImpl.findById(appointment.getPackageId());
                 String availableDatetime = appointment.getAvailableDatetime().format(formatter);
@@ -127,7 +131,8 @@ public class ProfileController {
             }
         }
         model.addAttribute("appointments", appointmentData);
-        model.addAttribute("nameOfUser", userPT.getName());
+        model.addAttribute("nameOfUser", user.getName());
         return "appointment";
     }
+
 }

@@ -113,23 +113,37 @@ public class HomeController {
         authentication = SecurityContextHolder.getContext().getAuthentication();
         Object principal = authentication.getPrincipal();
         if (principal instanceof UserDetails) {
-            String username = ((User) principal).getUsername();
-            session.setAttribute("username", username);
+            User user = (User) principal;
+            String username = user.getUsername();
+            Account account = accountService.findByUsername(username);
+            com.example.Booking_Care_Web.Models.Entities.User user_normal = userServiceImpl.findById(account.getAccountId());
+            session.setAttribute("user", user_normal);
+            session.setAttribute("userID", user_normal.getUserId());
             session.setAttribute("authentication", authentication);
-            model.addAttribute("user", username);
+            model.addAttribute("user", user_normal);
+
+        }
+        if (principal instanceof OAuth2User) {
+            OAuth2User oauth2User = (OAuth2User) principal;
+            String email = (String) oauth2User.getAttributes().get("email");
+            com.example.Booking_Care_Web.Models.Entities.User user_gg = userServiceImpl.findByEmail(email);
+            model.addAttribute("user", user_gg);
+            session.setAttribute("user", user_gg);
+            session.setAttribute("userID", user_gg.getUserId());
         }
         List<UserDTO> doctors = userServiceImpl.findAllDoctors();
         List<List<UserDTO>> doctorGroups = partition(doctors, 4);
         model.addAttribute("doctorGroups", doctorGroups);
-        System.out.println(doctorGroups);
+
         return "index";
     }
 
     @GetMapping("/")
     public String indexPage(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username != null) {
-            model.addAttribute("user", username);
+        String userID = (String) session.getAttribute("userID");
+        com.example.Booking_Care_Web.Models.Entities.User user = userServiceImpl.findById(userID);
+        if (user != null) {
+            model.addAttribute("user", user);
         } else {
             return "signin";
         }
@@ -148,9 +162,10 @@ public class HomeController {
     }
     @GetMapping("/instruct")
     public String instructPage(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username != null) {
-            model.addAttribute("user", username);
+        String userID = (String) session.getAttribute("userID");
+        com.example.Booking_Care_Web.Models.Entities.User user = userServiceImpl.findById(userID);
+        if (user != null) {
+            model.addAttribute("user", user);
         } else {
             return "signin";
         }
@@ -159,9 +174,10 @@ public class HomeController {
 
     @GetMapping("/contact")
     public String contactPage(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username != null) {
-            model.addAttribute("user", username);
+        String userID = (String) session.getAttribute("userID");
+        com.example.Booking_Care_Web.Models.Entities.User user = userServiceImpl.findById(userID);
+        if (user != null) {
+            model.addAttribute("user", user);
         } else {
             return "signin";
         }
@@ -170,14 +186,13 @@ public class HomeController {
 
     @GetMapping("/profile")
     public String profilePage(Model model, HttpSession session) {
-        String username = (String) session.getAttribute("username");
-        if (username != null) {
-            model.addAttribute("user", username);
+        String userID = (String) session.getAttribute("userID");
+        com.example.Booking_Care_Web.Models.Entities.User user = userServiceImpl.findById(userID);
+        if (user != null) {
+            model.addAttribute("user", user);
         } else {
             return "signin";
         }
-        Account account = accountService.findByUsername(username);
-        com.example.Booking_Care_Web.Models.Entities.User user = account.getUser();
         model.addAttribute("nameOfUser",user.getName());
         return "profile";
     }

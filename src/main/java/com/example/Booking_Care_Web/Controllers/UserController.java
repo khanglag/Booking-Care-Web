@@ -91,13 +91,6 @@ public class UserController {
         account.setRole(role);
         user.setAccount(account);
         userServiceImpl.saveUser(user);
-
-//        System.out.println("=================================");
-//        System.out.println("===========user " + user);
-//        System.out.println("===========account " + user.getAccount().getUsername());
-//        System.out.println("===========pass " + user.getAccount().getPassword());
-//        System.out.println("===========account " + account);
-
         return   accountServiceImpl.saveAccount(account);
     }
 }

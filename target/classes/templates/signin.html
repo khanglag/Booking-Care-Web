@@ -46,6 +46,7 @@
         <div th:if="${param.logout}">
             <p style="color: green;">Bạn đã đăng xuất thành công!</p>
         </div>
+        <!-- Nút đăng nhập với Google -->
         <div>
             <a href="/oauth2/authorization/google" class="social-login mt-4">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
@@ -54,12 +55,13 @@
                 <span class="ms-2 fs-6">Sign in with Google</span>
             </a>
         </div>
-        <!-- Nút đăng nhập với Facebook -->
+        <!-- Nút đăng nhập với Github -->
         <div class="social-login mt-4">
             <a class="btn btn-primary btn-block" href="/oauth2/authorization/github" role="button">
                 <i class="fab fa-facebook"></i> Đăng nhập với Github
             </a>
         </div>
+        <!-- Nút đăng nhập với Facebook -->
         <div class="social-login mt-4">
             <a class="btn btn-primary btn-block" href="/oauth2/authorization/facebook" role="button">
                 <i class="fab fa-facebook"></i> Đăng nhập với Facebook

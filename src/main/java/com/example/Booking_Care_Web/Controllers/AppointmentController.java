@@ -105,4 +105,10 @@ public class AppointmentController {
         return "appointmentsByDate"; // Tên view JSP hoặc Thymeleaf
     }
 
+
+    @GetMapping("/VNPay")
+    public String VNPay() {
+        return "orderCreate";
+    }
+
 }

@@ -14,9 +14,9 @@ public class AppointmentDTO {
     private int appointmentId;  // ID của cuộc hẹn
     private String patient_id;  // ID của bệnh nhân
     private String doctor_id;   // ID của bác sĩ
-    private LocalDateTime available_datetime;  // Ngày giờ có sẵn cho cuộc hẹn
+    private LocalDate available_datetime;  // Ngày giờ có sẵn cho cuộc hẹn
     private String package_id;  // ID của gói khám
-    private LocalDate examination_date;  // Ngày khám
+    private Date examination_date;  // Ngày khám
     private String time_id;  // ID của khung giờ
     private String note;  // Ghi chú
     private String status;  // Trạng thái của cuộc hẹn

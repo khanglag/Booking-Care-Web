@@ -105,4 +105,11 @@ public class AppointmentController {
         return "appointmentsByDate"; // Tên view JSP hoặc Thymeleaf
     }
 
+
+    @GetMapping("/VNPay/{total}")
+    public String VNPay(ModelMap modelMap,@PathVariable String total) {
+        modelMap.addAttribute("total", total);
+        return "orderCreate";
+    }
+
 }

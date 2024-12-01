@@ -43,7 +43,7 @@ public class Appointment {
 
     @NotNull
     @Column(name = "examination_day", nullable = false)
-    private LocalDateTime examinationDay;
+    private Date examinationDay;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

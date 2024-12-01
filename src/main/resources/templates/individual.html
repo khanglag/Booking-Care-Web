@@ -8,6 +8,7 @@
   <!-- css -->
   <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
   <link rel="stylesheet" th:href="@{/assets/css/profile.css}" />
+  <link rel="stylesheet" th:href="@{/assets/css/individual.css}" />
   <!-- Bootstrap CSS -->
   <link
           rel="stylesheet"
@@ -26,7 +27,7 @@
 </head>
 <body>
 <header th:replace="index :: header"></header>
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-5 mb-5">
   <div class="row mt-5">
     <div class="col-4" th:replace="profile :: menu"></div>
     <div class="col-8">
@@ -43,42 +44,81 @@
         <div class="content_post">
           <table class="table table-hover table-borderless">
             <tbody>
+            <tr class="table-primary d-none">
+              <th scope="row">ID</th>
+              <th><span th:text="${userInfo.userId}" class="form_idOfUser"></span></th>
+            </tr>
             <tr class="table-primary">
-              <th scope="row">Họ tên:</th>
-              <th><span >Xuân hoàng</span></th>
+              <th scope="row">Họ và tên</th>
+              <th><span th:text="${userInfo.name}" class="form_nameOfUser"></span></th>
             </tr>
             <tr class="table-light">
-              <th scope="row">Giới tính:</th>
-              <th><span >Nam</span></th>
+              <th scope="row">Giới tính</th>
+              <th><span th:text="${userInfo.gender}" class="form_sexOfUser"></span></th>
             </tr>
             <tr class="table-primary">
-              <th scope="row">Căn cước:</th>
-              <th><span ></span>0123456</th>
+              <th scope="row">Căn cước công dân</th>
+              <th><span th:text="${userInfo.identificationCard}" class="form_identificationOfUser"></span></th>
             </tr>
             <tr class="table-light">
-              <th scope="row">Số điện thoại:</th>
-              <th><span >0123456</span></th>
+              <th scope="row">Số điện thoại</th>
+              <th><span th:text="${userInfo.phoneNumber}" class="form_phoneOfUser"></span></th>
             </tr>
             <tr class="table-primary">
-              <th scope="row">Email:</th>
-              <th><span >123456@gmail.com</span></th>
+              <th scope="row">Địa chỉ email</th>
+              <th><span th:text="${userInfo.email}" class="form_emailOfUser"></span></th>
             </tr>
-            <tr class="table-primary">
-              <th scope="row">Địa chỉ:</th>
-              <th><span >123456@gmail.com</span></th>
+            <tr class="table-light">
+              <th scope="row">Địa chỉ cư trú</th>
+              <th><span th:text="${userInfo.address}" class="form_addressOfUser"></span></th>
             </tr>
-            <tr class="table-primary">
-              <th scope="row">Giới thiệu bản thân:</th>
-              <th><span >Sai đẹp chiêu</span></th>
-            </tr>
+
             </tbody>
           </table>
+
+
+          <button type="button" class="btn btn-primary btn_update_info" onclick="fillUserInfo()" data-toggle="modal" data-target="#exampleModal">
+            Sửa thông tin
+          </button>
+
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Cập nhật thông tin </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input class="form-control mb-3 input_idOfUser d-none" type="text"  name="id" placeholder="ID" >
+                  <input class="form-control mb-3 input_nameOfUser" type="text"  name="name" placeholder="Họ và tên" disabled >
+                  <select class="form-control mb-3 input_sexOfUser">
+                    <option>Nam</option>
+                    <option>Nữ</option>
+                  </select>
+                  <input class="form-control mb-3 input_identificationOfUser" type="text"  name="identification" placeholder="Căn cước công dân" >
+                  <input class="form-control mb-3 input_phoneOfUser" type="text"  name="phone" placeholder="Số điện thoại" >
+                  <input class="form-control mb-3 input_emailOfUser" type="text"  name="email" placeholder="Email" disabled>
+                  <input class="form-control input_addressOfUser" type="text"  name="address" placeholder="Địa chỉ" >
+
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                  <button type="button" class="btn btn-success" id="btn_saveInfoUser">Lưu thông tin</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
 <footer th:replace="index :: footer"></footer>
+<script th:src="@{/assets/js/individual.js}"></script>
 <script
         src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

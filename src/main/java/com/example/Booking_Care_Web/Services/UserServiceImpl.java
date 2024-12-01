@@ -89,6 +89,9 @@ public class UserServiceImpl implements UserService {
         if (updateUser.getAddress() != null) {
             userExisting.setAddress(updateUser.getAddress());
         }
+        if (updateUser.getIdentificationCard() != null) {
+            userExisting.setIdentificationCard(updateUser.getIdentificationCard());
+        }
 
         // Lưu lại vào cơ sở dữ liệu
         return userRepository.save(userExisting);

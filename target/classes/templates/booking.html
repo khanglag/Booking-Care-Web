@@ -7,7 +7,7 @@
         <title>Booking Care</title>
         <!-- css -->
         <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
-        <link rel="stylesheet" th:href="@{/assets/css/instruct.css}" />
+        <link rel="stylesheet" th:href="@{/assets/css/booking.css}" />
         <!-- Bootstrap CSS -->
         <link
                 rel="stylesheet"
@@ -27,9 +27,117 @@
       <body>
         <header th:replace="index :: header"></header>
         <div id="content">
+          <div class="title_content_booking">
+            <h1 class="title_booking">Đặt khám</h1>
+            <div class="slogan_booking" style="font-weight: bold">Trải nghiệm dịch vụ chăm sóc sức khỏe tối ưu và đặt lịch khám một cách dễ dàng, nhanh chóng với Booking Care</div>
+          </div>
+          <div class="booking_detail">
+            <div class="booking_detail_content">
+              <div class="doctor_info row">
+                  <div class="doctor_img col-sm-3 col-md-3 col-lg-3 col-xl-3">
+                    <img th:src="@{/assets/images/doctor.png}" class="imgDoctor">
+                  </div>
+                <div class="doctor_content col-sm-9 col-md-9 col-lg-9 col-xl-9">
+                  <div class="d-flex" style="font-weight: bold">
+                    <span>Bác sĩ chuyên khoa&nbsp;</span>
+                    <span th:text="${doctor.name}" class="ms-2 mb-0"></span>
+                  </div>
+
+                  <p>
+                    <i class="fa-solid fa-circle-check" style="color: #037cdb;"></i>
+                    <span style="color: #037cdb; font-weight: bold">Bác sĩ </span>
+                    <b>24</b>&nbsp;| năm kinh nghiệm
+                  </p>
+                  <p >Chuyên khoa <span th:text="${doctor.description}" style="color: #037cdb;  font-weight: bold"></span></p>
+                  <p>Chức vụ Trưởng khoa <span th:text="${doctor.description}" style="color: #037cdb; font-weight: bold">ABC</span> bệnh viện Đại học Y Dược TP.HCM</p>
+                  <p class="d-flex mr-2">Nơi công tác &nbsp;<b>Bệnh viện Đại học Y Dược</b></p>
+                </div>
+              </div>
+              <p style="font-weight: bold; font-size: 30px; text-align: center" class="mt-3">Lịch đặt khám</p>
+              <div class="calendar-container text-center d-flex mt-5">
+                  <button class="btn btn-success" id="prevBtn" disabled>
+                    <i class="fa-solid fa-chevron-left" ></i>
+                  </button>
+                <div class="calendar-grid" id="calendarGrid"></div>
+                <button class="btn btn-success" id="nextBtn">
+                  <i class="fa-solid fa-chevron-right" ></i>
+                </button>
+              </div>
+              <p id="selectedDate" class="d-none">Ngày chọn: </p>
+              <div class=" mt-4">
+                <p style="font-weight: bold; font-size: 30px; text-align: center">Khung giờ làm việc</p>
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5>Sáng</h5>
+                    <div id="morning-schedule"></div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <h5>Chiều</h5>
+                    <div id="afternoon-schedule"></div>
+                  </div>
+                </div>
+                <div class="mt-4 d-none">
+                  <h4>Giờ đã chọn: <span id="selected-time">Chưa chọn</span></h4>
+                </div>
+              </div>
+              <div class="row mt-5">
+                <div class="checkUp_package col-8">
+                  <p style="font-weight: bold; font-size: 25px; text-align: center">
+                    Các gói khám bệnh (Không bắt buộc)
+                  </p>
+                  <div th:if="${checkupPackages != null && !checkupPackages.isEmpty()}">
+                    <!-- Lặp qua các gói khám bệnh -->
+                    <div th:each="package : ${checkupPackages}" class="package-item border p-3 mb-3">
+                      <p style="font-weight: bold; font-size: 16px;" th:text="${package.name}"></p>
+                      <p th:text="'Mô tả: ' + ${package.description}" style="font-weight: bold"></p>
+                      <p th:text="'Giá tiền: ' + ${package.amount} + ' VND'" style="font-weight: bold"></p>
+                      <button class="btn btn-primary"    th:attr="data-package-id=${package.package_id}"  onclick="choosePackage(this)">Chọn gói</button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <p style="font-weight: bold; font-size: 25px">
+                    Ghi chú
+                  </p>
+                   <textarea placeholder="Ghi chú dấu hiệu, triệu chứng bệnh" class="note">
+                   </textarea>
+                </div>
+              </div>
+              <button class="btn btn-primary btn-booking mt-3" onclick="booking()">Đặt khám</button>
+            </div>
+          </div>
+          <div>
+            <p class="d-none">available_datetime: <span class="available_datetime"></span></p>
+            <p class="d-none">doctor_id: <span th:text="${doctor.userId}" class="doctor_id"></span></p>
+            <p class="d-none">package_id: <span class="package_id"></span></p>
+            <p class="d-none">patient_id: <span th:text="${user.userId}" class="patient_id"></span></p>
+            <p class="d-none">time_id: <span class="time_id"></span></p>
+            <p class="d-none">examination_day: <span class="examination_day"></span></p>
+            <p class="d-none">note: <span class="d_note"></span></p>
+          </div>
 
         </div>
+        <!-- Modal Bootstrap -->
+        <div class="modal fade" id="bookingSuccessModal" tabindex="-1" aria-labelledby="bookingSuccessModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header" style="border-bottom: none !important;">
+                <h5 class="modal-title text-success" id="bookingSuccessModalLabel" style="font-weight: bold; text-align: center">Đặt khám thành công!</h5>
+                <button type="button" class="btn-close btn btn-danger"  data-dismiss="modal" aria-label="Close">X</button>
+              </div>
+              <div class="modal-body">
+                <p>Yêu cầu đặt lịch khám của bạn đã được gửi thành công. Hãy kiểm tra email</p>
+              </div>
+              <div class="modal-footer" style="border-top: none !important;">
+                <button type="button" class="btn btn-primary"  data-dismiss="modal">OK</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <footer th:replace="index :: footer"></footer>
+        <script th:src="@{/assets/js/booking.js}"></script>
         <script
                 src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                 integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

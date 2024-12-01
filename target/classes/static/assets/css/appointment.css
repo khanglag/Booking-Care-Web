@@ -1,0 +1,45 @@
+.content_post {
+    max-width: 800px;
+    background-color: #e4e4e4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.1);
+}
+
+.content_post h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.appointment-info {
+    margin-bottom: 15px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.appointment-info .row {
+    margin-bottom: 10px;
+}
+
+.appointment-info label {
+    font-weight: bold;
+    color: #555;
+}
+
+.appointment-info span {
+    color: #333;
+}
+
+.appointment-info .row:last-child {
+    margin-bottom: 0;
+}
+
+.appointment-info .row:nth-child(odd) {
+    background-color: #f7f7f7;
+}
+
+.appointment-info .row:nth-child(even) {
+    background-color: #fff;
+}

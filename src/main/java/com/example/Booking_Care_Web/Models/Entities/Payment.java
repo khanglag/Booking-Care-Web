@@ -39,6 +39,9 @@ public class Payment {
     public void onCreate() {
         this.payment_time = LocalDateTime.now();
     }
+    public Integer getAppointmentId(){
+        return appointment != null ? appointment.getAppointmentId() : null;
+    }
 }
 //double value = 0.1;
 //BigDecimal bigDecimal = new BigDecimal(Double.toString(value));

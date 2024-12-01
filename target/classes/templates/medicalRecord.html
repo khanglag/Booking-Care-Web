@@ -8,6 +8,7 @@
   <!-- css -->
   <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
   <link rel="stylesheet" th:href="@{/assets/css/profile.css}" />
+  <link rel="stylesheet" th:href="@{/assets/css/medicalRecord.css}" />
   <!-- Bootstrap CSS -->
   <link
           rel="stylesheet"
@@ -26,7 +27,7 @@
 </head>
 <body>
 <header th:replace="index :: header"></header>
-<div class="container-fluid mt-5">
+<div class="container-fluid mt-5 mb-5">
   <div class="row mt-5">
     <div class="col-4" th:replace="profile :: menu"></div>
     <div class="col-8">
@@ -40,8 +41,71 @@
             </h3>
           </div>
         </div>
-        <div class="content_post">
+        <div class="content_post" >
+          <div th:if="${medicalRecords.size() > 0}">
+            <div th:each="record : ${medicalRecords}" class="record-info">
 
+              <div class="row">
+                <div class="col-4">
+                  <label>Họ tên bênh nhân</label>
+                </div>
+                <div class="col-8">
+                  <span th:text="${record.patientMedicalRecords}">pt00001</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <label>Mô tả bệnh</label>
+                </div>
+                <div class="col-8">
+                  <span th:text="${record.description}">Khám tổng quát, kiểm tra sức khỏe</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <label>Chẩn đoán</label>
+                </div>
+                <div class="col-8">
+                  <span th:text="${record.diagnosis}">Cảm cúm nhẹ</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <label>Phác đồ điều trị</label>
+                </div>
+                <div class="col-8">
+                  <span th:text="${record.treatmentPlan}">Nghỉ ngơi, uống thuốc giảm đau</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <label>Bác sĩ điều trị</label>
+                </div>
+                <div class="col-8">
+                  <span th:text="${record.doctorMedicalRecords}">Doctor1</span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <label>Ngày tạo hồ sơ</label>
+                </div>
+                <div class="col-8">
+                  <span style="color: #67a508; font-weight: bold" th:text="${record.createAt != null ? #temporals.format(record.createAt, 'dd-MM-yyyy HH:mm:ss') : 'N/A'}"></span>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-4">
+                  <label>Ngày cập nhật hồ sơ</label>
+                </div>
+                <div class="col-8">
+                  <span style="color: #67a508; font-weight: bold" th:text="${record.updateAt != null ? #temporals.format(record.updateAt, 'dd-MM-yyyy HH:mm:ss') : 'N/A'}"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div th:if="${medicalRecords.size() == 0}">
+            <p style="font-size: 20px; color: red;">Bạn chưa có hồ sơ bệnh án</p>
+          </div>
         </div>
       </div>
     </div>

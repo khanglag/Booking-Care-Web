@@ -35,13 +35,15 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
     private UserServiceImpl userService;
 
     @Autowired
-    public CustomOAuth2SuccessHandler(UserServiceImpl userService, OAuth2AuthorizedClientService authorizedClientService) {
+    public CustomOAuth2SuccessHandler(UserServiceImpl userService,
+            OAuth2AuthorizedClientService authorizedClientService) {
         this.userService = userService;
         this.authorizedClientService = authorizedClientService;
     }
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+            Authentication authentication) throws IOException {
 
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
@@ -50,7 +52,7 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         String provider = oauthToken.getAuthorizedClientRegistrationId();
         String email = oAuth2User.getAttribute("email");
         String name = oAuth2User.getAttribute("name");
-        if(provider.equals("github")){
+        if (provider.equals("github")) {
             email = getEmailFromGitHub(accessToken);
         }
 
@@ -64,14 +66,14 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
             userService.saveUser(user);
         }
 
-        response.sendRedirect("/dashboard"); // Chuyển hướng đến trang dashboard
+        response.sendRedirect("/index"); // Chuyển hướng đến trang dashboard
+
     }
 
     private String getAccessToken(OAuth2AuthenticationToken oauthToken) {
         OAuth2AuthorizedClient client = authorizedClientService.loadAuthorizedClient(
                 oauthToken.getAuthorizedClientRegistrationId(),
-                oauthToken.getName()
-        );
+                oauthToken.getName());
         return client.getAccessToken().getTokenValue();
     }
 

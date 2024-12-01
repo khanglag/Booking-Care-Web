@@ -25,15 +25,15 @@
 </head>
 <body>
         <header id="header" th:fragment="header">
+
             <div class="header_logo">
-                <img th:src="@{/assets/images/newlogo.png}" class="logo_img" />
+              <a th:href="@{/}"> <img  th:src="@{/assets/images/newlogo.png}" class="logo_img" /></a>
             </div>
             <div class="header_content">
                 <ul class="navbar">
                     <li>
                         <a th:href="@{/}"  style="color: transparent;
-                           background: linear-gradient(45deg, #3700ff, #3700ff);
-                           -webkit-background-clip: text;
+                           background: linear-gradient(45deg, rgb(187, 129, 76), rgb(87, 51, 219));
                            background-clip: text;
                            font-weight: bold;
                            text-decoration: none;
@@ -42,8 +42,7 @@
                            onmouseout="this.style.opacity='1'">Trang chủ</a>
                     </li>
                     <li> <a th:href="@{/instruct}" style="color: transparent;
-                           background: linear-gradient(45deg, #3700ff, #3700ff);
-                           -webkit-background-clip: text;
+                           background: linear-gradient(45deg, rgb(187, 129, 76), rgb(87, 51, 219));
                            background-clip: text;
                            font-weight: bold;
                            text-decoration: none;
@@ -51,8 +50,7 @@
                    .         onmouseover="this.style.opacity='0.8'"
                             onmouseout="this.style.opacity='1'">Hướng dẫn</a></li>
                     <li><a th:href="@{/contact}" style="color: transparent;
-                           background: linear-gradient(45deg, #3700ff, #3700ff);
-                           -webkit-background-clip: text;
+                           background: linear-gradient(45deg, rgb(187, 129, 76), rgb(87, 51, 219));
                            background-clip: text;
                            font-weight: bold;
                            text-decoration: none;
@@ -78,13 +76,13 @@
                 </div>
                 <div th:if="${user != null}">
                     <div class="dropdown">
-                        <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                        <button style="background: linear-gradient(45deg, #9beaff 1%, #346fdb)" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                            <span class="username" style="font-weight: bold; margin-right: 10px;">
-                                Xin chào, <span th:text="${user}"></span>
+                                Xin chào, <span th:text="${user.name}"></span>
                             </span>
                         </button>
                         <div class="dropdown-menu">
-                            <a th:href="@{/profile}" class="dropdown-item" href="#">Hồ sơ cá nhân</a>
+                            <a th:href="@{/profile/individual}" class="dropdown-item" href="#">Hồ sơ cá nhân</a>
                             <a th:href="@{/logout}" class=" dropdown-item">Đăng xuất </a>
                         </div>
                     </div>
@@ -152,177 +150,38 @@
             text-fill-color: transparent;">
                     BÁC SĨ TƯ VẤN KHÁM BỆNH
                 </p>
-                <div id="carouselExample" class="carousel slide" >
-                    <!-- Bỏ tự động cuộn -->
+                <div id="carouselExample" class="carousel slide">
                     <div class="carousel-inner">
-                        <div class="carousel-item active">
+                        <div th:each="group, groupStat : ${doctorGroups}"
+                             class="carousel-item"
+                             th:classappend="${groupStat.index == 0} ? 'active' : ''">
                             <div class="row justify-content-center">
-                                <div class="col-md-3 d-flex justify-content-center">
+                                <div th:each="doctor : ${group}" class="col-md-3 d-flex justify-content-center">
                                     <div class="card">
-                                        <img
-                                                th:src="@{assets/images/doctor.png}"
-                                                class="card-img-top"
-                                                alt="Card image"
-                                        />
+                                        <img th:src="@{/assets/images/doctor.png}"
+                                             class="card-img-top"
+                                             alt="Ảnh bác sĩ" />
                                         <div class="card-body">
                                             <p class="card-text">
-                                                BS: ABC
-                                                Da liễu
-                                                Bác sĩ Chuyên Khoa
+                                                <strong style="text-transform: uppercase;" th:text="'BÁC SĨ ' + ${doctor.name}">Tên Bác sĩ</strong>
                                             </p>
-                                            <p class="card-text">Thông tin thêm</p>
-                                            <button class="btn btn-primary">Đặt khám</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 d-flex justify-content-center">
-                                    <div class="card">
-                                        <img
-                                                th:src="@{assets/images/doctor.png}"
-                                                class="card-img-top"
-                                                alt="Card image"
-                                        />
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                                BS: ABC
-                                                Da liễu
-                                                Bác sĩ Chuyên Khoa
-                                            </p>
-                                            <p class="card-text">Thông tin thêm</p>
-                                            <button class="btn btn-primary">Đặt khám</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 d-flex justify-content-center">
-                                    <div class="card">
-                                        <img
-                                                th:src="@{assets/images/doctor.png}"
-                                                class="card-img-top"
-                                                alt="Card image"
-                                        />
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                                BS: ABC
-                                                Da liễu
-                                                Bác sĩ Chuyên Khoa
-                                            </p>
-                                            <p class="card-text">Thông tin thêm</p>
-                                            <button class="btn btn-primary">Đặt khám</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 d-flex justify-content-center">
-                                    <div class="card">
-                                        <img
-                                                th:src="@{assets/images/doctor.png}"
-                                                class="card-img-top"
-                                                alt="Card image"
-                                        />
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                                BS: ABC
-                                                Da liễu
-                                                Bác sĩ Chuyên Khoa
-                                            </p>
-                                            <p class="card-text">Thông tin thêm</p>
-                                            <button class="btn btn-primary">Đặt khám</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row justify-content-center">
-                                <div class="col-md-3 d-flex justify-content-center">
-                                    <div class="card">
-                                        <img
-                                                th:src="@{assets/images/doctor.png}"
-                                                class="card-img-top"
-                                                alt="Card image"
-                                        />
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                                BS: ABC
-                                                Da liễu
-                                                Bác sĩ Chuyên Khoa
-                                            </p>
-                                            <p class="card-text">Thông tin thêm</p>
-                                            <button class="btn btn-primary">Đặt khám</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 d-flex justify-content-center">
-                                    <div class="card">
-                                        <img
-                                                th:src="@{assets/images/doctor.png}"
-                                                class="card-img-top"
-                                                alt="Card image"
-                                        />
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                                BS: ABC
-                                                Da liễu
-                                                Bác sĩ Chuyên Khoa
-                                            </p>
-                                            <p class="card-text">Thông tin thêm</p>
-                                            <button class="btn btn-primary">Đặt khám</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 d-flex justify-content-center">
-                                    <div class="card">
-                                        <img
-                                                th:src="@{assets/images/doctor.png}"
-                                                class="card-img-top"
-                                                alt="Card image"
-                                        />
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                                BS: ABC
-                                                Da liễu
-                                                Bác sĩ Chuyên Khoa
-                                            </p>
-                                            <p class="card-text">Thông tin thêm</p>
-                                            <button class="btn btn-primary">Đặt khám</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 d-flex justify-content-center">
-                                    <div class="card">
-                                        <img
-                                                th:src="@{assets/images/doctor.png}"
-                                                class="card-img-top"
-                                                alt="Card image"
-                                        />
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                                BS: ABC
-                                                Da liễu
-                                                Bác sĩ Chuyên Khoa
-                                            </p>
-                                            <p class="card-text">Thông tin thêm</p>
-                                            <button class="btn btn-primary">Đặt khám</button>
+                                            <p class="card-text" th:text="'CHUYÊN KHOA: '+${doctor.description}" style="text-transform: uppercase;">Mô tả</p>
+                                            <a th:href="@{/booking/{id}(id=${doctor.id})}">
+                                                <button class="btn btn-primary">Đặt khám</button>
+                                            </a>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <button
-                            class="carousel-control-prev btn btn_prev_in_list_doctor"
-                            type="button"
-                            data-target="#carouselExample"
-                            data-slide="prev"
-                    >
+                    <!-- Nút điều khiển carousel -->
+                    <button class="carousel-control-prev btn btn_prev_in_list_doctor" type="button" data-target="#carouselExample" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
                     </button>
-                    <button
-                            class="carousel-control-next btn btn_next_in_list_doctor"
-                            type="button"
-                            data-target="#carouselExample"
-                            data-slide="next"
-                    >
+                    <button class="carousel-control-next btn btn_next_in_list_doctor" type="button" data-target="#carouselExample" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">Next</span>
                     </button>

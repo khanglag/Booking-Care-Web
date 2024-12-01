@@ -46,7 +46,7 @@ public class User {
     @Column(name = "identification_card", length = 12)
     private String identificationCard;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user",cascade = CascadeType.PERSIST)
     private Account account;
 
     @OneToMany(mappedBy = "patient")

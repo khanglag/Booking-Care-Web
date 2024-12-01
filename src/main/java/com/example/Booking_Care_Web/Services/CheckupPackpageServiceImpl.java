@@ -34,13 +34,6 @@ public class CheckupPackpageServiceImpl implements CheckupPackpageService {
     }
 
     @Transactional
-    @Override
-//    public CheckupPackpage saveCP(CheckupPackpage checkupPackpage){
-//
-//        checkupPackageRepository.insertCheckupPackage(checkupPackpage.getPackageId(), checkupPackpage.getName(), checkupPackpage.getDescription(), checkupPackpage.getAmount());
-//        return checkupPackpage;
-//    }
-
     public CheckupPackpage saveCheckupPackpage(CheckupPackpage checkupPackpage){
         return checkupPackageRepository.save(checkupPackpage);
     }

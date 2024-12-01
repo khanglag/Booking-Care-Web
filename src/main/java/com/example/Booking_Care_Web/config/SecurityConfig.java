@@ -2,15 +2,20 @@ package com.example.Booking_Care_Web.config;
 import com.example.Booking_Care_Web.Services.CustomUserDetailsService;
 import com.example.Booking_Care_Web.auth.CustomAuthenticationSuccessHandler;
 import com.example.Booking_Care_Web.auth.CustomOAuth2SuccessHandler;
+import com.example.Booking_Care_Web.auth.RestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -37,7 +42,19 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Nếu cần tắt CSRF, sử dụng cú pháp này
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/signin", "/register","/assets/**","/index","/reset-password").permitAll() // Cấu hình các URL không yêu cầu xác thực
+                        .requestMatchers("/signin",
+                                "/register",
+                                "/assets/**",
+                                "/index",
+                                "/reset-password",
+                                "/weekly-appointments-chart",
+                                "/api/weekly-appointments-chart",
+                                "/chart",
+                                "/api/appointments-by-date",
+                                "/appointments-by-year/**",
+                                "/appointmentByYear/**",
+                                "/appointmentByYear"
+                        ).permitAll() // Cấu hình các URL không yêu cầu xác thực
                         .anyRequest().authenticated() // Tất cả các URL khác đều yêu cầu đăng nhập
                 )
                 .formLogin(form -> form
@@ -71,8 +88,6 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
-
 
 
 }

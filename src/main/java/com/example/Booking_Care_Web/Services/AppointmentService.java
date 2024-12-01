@@ -14,3 +14,4 @@ public interface AppointmentService {
     List<Appointment> findAppointmentByDoctorId(String id);
     List<Appointment> findApppontmentByStatus(String status);
 }
+

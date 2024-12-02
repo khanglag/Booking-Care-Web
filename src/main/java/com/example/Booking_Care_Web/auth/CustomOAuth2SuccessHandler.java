@@ -11,11 +11,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -25,6 +27,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +57,21 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         String name = oAuth2User.getAttribute("name");
         if (provider.equals("github")) {
             email = getEmailFromGitHub(accessToken);
+            // Tạo lại OAuth2User với email mới
+            Map<String, Object> attributes = new HashMap<>(oAuth2User.getAttributes());
+            attributes.put("email", email);  // Cập nhật email
+
+            OAuth2User updatedOAuth2User = new DefaultOAuth2User(oAuth2User.getAuthorities(), attributes, "name");
+
+            // Tạo một OAuth2AuthenticationToken mới với updatedOAuth2User
+            OAuth2AuthenticationToken updatedAuthentication = new OAuth2AuthenticationToken(
+                    updatedOAuth2User,
+                    oAuth2User.getAuthorities(),
+                    oauthToken.getAuthorizedClientRegistrationId()
+            );
+
+            // Cập nhật SecurityContext với authentication mới
+            SecurityContextHolder.getContext().setAuthentication(updatedAuthentication);
         }
 
         User checkUser = userService.findByEmail(email);

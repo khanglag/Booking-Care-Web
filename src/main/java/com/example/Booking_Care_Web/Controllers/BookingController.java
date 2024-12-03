@@ -12,12 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class BookingController {
@@ -44,6 +47,8 @@ public class BookingController {
 
     @Autowired
     private TimeFrameServiceImpl timeFrameServiceImpl;
+    @Autowired
+    private MedicalRecordServiceImp medicalRecordServiceImp;
 
     @RequestMapping("/booking")
     public String booking() {
@@ -66,8 +71,19 @@ public class BookingController {
         User doctor = userServiceImpl.findById(doctorId);
         model.addAttribute("doctor",doctor);
 
+//        List<CheckupPackpageDTO> checkupPackpages = checkupPackpageServiceImpl.findAll();
+//        model.addAttribute("checkupPackages", checkupPackpages);
+
+
         List<CheckupPackpageDTO> checkupPackpages = checkupPackpageServiceImpl.findAll();
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        Map<String, String> formattedAmounts = checkupPackpages.stream()
+                .collect(Collectors.toMap(
+                        CheckupPackpageDTO::getPackage_id,
+                        packageDTO -> decimalFormat.format(packageDTO.getAmount())
+                ));
         model.addAttribute("checkupPackages", checkupPackpages);
+        model.addAttribute("formattedAmounts", formattedAmounts);
         return "booking";
     }
     @PostMapping(value = "/booking",consumes = "application/json")
@@ -100,6 +116,13 @@ public class BookingController {
         apm.setExaminationDay(appointment.getExamination_date());
         apm.setNote(appointment.getNote());
         apm.setStatus(appointment.getStatus());
+        MedicalRecord medicalRecord = new MedicalRecord();
+        medicalRecord.setCreateAt(LocalDateTime.now());
+        medicalRecord.setPatientMedicalRecords(patient);
+        medicalRecord.setDoctorMedicalRecords(doctor);
+        medicalRecord.setDescription("");
+        medicalRecord.setDiagnosis("");
+        medicalRecordServiceImp.saveMedicalRecord(medicalRecord);
         model.addAttribute("doctor", doctor);
         model.addAttribute("user", patient);
        return appointmentServiceImpl.save(apm);

@@ -24,8 +24,11 @@
     />
 </head>
 <body>
-    <div class="register-container">
-        <h2>Đăng kí</h2>
+<div class="background-image">
+    <img th:src="@{assets/images/backgroundSignin.png}" alt="Background" class="img-fluid w-100 h-100">
+</div>
+    <div class="register-container" style="background-color: transparent !important;">
+        <h2 style="color: #b8daff !important;">Đăng kí</h2>
         <form class="mb-3" method="POST" action="/register">
                 <input class="form-control" type="text" id="name" name="name" placeholder="Họ và tên" required>
                 <input class="form-control" type="text" id="email" name="email" placeholder="Email" required>

@@ -83,20 +83,33 @@
                 </div>
               </div>
               <div class="row mt-5">
-                <div class="checkUp_package col-8">
-                  <p style="font-weight: bold; font-size: 25px; text-align: center">
-                    Các gói khám bệnh (Không bắt buộc)
-                  </p>
+<!--                <div class="checkUp_package col-8">-->
+<!--                  <p style="font-weight: bold; font-size: 25px; text-align: center">-->
+<!--                    Các gói khám bệnh (Không bắt buộc)-->
+<!--                  </p>-->
+<!--                  <div th:if="${checkupPackages != null && !checkupPackages.isEmpty()}">-->
+<!--                    &lt;!&ndash; Lặp qua các gói khám bệnh &ndash;&gt;-->
+<!--                    <div th:each="package : ${checkupPackages}" class="package-item border p-3 mb-3">-->
+<!--                      <p style="font-weight: bold; font-size: 16px;" th:text="${package.name}"></p>-->
+<!--                      <p th:text="'Mô tả: ' + ${package.description}" style="font-weight: bold"></p>-->
+<!--                      <p th:text="'Giá tiền: ' + ${package.amount} + ' VND'" style="font-weight: bold"></p>-->
+<!--                      <button class="btn btn-primary"    th:attr="data-package-id=${package.package_id}"  onclick="choosePackage(this)">Chọn gói</button>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+                <div class="checkUp_package col-8 custom-package-container" style="margin-top: 0 !important;padding: 0 !important;">
+                  <p class="title">Các gói khám bệnh (Không bắt buộc)</p>
                   <div th:if="${checkupPackages != null && !checkupPackages.isEmpty()}">
                     <!-- Lặp qua các gói khám bệnh -->
-                    <div th:each="package : ${checkupPackages}" class="package-item border p-3 mb-3">
-                      <p style="font-weight: bold; font-size: 16px;" th:text="${package.name}"></p>
-                      <p th:text="'Mô tả: ' + ${package.description}" style="font-weight: bold"></p>
-                      <p th:text="'Giá tiền: ' + ${package.amount} + ' VND'" style="font-weight: bold"></p>
-                      <button class="btn btn-primary"    th:attr="data-package-id=${package.package_id}"  onclick="choosePackage(this)">Chọn gói</button>
+                    <div th:each="package : ${checkupPackages}" class="package-item">
+                      <h3 class="package-title" th:text="${package.name}"></h3>
+                      <p class="package-description" th:text="'Mô tả: ' + ${package.description}"></p>
+                      <p class="package-price" th:text="'Giá tiền: ' + ${formattedAmounts[package.package_id]} + ' VND'"></p>
+                      <button class="btn btn-primary" th:attr="data-package-id=${package.package_id}" onclick="choosePackage(this)">Chọn gói</button>
                     </div>
                   </div>
                 </div>
+
                 <div class="col-4">
                   <p style="font-weight: bold; font-size: 25px">
                     Ghi chú

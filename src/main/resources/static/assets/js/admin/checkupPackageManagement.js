@@ -61,3 +61,32 @@ function filterPackages() {
         }
     });
 }
+function createCheckupPackage(){
+    event.preventDefault()
+    const namePackage = document.getElementById('packageName').value;
+    const description = document.getElementById('description').value;
+    const amount = document.getElementById('amount').value;
+    const jsonData = JSON.stringify({
+        name: namePackage,
+        desc:description,
+        amount:amount,
+    })
+    fetch('/checkupPackageManagement', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: jsonData
+    })
+        .then(response => {
+            if (response.ok) {
+               alert("Thêm thành công")
+                location.reload();
+            }else {
+                alert("Thêm thất bại")
+            }
+        })
+        .catch(error => {
+            console.error('Đã xảy ra lỗi:', error);
+        });
+}

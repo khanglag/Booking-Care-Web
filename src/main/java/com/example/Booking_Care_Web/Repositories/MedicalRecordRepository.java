@@ -15,4 +15,9 @@ public interface MedicalRecordRepository extends JpaRepository<MedicalRecord, In
 
     @Query("SELECT d FROM MedicalRecord d WHERE d.doctorMedicalRecords.userId = :id")
     List<MedicalRecord> findMedicalRecordByDoctorId(String id);
+
+    @Query("SELECT d FROM MedicalRecord d " +
+            "WHERE d.doctorMedicalRecords.userId = :id " +
+            "AND (d.description = '' OR d.diagnosis = '' OR d.treatmentPlan IS NULL)")
+    List<MedicalRecord> findMedicalRecordsByDoctorIdAndIncompleteFields(String id);
 }

@@ -11,5 +11,8 @@ public interface MedicalRecordService {
     List<MedicalRecordDTO> getAllMedicalRecords();
     List<MedicalRecord> findMedicalRecordsByPatientId(String patientId);
     List<MedicalRecord> findMedicalRecordsByDoctorId(String doctorId);
+
+    List<MedicalRecord> findMedicalRecordsByDoctorIdAndIncompleteFields(String id);
+
     MedicalRecord findMedicalRecordByMedicalRecordID(Integer medicalRecordID);
 }

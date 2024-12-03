@@ -35,7 +35,7 @@ public class Appointment {
 
     @NotNull
     @Column(name = "available_datetime", nullable = false)
-    private LocalDateTime availableDatetime;
+    private LocalDate availableDatetime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "package_id", referencedColumnName = "package_id", nullable = true)
@@ -43,7 +43,7 @@ public class Appointment {
 
     @NotNull
     @Column(name = "examination_day", nullable = false)
-    private LocalDate examinationDay;
+    private Date examinationDay;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

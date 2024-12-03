@@ -40,7 +40,8 @@
                 <div class="doctor_content col-sm-9 col-md-9 col-lg-9 col-xl-9">
                   <div class="d-flex" style="font-weight: bold">
                     <span>Bác sĩ chuyên khoa&nbsp;</span>
-                    <span th:text="${doctor.name}" class="ms-2 mb-0"></span>
+                    <span th:text="${doctor.name}" class="ms-2 mb-0 nameOfDoctor" th:value="${doctor.name}"></span>
+                    <span th:text="${doctor.phoneNumber}" class="ms-2 mb-0 phoneOfDoctor d-none"></span>
                   </div>
 
                   <p>
@@ -124,13 +125,13 @@
             <div class="modal-content">
               <div class="modal-header" style="border-bottom: none !important;">
                 <h5 class="modal-title text-success" id="bookingSuccessModalLabel" style="font-weight: bold; text-align: center">Đặt khám thành công!</h5>
-                <button type="button" class="btn-close btn btn-danger"  data-dismiss="modal" aria-label="Close">X</button>
+                <button type="button" class="btn-close btn btn-danger"  data-dismiss="modal" aria-label="Close" onclick="redirectIndex()" >X</button>
               </div>
               <div class="modal-body">
                 <p>Yêu cầu đặt lịch khám của bạn đã được gửi thành công. Hãy kiểm tra email</p>
               </div>
               <div class="modal-footer" style="border-top: none !important;">
-                <button type="button" class="btn btn-primary"  data-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick="redirectIndex()">OK</button>
               </div>
             </div>
           </div>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.context.Context;
@@ -42,7 +43,7 @@ public class EmailService {
         helper.setText(emailContent, true);
         mailSender.send(mimeMessage);
     }
-
+    @Async
     public void sendAppointmentConfirmationEmail(String toEmail, String patientName, String appointmentDate, String doctorName, String phoneNumber) throws MessagingException {
         // Tạo context để truyền dữ liệu vào template
         Context context = new Context();

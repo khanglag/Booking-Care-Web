@@ -49,7 +49,7 @@ public class CheckupPackpageServiceImpl implements CheckupPackpageService {
             checkuExisting.setDescription(updateCP.getDescription());
         }
         if (updateCP.getAmount() != null){
-            checkuExisting.setDescription(String.valueOf(updateCP.getAmount()));
+            checkuExisting.setAmount(Double.valueOf(String.valueOf(updateCP.getAmount())));
         }
         return checkupPackageRepository.save(checkuExisting);
     }

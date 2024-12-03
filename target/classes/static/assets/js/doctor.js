@@ -69,5 +69,5 @@ btnSubmitInfoUser.addEventListener('click',()=>{
         .catch(error => {
             console.error('Đã xảy ra lỗi:', error);
         });
-
 })
+

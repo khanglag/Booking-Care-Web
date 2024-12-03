@@ -227,4 +227,37 @@ public class AdminController {
         checkupPackpageServiceImpl.updateCP(id,checkupPackpage);
         return "admin/checkupPackageManagement";
     }
+
+    @PostMapping(value = "/checkupPackageManagement",consumes = "application/json")
+    public String addCheckupPackage(@RequestBody Map<String, Object> requestData, Model model,Authentication authentication, HttpSession session) {
+        authentication = SecurityContextHolder.getContext().getAuthentication();
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof UserDetails) {
+            User user = (User) principal;
+            String username = user.getUsername();
+            Account account = accountService.findByUsername(username);
+            com.example.Booking_Care_Web.Models.Entities.User user_normal = userServiceImpl.findById(account.getAccountId());
+            session.setAttribute("user", user_normal);
+            session.setAttribute("userID", user_normal.getUserId());
+            session.setAttribute("authentication", authentication);
+            model.addAttribute("user", user_normal);
+        }
+        String name = (String) requestData.get("name");
+        String description = (String) requestData.get("desc");
+        String amount = (String) requestData.get("amount");
+        double amountDouble = 0.0;
+        try {
+            amountDouble = Double.parseDouble(amount);
+        } catch (NumberFormatException e) {
+            System.err.println("Không thể chuyển đổi giá trị amount thành double: " + e.getMessage());
+        }
+        String id = checkupPackpageServiceImpl.createCPId();
+        CheckupPackpage checkupPackpage = new CheckupPackpage();
+        checkupPackpage.setPackageId(id);
+        checkupPackpage.setName(name);
+        checkupPackpage.setDescription(description);
+        checkupPackpage.setAmount(amountDouble);
+        checkupPackpageServiceImpl.saveCheckupPackpage(checkupPackpage);
+        return "admin/checkupPackageManagement";
+    }
 }

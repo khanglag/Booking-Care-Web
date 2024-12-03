@@ -24,74 +24,54 @@
     />
 </head>
 <body>
-        <header id="header" th:fragment="header">
-
-            <div class="header_logo">
-              <a th:href="@{/}"> <img  th:src="@{/assets/images/newlogo.png}" class="logo_img" /></a>
-            </div>
-            <div class="header_content">
-                <ul class="navbar">
-                    <li>
-                        <a th:href="@{/}"  style="color: transparent;
-                           background: linear-gradient(45deg, rgb(187, 129, 76), rgb(87, 51, 219));
-                           background-clip: text;
-                           font-weight: bold;
-                           text-decoration: none;
-                           transition: opacity 0.3s ease;"
-                           onmouseover="this.style.opacity='0.8'"
-                           onmouseout="this.style.opacity='1'">Trang chủ</a>
-                    </li>
-                    <li> <a th:href="@{/instruct}" style="color: transparent;
-                           background: linear-gradient(45deg, rgb(187, 129, 76), rgb(87, 51, 219));
-                           background-clip: text;
-                           font-weight: bold;
-                           text-decoration: none;
-                           transition: opacity 0.3s ease;"
-                   .         onmouseover="this.style.opacity='0.8'"
-                            onmouseout="this.style.opacity='1'">Hướng dẫn</a></li>
-                    <li><a th:href="@{/contact}" style="color: transparent;
-                           background: linear-gradient(45deg, rgb(187, 129, 76), rgb(87, 51, 219));
-                           background-clip: text;
-                           font-weight: bold;
-                           text-decoration: none;
-                           transition: opacity 0.3s ease;"
-                           onmouseover="this.style.opacity='0.8'"
-                           onmouseout="this.style.opacity='1'">Liên hệ bác sĩ</a></li>
-                </ul>
-            </div>
-            <div class="header_login">
-                <div th:if="${user == null}">
-                    <a th:href="@{/signin}" class="active">
-                        <button class="btn btn-info btn_login">
-                            <i class="fa-solid fa-right-to-bracket"></i>
-                            Đăng nhập
-                        </button>
-                    </a>
-                    <a th:href="@{/register}" class="active">
-                        <button class="btn btn-danger btn_register">
-                            <i class="fa-solid fa-user-plus"></i>
-                            Đăng ký
-                        </button>
-                    </a>
-                </div>
-                <div th:if="${user != null}">
-                    <div class="dropdown">
-                        <button style="background: linear-gradient(45deg, #9beaff 1%, #346fdb)" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-                           <span class="username" style="font-weight: bold; margin-right: 10px;">
-                                Xin chào, <span th:text="${user.name}" class="nameOfUser"></span>
-                            </span>
-                            <span th:text="${user.email}" class="emailOfUser d-none"></span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a th:href="@{/profile/individual}" class="dropdown-item" href="#">Hồ sơ cá nhân</a>
-                            <a th:href="@{/logout}" class=" dropdown-item">Đăng xuất </a>
-                        </div>
-                    </div>
-
-
+<header id="header" th:fragment="header" class="header">
+    <div class="header_logo">
+        <a th:href="@{/}">
+            <img th:src="@{/assets/images/newlogo.png}" alt="Logo" class="logo_img" />
+        </a>
+    </div>
+    <div class="header_content">
+        <ul class="navbar">
+            <li>
+                <a th:href="@{/}" class="navbar_link">Trang chủ</a>
+            </li>
+            <li>
+                <a th:href="@{/instruct}" class="navbar_link">Hướng dẫn</a>
+            </li>
+            <li>
+                <a th:href="@{/contact}" class="navbar_link">Liên hệ bác sĩ</a>
+            </li>
+        </ul>
+    </div>
+    <div class="header_login">
+        <div th:if="${user == null}">
+            <a th:href="@{/signin}" class="btn_link">
+                <button class="btn btn-info btn_login">
+                    <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập
+                </button>
+            </a>
+            <a th:href="@{/register}" class="btn_link">
+                <button class="btn btn-danger btn_register">
+                    <i class="fa-solid fa-user-plus"></i> Đăng ký
+                </button>
+            </a>
+        </div>
+        <div th:if="${user != null}">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    <span class="username">
+                        Xin chào, <span th:text="${user.name}" class="nameOfUser"></span>
+                    </span>
+                </button>
+                <div class="dropdown-menu">
+                    <a th:href="@{/profile/individual}" class="dropdown-item">Hồ sơ cá nhân</a>
+                    <a th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
                 </div>
             </div>
-        </header>
+        </div>
+    </div>
+</header>
+
         <div id="content" class="mt-5">
             <div class="styles_cashBackWrapper">
                 <p class="styles_cashBackContent">
@@ -177,7 +157,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Nút điều khiển carousel -->
                     <button class="carousel-control-prev btn btn_prev_in_list_doctor" type="button" data-target="#carouselExample" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="sr-only">Previous</span>
@@ -189,92 +168,86 @@
                 </div>
             </div>
             <div class="customer_feedback mt-3">
-                <p class="d-flex justify-content-center" style="font-size: 30px; font-weight: bold;  background: linear-gradient(45deg, #9beaff 1%, #346fdb); /* Gradient màu */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-fill-color: transparent;">
+                <p class="customer_feedback-title">
                     CẢM NHẬN TỪ KHÁCH HÀNG
                 </p>
-                <div class="d-flex justify-content-center">
-                        <div class="feedback">
-                            <div class="d-flex info-user">
-                                <img class="user_face" th:src="@{assets/images/male.png}">
-                                <b>Anh Nguyễn Trọng Nhân</b>
-                            </div>
-                            <hr>
-                            <div class="info_feedback">
-                                <p class="">Tôi rất hài lòng với dịch vụ tại phòng khám. Đội ngũ y bác sĩ rất tận tâm và chuyên nghiệp, khiến tôi cảm thấy yên tâm khi đến khám. Phòng khám sạch sẽ, trang thiết bị hiện đại và thời gian chờ đợi không lâu. </p>
-                            </div>
-                        </div>
-                        <div class="feedback">
-                            <div class="d-flex info-user">
-                                <img class="user_face" th:src="@{assets/images/female.png}">
-                                <b class="">Chị Lê Thị Thu Hằng</b>
-                            </div>
-                            <hr>
-                            <div class="info_feedback">
-                                <p class="">Dịch vụ ở đây rất tuyệt vời! Các bác sĩ và nhân viên rất chu đáo, lắng nghe kỹ càng và tư vấn rõ ràng. Không gian phòng khám thân thiện và thoải mái, giúp tôi cảm thấy dễ chịu khi đến khám. Cảm ơn phòng khám đã mang đến trải nghiệm tuyệt vời này!</p>
-                            </div>
-                        </div>
+                <div class="d-flex flex-wrap justify-content-center customer_feedback-content">
                     <div class="feedback">
-                        <div class="d-flex info-user">
-                            <img class="user_face" th:src="@{assets/images/female.png}">
-                            <b class="">Chị Hồ Thị Loan</b>
+                        <div class="d-flex align-items-center info-user">
+                            <img class="user_face" th:src="@{assets/images/male.png}" alt="User Avatar">
+                            <b>Anh Nguyễn Trọng Nhân</b>
                         </div>
                         <hr>
                         <div class="info_feedback">
-                            <p class="">Mình thật sự rất hài lòng khi đến khám ở đây. Bác sĩ rất tâm lý, luôn lắng nghe và giải thích chi tiết từng vấn đề sức khỏe. Từ lúc bước vào cho đến khi kết thúc, mọi thứ đều rất chu đáo và dễ chịu.</p>
+                            <p>Tôi rất hài lòng với dịch vụ tại phòng khám. Đội ngũ y bác sĩ rất tận tâm và chuyên nghiệp, khiến tôi cảm thấy yên tâm khi đến khám. Phòng khám sạch sẽ, trang thiết bị hiện đại và thời gian chờ đợi không lâu.</p>
                         </div>
                     </div>
                     <div class="feedback">
-                        <div class="d-flex info-user">
-                            <img class="user_face" th:src="@{assets/images/male.png}">
-                            <b class="">Anh Lê Gia Khang</b>
+                        <div class="d-flex align-items-center info-user">
+                            <img class="user_face" th:src="@{assets/images/female.png}" alt="User Avatar">
+                            <b>Chị Lê Thị Thu Hằng</b>
                         </div>
                         <hr>
                         <div class="info_feedback">
-                            <p class="">Điều mình thích nhất là cách phòng khám chăm chút từng chi tiết nhỏ, từ không gian thoải mái cho đến sự tận tình của nhân viên. Đến đây khám mà cảm giác như được nghỉ ngơi, chứ không phải đi khám bệnh.</p>
+                            <p>Dịch vụ ở đây rất tuyệt vời! Các bác sĩ và nhân viên rất chu đáo, lắng nghe kỹ càng và tư vấn rõ ràng. Không gian phòng khám thân thiện và thoải mái, giúp tôi cảm thấy dễ chịu khi đến khám. Cảm ơn phòng khám đã mang đến trải nghiệm tuyệt vời này!</p>
                         </div>
                     </div>
-
+                    <div class="feedback">
+                        <div class="d-flex align-items-center info-user">
+                            <img class="user_face" th:src="@{assets/images/female.png}" alt="User Avatar">
+                            <b>Chị Hồ Thị Loan</b>
+                        </div>
+                        <hr>
+                        <div class="info_feedback">
+                            <p>Mình thật sự rất hài lòng khi đến khám ở đây. Bác sĩ rất tâm lý, luôn lắng nghe và giải thích chi tiết từng vấn đề sức khỏe. Từ lúc bước vào cho đến khi kết thúc, mọi thứ đều rất chu đáo và dễ chịu.</p>
+                        </div>
+                    </div>
+                    <div class="feedback">
+                        <div class="d-flex align-items-center info-user">
+                            <img class="user_face" th:src="@{assets/images/male.png}" alt="User Avatar">
+                            <b>Anh Lê Gia Khang</b>
+                        </div>
+                        <hr>
+                        <div class="info_feedback">
+                            <p>Điều mình thích nhất là cách phòng khám chăm chút từng chi tiết nhỏ, từ không gian thoải mái cho đến sự tận tình của nhân viên. Đến đây khám mà cảm giác như được nghỉ ngơi, chứ không phải đi khám bệnh.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <div class="statistical mt-3">
-                <p class="d-flex justify-content-center mb-2" style="font-size: 30px; font-weight: bold;  background: linear-gradient(45deg, #9beaff 1%, #346fdb); /* Gradient màu */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-fill-color: transparent;">
+                <p class="statistical-title d-flex justify-content-center mb-2">
                     THỐNG KÊ
                 </p>
-                <div class="d-flex statistical_content">
-                    <div class="text-center">
-                        <i class="fa-solid fa-stethoscope d-block" style="color: #74C0FC; font-size: 70px"></i>
-                        <b style="font-size: 30px">500k+</b>
-                        <p style="font-size: 20px">Lượt khám</p>
+                <div class="d-flex flex-wrap justify-content-center statistical-content">
+                    <div class="statistical-item text-center">
+                        <i class="fa-solid fa-stethoscope"></i>
+                        <b>500k+</b>
+                        <p>Lượt khám</p>
                     </div>
-                    <div class="text-center">
-                        <i class="fa-solid fa-eye d-block" style="color: #74C0FC; font-size: 70px"></i>
-                        <b style="font-size: 30px">2k+</b>
-                        <p style="font-size: 20px">Truy cập trong ngày</p>
+                    <div class="statistical-item text-center">
+                        <i class="fa-solid fa-eye"></i>
+                        <b>2k+</b>
+                        <p>Truy cập trong ngày</p>
                     </div>
-                    <div class="text-center">
-                        <i class="fa-solid fa-arrow-pointer d-block" style="color: #74C0FC; font-size: 70px"></i>
-                        <b style="font-size: 30px">60k+</b>
-                        <p style="font-size: 20px">Truy cập hằng tháng</p>
+                    <div class="statistical-item text-center">
+                        <i class="fa-solid fa-arrow-pointer"></i>
+                        <b>60k+</b>
+                        <p>Truy cập hằng tháng</p>
                     </div>
-                    <div class="text-center">
-                        <i class="fa-solid fa-user-doctor d-block" style="color: #74C0FC; font-size: 70px"></i>
-                        <b style="font-size: 30px">10+</b>
-                        <p style="font-size: 20px">Năm kinh nghiệm</p>
+                    <div class="statistical-item text-center">
+                        <i class="fa-solid fa-user-doctor"></i>
+                        <b>10+</b>
+                        <p>Năm kinh nghiệm</p>
                     </div>
-                    <div class="text-center">
-                        <i class="fa-solid fa-bed-pulse d-block" style="color: #74C0FC; font-size: 70px"></i>
-                        <b style="font-size: 30px">500k+</b>
-                        <p style="font-size: 20px">Bệnh nhân được chữa trị</p>
+                    <div class="statistical-item text-center">
+                        <i class="fa-solid fa-bed-pulse"></i>
+                        <b>500k+</b>
+                        <p>Bệnh nhân được chữa trị</p>
                     </div>
-
                 </div>
             </div>
+
         </div>
         <footer id="footer"  th:fragment="footer" class="row">
             <div class="footer_info col-md-4">

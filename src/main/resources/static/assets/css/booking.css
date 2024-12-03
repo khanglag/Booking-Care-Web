@@ -129,30 +129,78 @@ textarea.note:hover {
     background-color: #f1f1f1;
 }
 
+.custom-package-container {
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề */
+.title {
+    font-weight: bold;
+    font-size: 25px;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Định dạng cho từng gói khám */
 .package-item {
-    border: 1px solid #ddd;
+    background-color: #fff;
     border-radius: 8px;
-    background-color: #f9f9f9;
-    padding: 16px;
-    margin-bottom: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: border 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 15px;
 }
 
 .package-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
-.package-item p {
-    margin: 0;
+/* Tên gói khám */
+.package-name {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
 }
 
-.package-item button {
-    margin-top: 10px;
-    display: block;
-    width: 100%;
+/* Mô tả và giá tiền */
+.package-description,
+.package-price {
+    font-weight: normal;
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: #555;
 }
+
+/* Button */
+.package-item .btn {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.package-item .btn:hover {
+    background-color: #0056b3;
+}
+
+.package-item.selected {
+    border: 2px solid #28a745;
+    box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+}
+
+.package-item.selected .btn {
+    background-color: #28a745;
+}
+
 @media (max-width: 768px) {
     textarea.note {
         height: 120px;

@@ -1,6 +1,7 @@
 package com.example.Booking_Care_Web.Controllers;
 
 import com.example.Booking_Care_Web.Models.Entities.Account;
+import com.example.Booking_Care_Web.Models.Entities.MedicalRecord;
 import com.example.Booking_Care_Web.Services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class DoctorController {
@@ -41,7 +48,8 @@ public class DoctorController {
     @Autowired
     private TimeFrameServiceImpl timeFrameServiceImpl;
 
-
+    @Autowired
+    private MedicalRecordServiceImp medicalRecordServiceImpl;
     @GetMapping("/doctorPage")
     public String gdoctorPage(Model model, Authentication authentication, HttpSession session) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -96,6 +104,31 @@ public class DoctorController {
         com.example.Booking_Care_Web.Models.Entities.User user = userServiceImpl.findById(userID);
         model.addAttribute("userInfo",user);
         model.addAttribute("nameOfUser",user.getName());
+
+        com.example.Booking_Care_Web.Models.Entities.User userPT ;
+        com.example.Booking_Care_Web.Models.Entities.User userDT ;
+        List<MedicalRecord> medicalRecords = medicalRecordServiceImpl.findMedicalRecordsByDoctorIdAndIncompleteFields(userID);
+        List<Map<String, Object>> medicalRecordData = new ArrayList<>();
+        if (medicalRecords != null && !medicalRecords.isEmpty()) {
+            for (MedicalRecord record : medicalRecords) {
+                Map<String, Object> recordData = new HashMap<>();
+                userPT  = userService.findById(record.getPatientId());
+                userDT   = userService.findById(record.getDoctorId());
+                recordData.put("id", record.getId());
+                recordData.put("patientID", userPT.getUserId());
+                recordData.put("doctorID", userDT.getUserId());
+                recordData.put("patientMedicalRecords",userPT.getName());
+                recordData.put("doctorMedicalRecords", userDT.getName());
+                recordData.put("description", record.getDescription());
+                recordData.put("createAt", record.getCreateAt());
+                recordData.put("updateAt", record.getUpdatedAt());
+                recordData.put("diagnosis", record.getDiagnosis());
+                recordData.put("treatmentPlan",record.getTreatmentPlan());
+                medicalRecordData.add(recordData);
+            }
+        }
+        model.addAttribute("medicalRecords", medicalRecordData);
+        System.out.println(medicalRecordData);
         return "doctorUpdateMedicalRecord";
     }
 
@@ -106,8 +139,32 @@ public class DoctorController {
         user.setIdentificationCard(user.getIdentificationCard());
         user.setGender(user.getGender());
         user.setDescription(user.getDescription());
-        System.out.println("==================================="+user);
         model.addAttribute("userInfo", user);
         return userServiceImpl.updateUser(user.getUserId(), user);
+    }
+
+    @PostMapping(value = "/updateMedicalRecord",consumes = "application/json")
+    public String updateMedicalRecord(@RequestBody Map<String, Object> medicalRecordData, Model model) {
+
+        String recordId = (String) medicalRecordData.get("recordId");
+        String patientID = (String) medicalRecordData.get("patientID");
+        String doctorID = (String) medicalRecordData.get("doctorID");
+        String createAt = (String) medicalRecordData.get("createAt");
+        String description = (String) medicalRecordData.get("description");
+        String diagnosis = (String) medicalRecordData.get("diagnosis");
+        String treatmentPlan = (String) medicalRecordData.get("treatmentPlan");
+        MedicalRecord medicalRecord = new MedicalRecord();
+        com.example.Booking_Care_Web.Models.Entities.User patient = userServiceImpl.findById(patientID);
+        com.example.Booking_Care_Web.Models.Entities.User doctor = userServiceImpl.findById(doctorID);
+        medicalRecord.setId(Integer.parseInt(recordId));
+        medicalRecord.setPatientMedicalRecords(patient);
+        medicalRecord.setDoctorMedicalRecords(doctor);
+        medicalRecord.setDiagnosis(diagnosis);
+        medicalRecord.setTreatmentPlan(treatmentPlan);
+        medicalRecord.setUpdatedAt(LocalDateTime.parse(createAt));
+        medicalRecord.setDescription(description);
+        medicalRecord.setUpdatedAt(LocalDateTime.now());
+        medicalRecordServiceImpl.updateMedicalRecord(medicalRecord);
+        return "doctorUpdateMedicalRecord";
     }
 }

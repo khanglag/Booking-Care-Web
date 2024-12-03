@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,9 +59,14 @@ public class MedicalRecordServiceImp implements MedicalRecordService {
     public List<MedicalRecord> findMedicalRecordsByDoctorId(String doctorId) {
         return medicalRecordRepository.findMedicalRecordByDoctorId(doctorId);
     }
-
+    @Override
+    public List<MedicalRecord> findMedicalRecordsByDoctorIdAndIncompleteFields(String id) {
+        return medicalRecordRepository.findMedicalRecordsByDoctorIdAndIncompleteFields(id);
+    }
     @Override
     public MedicalRecord findMedicalRecordByMedicalRecordID(Integer medicalRecordID) {
         return medicalRecordRepository.findById(medicalRecordID).orElse(null);
     }
+
+
 }

@@ -148,6 +148,17 @@ generateTimeSlots('13:30', '18:00', 'afternoon-schedule');
 function choosePackage(buttonElement) {
     const packageId = buttonElement.getAttribute("data-package-id");
     document.querySelector('.package_id').textContent = packageId;
+
+    const allPackages = document.querySelectorAll('.package-item');
+    allPackages.forEach(packageItem => {
+        packageItem.classList.remove('selected');
+    });
+
+    // Thêm lớp 'selected' vào package-item cha của nút bấm đã click
+    const packageItem = buttonElement.closest('.package-item');
+    if (packageItem) {
+        packageItem.classList.add('selected');
+    }
 }
 
 function booking(){
@@ -204,12 +215,12 @@ noteTextarea.addEventListener('input', () => {
 });
 
 function redirectIndex(){
-    // window.location.href = '/index';
-    const nameDoctor = document.querySelector('nameOfDoctor').value;
+     window.location.href = '/index';
+//const nameDoctor = document.querySelector('nameOfDoctor').value;
     // const phoneDoctor = document.querySelector('phoneOfDoctor').textContent;
     // const emailUser = document.querySelector('emailOfUser').textContent;
     // const nameUser = document.querySelector('nameOfUser').textContent;
     // const examination_day = document.querySelector('.examination_day').textContent;
     // console.log(nameDoctor, phoneDoctor,emailUser,nameUser,examination_day)
-    console.log(nameDoctor)
+    //console.log(nameDoctor)
 }

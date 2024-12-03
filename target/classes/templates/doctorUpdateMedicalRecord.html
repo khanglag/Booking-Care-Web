@@ -8,7 +8,7 @@
   <!-- css -->
   <link rel="stylesheet" th:href="@{/assets/css/index.css}" />
   <link rel="stylesheet" th:href="@{/assets/css/profile.css}" />
-  <link rel="stylesheet" th:href="@{/assets/css/individual.css}" />
+  <link rel="stylesheet" th:href="@{/assets/css/doctorUpdateMedicalRecord.css}" />
   <!-- Bootstrap CSS -->
   <link
           rel="stylesheet"
@@ -42,7 +42,58 @@
           </div>
         </div>
         <div class="content_post">
-
+          <div class="container mt-2">
+            <div th:each="record : ${medicalRecords}" class="record-container">
+              <div class="record-field  d-none">
+                <div class="record-label mr-2">ID record</div>
+                <div th:text="${record.id}"></div>
+              </div>
+              <div class="record-field  d-none">
+                <div class="record-label mr-2">DOCtor id</div>
+                <div th:text="${record.doctorID}"></div>
+              </div>
+              <div class="record-field d-flex">
+                <div class="record-label mr-2">ID bệnh nhân</div>
+                <div th:text="${record.patientID}"></div>
+              </div>
+              <div class="record-field d-flex">
+                <div class="record-label mr-2">Họ tên bệnh nhân</div>
+                <div th:text="${record.patientMedicalRecords}"></div>
+              </div>
+              <div class="record-field d-flex">
+                <div class="record-label mr-2">Bác sĩ</div>
+                <div th:text="${record.doctorMedicalRecords}"></div>
+              </div>
+              <div class="record-field">
+                <div class="record-label">Mô tả bệnh của bệnh nhân</div>
+                <textarea class="form-control textarea-field description" rows="3" th:text="${record.description}" placeholder="Nhập mô tả"></textarea>
+              </div>
+              <div class="record-field">
+                <div class="record-label">Chẩn đoán</div>
+                <textarea class="form-control textarea-field diagnosis" rows="3" th:text="${record.diagnosis}" placeholder="Nhập chẩn đoán"></textarea>
+              </div>
+              <div class="record-field">
+                <div class="record-label">Phác đồ điều trị bệnh</div>
+                <textarea class="form-control textarea-field treatmentPlan" rows="3" th:text="${record.treatmentPlan}" placeholder="Nhập phác đồ điều trị"></textarea>
+              </div>
+              <div class="record-field">
+                <div class="record-label">Thời gian bệnh nhân tạo hồ sơ</div>
+                <div th:text="${record.createAt}"></div>
+              </div>
+              <div class="text-end">
+                <button
+                        class="btn btn-primary btn-update"
+                        th:attr="
+                    data-record-id=${record.id},
+                    data-patient-id=${record.patientID},
+                    data-doctor-id=${record.doctorID},
+                    data-createAt=${record.createAt}"
+                        onclick="handleUpdate(this)">
+                  Cập nhật
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

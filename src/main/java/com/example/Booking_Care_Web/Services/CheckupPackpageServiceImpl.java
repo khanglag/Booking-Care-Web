@@ -53,4 +53,15 @@ public class CheckupPackpageServiceImpl implements CheckupPackpageService {
         }
         return checkupPackageRepository.save(checkuExisting);
     }
+
+    public String createCPId(){
+        String maxCPId = checkupPackageRepository.findMaxCP();
+        if (maxCPId == null){
+            maxCPId = "pg00000";
+        }
+        String numberPart = maxCPId.substring(2);
+        int newId= Integer.parseInt(numberPart) + 1;
+        return "pg" + String.format("%05d", newId);
+    }
+
 }

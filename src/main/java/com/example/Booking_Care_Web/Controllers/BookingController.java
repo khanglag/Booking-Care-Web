@@ -85,12 +85,11 @@ public class BookingController {
         appointment.setExamination_date(dateFormat.parse(examinationDayStr));
         appointment.setNote((String) appointmentData.get("note"));
         appointment.setStatus((String) appointmentData.get("status"));
-
-        System.out.println("=============appointment=================="+appointment);
         Appointment apm = new Appointment();
 
         User patient = userService.findById(appointment.getPatient_id());
         User doctor = userService.findById(appointment.getDoctor_id());
+//       emailService.sendAppointmentConfirmationEmail(patient.getEmail(),patient.getName(),examinationDayStr, doctor.getName(),doctor.getPhoneNumber());
         CheckupPackpage packageField = checkupPackpageServiceImpl.findById(appointment.getPackage_id());
         TimeFrame timeFrame = timeFrameServiceImpl.findById(appointment.getTime_id());
         apm.setPatient(patient);
@@ -101,12 +100,8 @@ public class BookingController {
         apm.setExaminationDay(appointment.getExamination_date());
         apm.setNote(appointment.getNote());
         apm.setStatus(appointment.getStatus());
-        System.out.println("=============apm=================="+apm);
         model.addAttribute("doctor", doctor);
         model.addAttribute("user", patient);
-        System.out.println(patient.getEmail());
-        emailService.sendAppointmentConfirmationEmail(patient.getEmail(),patient.getName(),examinationDayStr, doctor.getName(),doctor.getPhoneNumber());
-
        return appointmentServiceImpl.save(apm);
 
     }

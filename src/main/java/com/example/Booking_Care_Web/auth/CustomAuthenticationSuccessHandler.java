@@ -21,22 +21,22 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         String userId = ((org.springframework.security.core.userdetails.User) authentication.getPrincipal()).getUsername();
         request.getSession().setAttribute("userId", userId);
-        System.out.println("user id is " + userId);
+//        System.out.println("user id is " + userId);
         // Kiểm tra quyền của người dùng
         for (GrantedAuthority authority : authorities) {
             String role = authority.getAuthority();
             // Điều hướng theo Role
             if (role.equals("ROLE_Admin")) {
-                response.sendRedirect("/adminPage");
+                response.sendRedirect("/userManagement");
                 return;
             } else if (role.equals("ROLE_Doctor")) {
-                response.sendRedirect("/contact");
+                response.sendRedirect("/doctorPage/doctorProfile");
                 return;
             } else if (role.equals("ROLE_Patient")) {
                 response.sendRedirect("/index");
                 return;
             } else if (role.equals("ROLE_Supporter")) {
-                response.sendRedirect("/instruct");
+                response.sendRedirect("/supportPage/supportProfile");
                 return;
             }
         }

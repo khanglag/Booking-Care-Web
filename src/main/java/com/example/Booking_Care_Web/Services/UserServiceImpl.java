@@ -92,7 +92,9 @@ public class UserServiceImpl implements UserService {
         if (updateUser.getIdentificationCard() != null) {
             userExisting.setIdentificationCard(updateUser.getIdentificationCard());
         }
-
+        if (updateUser.getDescription() != null) {
+            userExisting.setDescription(updateUser.getDescription());
+        }
         // Lưu lại vào cơ sở dữ liệu
         return userRepository.save(userExisting);
     }
@@ -114,10 +116,11 @@ public class UserServiceImpl implements UserService {
             numberPart = maxPatientId.substring(5);
             newId = Integer.parseInt(numberPart) + 1;
             return "admin" + String.format("%02d",newId);
-        } else {
+        } else if(str.equals("sp")){
             numberPart = maxPatientId.substring(2);
             newId = Integer.parseInt(numberPart) + 1;
             return "sp" + String.format("%05d",newId);
         }
+        return null;
     }
 }

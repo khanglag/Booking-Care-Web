@@ -4,7 +4,7 @@
   <meta charset="UTF-8"
         name="viewport"
         content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Booking Care</title>
+  <title>Booking Admin</title>
   <!-- css -->
 
   <link rel="stylesheet" th:href="@{/assets/css/admin/admin.css}" />
@@ -26,8 +26,8 @@
 </head>
 <body>
 
-<div class="containerz">
-  <div class="navigation">
+<div  class="containerz">
+  <div th:fragment="nav" class="navigation">
     <ul>
       <li>
         <a href="#">
@@ -39,7 +39,7 @@
       </li>
 
       <li>
-        <a href="#">
+        <a th:href="@{/userManagement}">
                         <span class="icon">
                            <i class="fa-solid fa-user"></i>
                         </span>
@@ -48,7 +48,7 @@
       </li>
 
       <li>
-        <a href="#">
+        <a th:href="@{/checkupPackageManagement}">
                         <span class="icon">
                            <i class="fa-solid fa-notes-medical"></i>
                         </span>
@@ -57,7 +57,7 @@
       </li>
 
       <li>
-        <a href="#">
+        <a th:href="@{/statisticManagement}">
                         <span class="icon">
                            <i class="fa-solid fa-chart-simple"></i>
                         </span>
@@ -74,25 +74,26 @@
       </li>
     </ul>
   </div>
-
-
   <div class="main">
-    <div class="topbar">
-      <div class="toggle">
-        <i class="fa-solid fa-bars"></i>
+      <div th:fragment="head" class="d-flex mb-4">
+          <div class="topbar">
+              <div class="toggle">
+                  <i class="fa-solid fa-bars"></i>
+              </div>
+          </div>
+          <div th:if="${user != null}" class="mr-1 mt-1" style="padding-top: 8px">
+              <div class="dropdown">
+                  <button style="background: linear-gradient(45deg, #9beaff 1%, #346fdb)" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                           <span class="username" style="font-weight: bold; margin-right: 10px;">
+                                Xin chào, <span th:text="${user.name}"></span>
+                            </span>
+                  </button>
+                  <div class="dropdown-menu">
+                      <a th:href="@{/logout}" class=" dropdown-item">Đăng xuất </a>
+                  </div>
+              </div>
+          </div>
       </div>
-
-      <div class="search">
-        <label>
-          <input type="text" placeholder="Search here">
-          <ion-icon name="search-outline"></ion-icon>
-        </label>
-      </div>
-
-      <div class="user">
-        <img th:src="@{/assets/images/avata.png}" alt="" />
-      </div>
-    </div>
   </div>
 </div>
 <script th:src="@{/assets/js/admin/adminPage.js}"></script>

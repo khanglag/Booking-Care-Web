@@ -169,7 +169,6 @@ function booking(){
         note:noteTextarea,
         status:status,
     })
-    console.log(jsonData)
     fetch('/booking', {
         method: "POST",
         headers: {
@@ -181,6 +180,7 @@ function booking(){
             if (response.ok) {
                 const bookingModal = new bootstrap.Modal(document.getElementById('bookingSuccessModal'));
                 bookingModal.show();
+
             }else {
                 console.error('Booking unsuccess'+response.status);
             }
@@ -202,3 +202,14 @@ document.querySelector('.available_datetime').textContent = formattedDate;
 noteTextarea.addEventListener('input', () => {
     note.textContent = noteTextarea.value;
 });
+
+function redirectIndex(){
+    // window.location.href = '/index';
+    const nameDoctor = document.querySelector('nameOfDoctor').value;
+    // const phoneDoctor = document.querySelector('phoneOfDoctor').textContent;
+    // const emailUser = document.querySelector('emailOfUser').textContent;
+    // const nameUser = document.querySelector('nameOfUser').textContent;
+    // const examination_day = document.querySelector('.examination_day').textContent;
+    // console.log(nameDoctor, phoneDoctor,emailUser,nameUser,examination_day)
+    console.log(nameDoctor)
+}

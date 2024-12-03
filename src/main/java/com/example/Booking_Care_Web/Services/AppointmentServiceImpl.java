@@ -147,7 +147,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate startDate = LocalDate.parse(startDateStr, formatter);
         LocalDate endDate = LocalDate.parse(endDateStr, formatter);
-
+        System.out.println("==đã chuyển thành localdate====="+startDate+"======"+ endDate);
         // Lấy kết quả từ repository
         List<Object[]> results = appointmentRepository.countAppointmentsByDateRange(startDateStr, endDateStr);
 
@@ -155,13 +155,21 @@ public class AppointmentServiceImpl implements AppointmentService {
         List<Map<String, Object>> appointmentsByDate = new ArrayList<>();
         Map<LocalDate, Long> appointmentDataMap = new HashMap<>();
 
-        // Lưu kết quả query vào map để dễ dàng tra cứu
         for (Object[] result : results) {
-            // Sử dụng toLocalDate() thay vì toInstant().atZone()
-            LocalDate date = ((java.sql.Date) result[0]).toLocalDate(); // Convert to LocalDate
-            Long appointmentCount = (Long) result[1];
-            appointmentDataMap.put(date, appointmentCount);
+            // Kiểm tra kiểu dữ liệu của result[0]
+            if (result[0] instanceof java.sql.Timestamp) {
+                LocalDate date = ((java.sql.Timestamp) result[0]).toLocalDateTime().toLocalDate(); // Convert Timestamp to LocalDate
+                Long appointmentCount = (Long) result[1];
+                appointmentDataMap.put(date, appointmentCount);
+            } else if (result[0] instanceof java.sql.Date) {
+                LocalDate date = ((java.sql.Date) result[0]).toLocalDate(); // Convert Date to LocalDate
+                Long appointmentCount = (Long) result[1];
+                appointmentDataMap.put(date, appointmentCount);
+            } else {
+                throw new IllegalArgumentException("Unsupported date type: " + result[0].getClass());
+            }
         }
+
 
 
         // Duyệt qua tất cả các ngày trong khoảng thời gian và đảm bảo mỗi ngày có dữ liệu

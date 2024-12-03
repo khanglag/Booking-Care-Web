@@ -1,23 +1,4 @@
-<!--<!DOCTYPE html>-->
-<!--<html xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <title>Appointment Confirmation</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<h2>Hello, <span th:text="${patientName}">Patient</span>!</h2>-->
-<!--<p>We have received your appointment request:</p>-->
-<!--<ul>-->
-<!--    <li><strong>Ngày:</strong> <span th:text="${appointmentDate}">[Appointment Date]</span></li>-->
-<!--    <li><strong>Time:</strong> <span th:text="${appointmentTime}">[Appointment Time]</span></li>-->
-<!--    <li><strong>Doctor:</strong> <span th:text="${doctorName}">[Doctor Name]</span></li>-->
-<!--    <li><strong>Phone Number:</strong> <span th:text="${phoneNumber}">[Phone Number]</span></li>-->
-<!--</ul>-->
-<!--<p>Đội ngũ của chúng tôi sẽ liên hệ với bạn qua số điện thoại đã cung cấp để xác nhận cuộc hẹn của bạn.</p>-->
-<!--<p>Nếu bạn có bất kỳ thắc mắc nào, vui lòng liên hệ với chúng tôi qua email <strong>support@example.com</strong>.</p>-->
-<!--<p>Xin cảm ơn bạn đã lựa chọn dịch vụ của chúng tôi!</p>-->
-<!--<p>Trân trọng,<br>Đội ngũ phòng khám của bạn</p>-->
-<!--</body>-->
-<!--</html>-->
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="vi">
 <head>
@@ -28,20 +9,15 @@
 </head>
 <body class="bg-light">
 <div class="container py-5">
-    <!-- Tiêu đề -->
+
     <div class="text-center mb-4">
         <h1 class="text-primary" style="color: #00b5f1;text-align: center;">THƯ XÁC NHẬN CUỘC HẸN</h1>
         <p class="text-muted" style="font-size: 20px">Thông tin chi tiết về cuộc hẹn của bạn</p>
     </div>
-
-    <!-- Nội dung chính -->
     <div class="card shadow-sm">
         <div class="card-body">
-            <!-- Lời chào -->
             <h2 class="card-title">Xin chào, <span th:text="${patientName}">[Tên bệnh nhân]</span>!</h2>
             <p class="card-text">Chúng tôi đã nhận được yêu cầu đặt lịch hẹn của bạn:</p>
-
-            <!-- Thông tin cuộc hẹn -->
             <ul class="list-group list-group-flush mb-4">
                 <li class="list-group-item">
                     <strong>Ngày:</strong> <span th:text="${appointmentDate}">[Ngày hẹn]</span>
@@ -54,15 +30,12 @@
                     <strong>Số điện thoại:</strong> <span th:text="${phoneNumber}">[Số điện thoại]</span>
                 </li>
             </ul>
-
-            <!-- Lưu ý và liên hệ -->
             <p class="text-muted">
                 Đội ngũ của chúng tôi sẽ liên hệ với bạn qua số điện thoại đã cung cấp để xác nhận lịch hẹn.
                 Nếu bạn có bất kỳ thắc mắc nào, vui lòng liên hệ với chúng tôi qua email
                 <a href="mailto:support@example.com" class="text-decoration-none">support@example.com</a>.
             </p>
 
-            <!-- Cảm ơn -->
             <p class="mb-0 text-primary">
                 Xin cảm ơn bạn đã tin tưởng và sử dụng dịch vụ của chúng tôi!
             </p>
@@ -71,7 +44,6 @@
     </div>
 </div>
 
-<!-- Footer -->
 <footer class="text-center mt-5 py-4 bg-white shadow-sm">
     <p class="mb-0 text-muted">© 2024 Phòng khám của bạn. Mọi quyền được bảo lưu.</p>
 </footer>

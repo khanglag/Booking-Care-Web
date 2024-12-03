@@ -22,7 +22,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 
     @Query(value = "SELECT WEEK(examination_day) as week, COUNT(*) as appointmentCount " +
             "FROM appointment " +
-            "WHERE status = 'CONFIRMED' " +
+            "WHERE status = 'ĐÃ DUYỆT' " +
             "GROUP BY WEEK(examination_day) " +
             "ORDER BY week", nativeQuery = true)
     List<Object[]> countAppointmentsByWeek();
@@ -39,7 +39,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 
     @Query(value = "SELECT MONTH(examination_day) as month, COUNT(*) as appointmentCount " +
             "FROM appointment " +
-            "WHERE status = 'CONFIRMED' " +
+            "WHERE status = 'ĐÃ DUYỆT' " +
             "AND YEAR(examination_day) = :year " +
             "GROUP BY MONTH(examination_day) " +
             "ORDER BY month", nativeQuery = true)

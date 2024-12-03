@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Booking Admin</title>
+  <!-- css -->
+
+  <link rel="stylesheet" th:href="@{/assets/css/admin/admin.css}" />
+  <!-- Bootstrap CSS -->
+  <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous"
+  />
+  <!-- font awesome -->
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+  />
+<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div  class="containerz">
+      <div th:replace="adminPage :: nav"></div>
+      <div class="main">
+        <div th:replace="adminPage :: head"  class="d-flex">
+          <div class="topbar">
+            <div class="toggle">
+              <i class="fa-solid fa-bars"></i>
+            </div>
+          </div>
+          <div th:if="${user != null}" class="mr-1 mt-1">
+            <div class="dropdown">
+              <button style="background: linear-gradient(45deg, #9beaff 1%, #346fdb)" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                               <span class="username" style="font-weight: bold; margin-right: 10px;">
+                                    Xin chào, <span th:text="${user.name}"></span>
+                                </span>
+              </button>
+              <div class="dropdown-menu">
+                <a th:href="@{/logout}" class=" dropdown-item">Đăng xuất </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div  class="groupChart d-flex">
+          <div style="width: 50%;" class="chartByYear">
+            <form action="/statisticManagement" method="get" id="yearForm" style="margin-left: 22px">
+              <label for="year">Chọn năm:</label>
+              <select id="year" name="year" class="form-control" onchange="document.getElementById('yearForm').submit()">
+                <option value="" disabled selected>Chọn năm</option>
+                <option th:each="y : ${#numbers.sequence(2020, 2025)}" th:value="${y}" th:text="${y}"></option>
+              </select>
+            </form>
+            <div class="container">
+              <h2 align="center" style="font-size: 20px;color: rebeccapurple;">
+                Thống kê số lượng cuộc hẹn trong năm
+                <span th:text="${year}"></span>
+              </h2>
+              <div id="container" style="width: 100%; height: 400px; margin: 0 auto;"></div>
+            </div>
+          </div>
+          <div class="container">
+            <form th:action="@{/statisticManagement}" method="get">
+              <div class="row ">
+                <div class="col-md-5">
+                  <label for="startDate">Ngày bắt đầu:</label>
+                  <input type="date" id="startDate" name="startDate"
+                         class="form-control" th:value="${startDate}">
+                </div>
+                <div class="col-md-5">
+                  <label for="endDate">Ngày kết thúc:</label>
+                  <input type="date" id="endDate" name="endDate"
+                         class="form-control" th:value="${endDate}">
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                  <button type="submit" class="btn btn-primary">Thống kê</button>
+                </div>
+              </div>
+            </form>
+            <h2 align="center" style="font-size: 20px;color: rebeccapurple;">Thống kê số lượng cuộc hẹn từ <span th:text="${startDate}"></span> đến <span th:text="${endDate}"></span></h2>
+            <div>
+              <canvas id="appointmentChart" width="400" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+<script th:src="@{/assets/js/admin/adminPage.js}"></script>
+<script th:src="@{/assets/js/admin/statisticManagement.js}"></script>
+<script th:inline="javascript">
+  $(function () {
+    // Dữ liệu từ server (được Thymeleaf render)
+    var dataList = /*[[${canvajsDataList}]]*/ [];
+    var categories = dataList.map(data => 'Tháng ' + data.month);
+    var values = dataList.map(data => data.appointmentCount);
+
+    // Cấu hình biểu đồ Highcharts
+    Highcharts.chart('container', {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: ''
+      },
+      subtitle: {
+        text: ''
+      },
+      xAxis: {
+        categories: categories,
+        crosshair: true
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Số lượng cuộc hẹn'
+        }
+      },
+      tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y}</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+      },
+      plotOptions: {
+        column: {
+          pointPadding: 0.2,
+          borderWidth: 0
+        }
+      },
+      series: [{
+        name: 'Số lượng',
+        data: values
+      }]
+    });
+  });
+  $(document).ready(function() {
+    // Lấy dữ liệu từ server (được Thymeleaf render)
+    var dataList = /*[[${appointmentsByDate}]]*/ [];
+
+    // Lấy danh sách ngày và số cuộc hẹn
+    var labels = dataList.map(data => data.date);  // Danh sách ngày
+    var dataPoints = dataList.map(data => data.appointmentCount);  // Số cuộc hẹn
+
+    // Vẽ biểu đồ Line với Chart.js
+    var ctx = document.getElementById('appointmentChart').getContext('2d');
+    var chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Số Cuộc Hẹn',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          data: dataPoints,
+          fill: true
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          x: {
+            beginAtZero: true
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1 // Chỉ hiển thị số nguyên
+            }
+          }
+        }
+      }
+    });
+  });
+</script>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"
+></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"
+></script>
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"
+></script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Booking Admin</title>
+  <!-- css -->
+  <link rel="stylesheet" th:href="@{/assets/css/admin/admin.css}" />
+    <link rel="stylesheet" th:href="@{/assets/css/admin/userManagement.css}" />
+  <!-- Bootstrap CSS -->
+  <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous"
+  />
+  <!-- font awesome -->
+  <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer"
+  />
+</head>
+<body>
+<div  class="containerz">
+    <div th:replace="adminPage :: nav">
+    </div>
+    <div class="main">
+        <div th:replace="adminPage :: head"  class="d-flex">
+            <div class="topbar">
+                <div class="toggle">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </div>
+            <div th:if="${user != null}" class="mr-1 mt-1">
+                <div class="dropdown">
+                    <button style="background: linear-gradient(45deg, #9beaff 1%, #346fdb)" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                           <span class="username" style="font-weight: bold; margin-right: 10px;">
+                                Xin chào, <span th:text="${user.name}"></span>
+                            </span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a th:href="@{/logout}" class=" dropdown-item">Đăng xuất </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex" style="justify-content: space-between">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter" style="margin-left: 22px;height: 50%">
+                Tạo tài khoản
+            </button>
+            <div class="input-group mb-3" style="width: 50%">
+                <input type="text" oninput="filterTable()" class="form-control" placeholder="Tìm theo tên, email, id, địa chỉ, giới tính, căn cước" aria-label="Recipient's username" aria-describedby="basic-addon2" id="searchInput">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-success" type="button">Tìm kiếm</button>
+                </div>
+            </div>
+        </div>
+        <table id="userTable" class="table mt-3 mr-2 styled-table" style="width: 98% !important;">
+            <thead>
+            <tr>
+                <th>STT</th>
+                <th>ID</th>
+                <th>HỌ TÊN</th>
+                <th>SĐT</th>
+                <th>CĂN CƯỚC</th>
+                <th>ĐỊA CHỈ</th>
+                <th>EMAIL</th>
+                <th>GIỚI TÍNH</th>
+                <th>ACTION</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user, iterStat : ${listUser}">
+                <td th:text="${iterStat.count}"></td>
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.phone}"></td>
+                <td th:text="${user.identificationCard}"></td>
+                <td th:text="${user.address}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.gender}"></td>
+                <td>
+                    <button type="button" class="btn btn-success btn_update_info" onclick="editUser(this)" data-toggle="modal" data-target="#exampleModal">
+                        EDIT
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cập nhật thông tin </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input class="form-control mb-3 input_idOfUser d-none" type="text"  name="id" placeholder="ID" >
+                        <input class="form-control mb-3 input_nameOfUser" type="text"  name="name" placeholder="Họ và tên" disabled >
+                        <select class="form-control mb-3 input_sexOfUser">
+                            <option>Nam</option>
+                            <option>Nữ</option>
+                        </select>
+                        <input class="form-control mb-3 input_identificationOfUser" type="text"  name="identification" placeholder="Căn cước công dân" >
+                        <input class="form-control mb-3 input_phoneOfUser" type="text"  name="phone" placeholder="Số điện thoại" >
+                        <input class="form-control mb-3 input_emailOfUser" type="text"  name="email" placeholder="Email" disabled>
+                        <input class="form-control input_addressOfUser" type="text"  name="address" placeholder="Địa chỉ" >
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn btn-success" id="btn_saveInfoUser">Lưu thông tin</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle" style="font-weight: bold; color: #45a049">Tạo tài khoản</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p style="margin-bottom: 0 !important;">Chọn loại người dùng</p>
+                        <div style="margin-top: 10px !important;" class="radio-group">
+                            <div class="radio-item d-flex">
+                                <input type="radio" id="option1" name="number" value="admin00" onchange="displaySelection(this)">
+                                <label for="option1">Admin</label>
+                            </div>
+                            <div class="radio-item d-flex">
+                                <input type="radio" id="option2" name="number" value="doctor0" onchange="displaySelection(this)">
+                                <label for="option2">Bác sĩ</label>
+                            </div>
+                            <div class="radio-item d-flex">
+                                <input type="radio" id="option3" name="number" value="support" onchange="displaySelection(this)">
+                                <label for="option3">Người hỗ trợ</label>
+                            </div>
+                            <div class="radio-item d-flex">
+                                <input type="radio" id="option4" name="number" value="patient" onchange="displaySelection(this)">
+                                <label for="option4">Bệnh nhân</label>
+                            </div>
+                        </div>
+                        <div id="result" class="result d-none"></div>
+                        <form class="mb-3" method="POST" action="/userManagement">
+                            <input class="form-control mt-3" type="text" id="name" name="name" placeholder="Họ và tên" required>
+                            <input class="form-control mt-3" type="text" id="email" name="email" placeholder="Email" required>
+                            <input class="form-control mt-3" type="text" id="username" name="username" placeholder="Username đăng nhập" required>
+                            <input class="form-control mt-3" type="password" id="password" name="password" placeholder="Mật khẩu" required>
+                            <input class="form-control mt-3" type="password" id="repass" name="repass" placeholder="Nhập lại mật khẩu" required>
+                            <button type="submit" class="btn btn-success mt-3" id="btnSubmitAdmin">Đăng kí</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/assets/js/admin/adminPage.js}"></script>
+<script th:src="@{/assets/js/admin/userManagement.js}"></script>
+<script
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"
+></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"
+></script>
+<script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"
+></script>
+</body>
+</html>

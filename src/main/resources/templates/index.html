@@ -78,8 +78,9 @@
                     <div class="dropdown">
                         <button style="background: linear-gradient(45deg, #9beaff 1%, #346fdb)" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                            <span class="username" style="font-weight: bold; margin-right: 10px;">
-                                Xin chào, <span th:text="${user.name}"></span>
+                                Xin chào, <span th:text="${user.name}" class="nameOfUser"></span>
                             </span>
+                            <span th:text="${user.email}" class="emailOfUser d-none"></span>
                         </button>
                         <div class="dropdown-menu">
                             <a th:href="@{/profile/individual}" class="dropdown-item" href="#">Hồ sơ cá nhân</a>

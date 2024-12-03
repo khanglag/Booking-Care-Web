@@ -121,6 +121,9 @@ public class HomeController {
             session.setAttribute("userID", user_normal.getUserId());
             session.setAttribute("authentication", authentication);
             model.addAttribute("user", user_normal);
+            if(account.getRole().equals("patient")) {
+                return "signin";
+            }
 
         }
         if (principal instanceof OAuth2User) {

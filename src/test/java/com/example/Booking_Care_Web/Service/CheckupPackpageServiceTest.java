@@ -29,10 +29,10 @@ public class CheckupPackpageServiceTest {
     public void testCreatePackpage(){
 
         CheckupPackpage checkupPackpageDTO = new CheckupPackpage();
-        checkupPackpageDTO.setPackageId("0000026");
+        checkupPackpageDTO.setPackageId(checkupPackpageServiceImp.createCPId());
         checkupPackpageDTO.setName("Goi kham");
         checkupPackpageDTO.setDescription("xet nghiem j do");
-        checkupPackpageDTO.setAmount(Double.valueOf("223"));
+        checkupPackpageDTO.setAmount(Double.valueOf("223000"));
 
         System.out.println(checkupPackpageDTO);
         CheckupPackpage savedCP = checkupPackpageServiceImp.saveCheckupPackpage(checkupPackpageDTO);

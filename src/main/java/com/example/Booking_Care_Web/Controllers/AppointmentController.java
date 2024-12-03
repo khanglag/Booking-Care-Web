@@ -38,10 +38,10 @@ public class AppointmentController {
     private AccountService accountService;
     @Autowired
     private UserServiceImpl userServiceImpl;
-//    @GetMapping("/api/weekly-appointments-chart")
-//    public List<Map<String, Object>> getWeeklyAppointmentsChart() {
-//        return appointmentService.getAppointmentsByWeek();
-//    }
+    // @GetMapping("/api/weekly-appointments-chart")
+    // public List<Map<String, Object>> getWeeklyAppointmentsChart() {
+    // return appointmentService.getAppointmentsByWeek();
+    // }
 
     @GetMapping("/weekly-appointments-chart")
     public String goWeekly(Model model) {
@@ -53,6 +53,7 @@ public class AppointmentController {
         // Trả về tên view (HTML hoặc Thymeleaf template)
         return "weekly-appointments";
     }
+
     @GetMapping("/chart")
     public void generateChart(HttpServletResponse response) throws IOException {
         List<Map<String, Object>> weeklyAppointments = appointmentService.getAppointmentsByWeek();
@@ -61,20 +62,19 @@ public class AppointmentController {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (Map<String, Object> appointment : weeklyAppointments) {
             dataset.addValue(
-                    ((Number)appointment.get("appointmentCount")).doubleValue(),
+                    ((Number) appointment.get("appointmentCount")).doubleValue(),
                     "Số Cuộc Hẹn",
-                    "Tuần " + appointment.get("week")
-            );
+                    "Tuần " + appointment.get("week"));
         }
 
         // Tạo biểu đồ
         JFreeChart chart = ChartFactory.createBarChart(
-                "Số Cuộc Hẹn Theo Tuần",  // Tiêu đề
-                "Tuần",                   // Nhãn trục X
-                "Số Lượng",               // Nhãn trục Y
-                dataset,                  // Dataset
+                "Số Cuộc Hẹn Theo Tuần", // Tiêu đề
+                "Tuần", // Nhãn trục X
+                "Số Lượng", // Nhãn trục Y
+                dataset, // Dataset
                 PlotOrientation.VERTICAL, // Hướng biểu đồ
-                true, true, false         // Các tùy chọn legend, tooltips, URLs
+                true, true, false // Các tùy chọn legend, tooltips, URLs
         );
 
         // Thiết lập màu sắc
@@ -85,38 +85,43 @@ public class AppointmentController {
         ChartUtils.writeChartAsPNG(response.getOutputStream(), chart, 600, 400);
     }
 
-//    @GetMapping("/api/appointments-by-date")
-//    public List<Map<String, Object>> getAppointmentsByDateRange(
-//            @RequestParam("startDate") String startDate,
-//            @RequestParam("endDate") String endDate) {
-//        return appointmentService.getAppointmentsByDateRange(startDate, endDate);
-//    }
+    // @GetMapping("/api/appointments-by-date")
+    // public List<Map<String, Object>> getAppointmentsByDateRange(
+    // @RequestParam("startDate") String startDate,
+    // @RequestParam("endDate") String endDate) {
+    // return appointmentService.getAppointmentsByDateRange(startDate, endDate);
+    // }
 
-//    @GetMapping("/appointments-by-year")
-//    public List<Map<String, Object>> getAppointmentsByYear(@PathVariable String year) {
-//        return appointmentService.getAppointmentsByYear(year);
-//    }
+    // @GetMapping("/appointments-by-year")
+    // public List<Map<String, Object>> getAppointmentsByYear(@PathVariable String
+    // year) {
+    // return appointmentService.getAppointmentsByYear(year);
+    // }
 
-//    @GetMapping("/statisticManagement")
-//    public String generateChartAppointmentByYear(ModelMap modelMap, @PathVariable String year, Authentication authentication, HttpSession session,Model model) {
-//        authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Object principal = authentication.getPrincipal();
-//        if (principal instanceof UserDetails) {
-//            User user = (User) principal;
-//            String username = user.getUsername();
-//            Account account = accountService.findByUsername(username);
-//            com.example.Booking_Care_Web.Models.Entities.User user_normal = userServiceImpl.findById(account.getAccountId());
-//            session.setAttribute("user", user_normal);
-//            session.setAttribute("userID", user_normal.getUserId());
-//            session.setAttribute("authentication", authentication);
-//            model.addAttribute("user", user_normal);
-//        }
-//        List<Map<String, Object>> canvajsDataList = appointmentService.getAppointmentsByYear(year);
-//        System.out.println("Data sent to view: " + canvajsDataList);
-//        modelMap.addAttribute("canvajsDataList", canvajsDataList);
-//        modelMap.addAttribute("year", year);
-//        return "admin/statisticManagement";
-//    }
+    // @GetMapping("/statisticManagement")
+    // public String generateChartAppointmentByYear(ModelMap modelMap, @PathVariable
+    // String year, Authentication authentication, HttpSession session,Model model)
+    // {
+    // authentication = SecurityContextHolder.getContext().getAuthentication();
+    // Object principal = authentication.getPrincipal();
+    // if (principal instanceof UserDetails) {
+    // User user = (User) principal;
+    // String username = user.getUsername();
+    // Account account = accountService.findByUsername(username);
+    // com.example.Booking_Care_Web.Models.Entities.User user_normal =
+    // userServiceImpl.findById(account.getAccountId());
+    // session.setAttribute("user", user_normal);
+    // session.setAttribute("userID", user_normal.getUserId());
+    // session.setAttribute("authentication", authentication);
+    // model.addAttribute("user", user_normal);
+    // }
+    // List<Map<String, Object>> canvajsDataList =
+    // appointmentService.getAppointmentsByYear(year);
+    // System.out.println("Data sent to view: " + canvajsDataList);
+    // modelMap.addAttribute("canvajsDataList", canvajsDataList);
+    // modelMap.addAttribute("year", year);
+    // return "admin/statisticManagement";
+    // }
     @GetMapping("/statisticManagement")
     public String generateChartAppointmentByYear(
             @RequestParam(required = false) String year,
@@ -132,7 +137,8 @@ public class AppointmentController {
             User user = (User) principal;
             String username = user.getUsername();
             Account account = accountService.findByUsername(username);
-            com.example.Booking_Care_Web.Models.Entities.User user_normal = userServiceImpl.findById(account.getAccountId());
+            com.example.Booking_Care_Web.Models.Entities.User user_normal = userServiceImpl
+                    .findById(account.getAccountId());
             session.setAttribute("user", user_normal);
             session.setAttribute("userID", user_normal.getUserId());
             session.setAttribute("authentication", authentication);
@@ -148,13 +154,14 @@ public class AppointmentController {
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedStartDate = null;
         String formattedEndDate = null;
-        if(startDate == null || startDate.isEmpty() || endDate == null || endDate.isEmpty()) {
+        if (startDate == null || startDate.isEmpty() || endDate == null || endDate.isEmpty()) {
             LocalDate now = LocalDate.now();
             LocalDate firstDayOfMonth = now.withDayOfMonth(1); // Ngày đầu tháng
             LocalDate lastDayOfMonth = now.withDayOfMonth(now.lengthOfMonth()); // Ngày cuối tháng
             startDate = firstDayOfMonth.format(outputFormatter); // Chuyển sang định dạng yyyy-MM-dd
             endDate = lastDayOfMonth.format(outputFormatter);
-            List<Map<String, Object>> appointmentsByDate = appointmentService.getAppointmentsByDateRange(startDate, endDate);
+            List<Map<String, Object>> appointmentsByDate = appointmentService.getAppointmentsByDateRange(startDate,
+                    endDate);
             modelMap.addAttribute("appointmentsByDate", appointmentsByDate);
             modelMap.addAttribute("startDate", startDate);
             modelMap.addAttribute("endDate", endDate);
@@ -171,14 +178,17 @@ public class AppointmentController {
                 formattedEndDate = end.format(outputFormatter);
             }
             if (formattedStartDate != null && formattedEndDate != null) {
-                System.out.println("==============Sau khi chuyển đổi ===============" + formattedStartDate+formattedEndDate);
-                List<Map<String, Object>> appointmentsByDate = appointmentService.getAppointmentsByDateRange(formattedStartDate, formattedEndDate);
+                System.out.println(
+                        "==============Sau khi chuyển đổi ===============" + formattedStartDate + formattedEndDate);
+                List<Map<String, Object>> appointmentsByDate = appointmentService
+                        .getAppointmentsByDateRange(formattedStartDate, formattedEndDate);
                 modelMap.addAttribute("appointmentsByDate", appointmentsByDate);
                 System.out.println("=============================" + appointmentsByDate);
             }
 
         } catch (DateTimeParseException e) {
-            modelMap.addAttribute("errorMessage", "Định dạng ngày tháng không hợp lệ. Vui lòng nhập theo định dạng yyyy-MM-dd.");
+            modelMap.addAttribute("errorMessage",
+                    "Định dạng ngày tháng không hợp lệ. Vui lòng nhập theo định dạng yyyy-MM-dd.");
             return "admin/statisticManagement";
         }
         modelMap.addAttribute("startDate", formattedStartDate);
@@ -186,74 +196,84 @@ public class AppointmentController {
         return "admin/statisticManagement";
     }
 
-
     // Phương thức để lấy số cuộc hẹn theo ngày trong khoảng thời gian
-//    @RequestMapping("/appointmentsByDateRange")
-//    public String getAppointmentsByDateRange(ModelMap modelMap, @RequestParam String startDate, @RequestParam String endDate) {
-//        // Gọi service để lấy dữ liệu cuộc hẹn theo khoảng thời gian
-//        List<Map<String, Object>> appointmentsByDate = appointmentService.getAppointmentsByDateRange(startDate, endDate);
-//
-//        // Gửi dữ liệu sang view
-//        modelMap.addAttribute("appointmentsByDate", appointmentsByDate);
-//        modelMap.addAttribute("startDate", startDate);
-//        modelMap.addAttribute("endDate", endDate);
-//
-//        return "appointmentsByDate"; // Tên view JSP hoặc Thymeleaf
-//    }
-//    @RequestMapping("/statisticManagement/{year}")
-//    public String generateChartAppointmentByYear(
-//            ModelMap modelMap,
-//            @PathVariable String year,
-//            Authentication authentication,
-//            HttpSession session,
-//            Model model,
-//            @RequestParam(required = false) String startDate,
-//            @RequestParam(required = false) String endDate) {
-//
-//        // Xử lý thông tin người dùng (giữ nguyên như bạn đã viết)
-//        authentication = SecurityContextHolder.getContext().getAuthentication();
-//        Object principal = authentication.getPrincipal();
-//        if (principal instanceof UserDetails) {
-//            User user = (User) principal;
-//            String username = user.getUsername();
-//            Account account = accountService.findByUsername(username);
-//            com.example.Booking_Care_Web.Models.Entities.User user_normal = userServiceImpl.findById(account.getAccountId());
-//            session.setAttribute("user", user_normal);
-//            session.setAttribute("userID", user_normal.getUserId());
-//            session.setAttribute("authentication", authentication);
-//            model.addAttribute("user", user_normal);
-//        }
-//
-//        // Dữ liệu biểu đồ theo năm
-//        List<Map<String, Object>> canvajsDataList = appointmentService.getAppointmentsByYear(year);
-//        modelMap.addAttribute("canvajsDataList", canvajsDataList);
-//        modelMap.addAttribute("year", year);
-//
-//        // Xử lý dữ liệu biểu đồ theo ngày (nếu có startDate và endDate)
-//        if (startDate != null && endDate != null) {
-//            List<Map<String, Object>> appointmentsByDate = appointmentService.getAppointmentsByDateRange(startDate, endDate);
-//            modelMap.addAttribute("appointmentsByDate", appointmentsByDate);
-//            modelMap.addAttribute("startDate", startDate);
-//            modelMap.addAttribute("endDate", endDate);
-//        } else {
-//            // Thiết lập giá trị mặc định nếu không có ngày
-//            modelMap.addAttribute("startDate", "2024-01-01");
-//            modelMap.addAttribute("endDate", "2024-12-31");
-//            modelMap.addAttribute("appointmentsByDate", new ArrayList<>()); // Dữ liệu trống
-//        }
-//
-//        return "admin/statisticManagement";
-//    }
+    // @RequestMapping("/appointmentsByDateRange")
+    // public String getAppointmentsByDateRange(ModelMap modelMap, @RequestParam
+    // String startDate, @RequestParam String endDate) {
+    // // Gọi service để lấy dữ liệu cuộc hẹn theo khoảng thời gian
+    // List<Map<String, Object>> appointmentsByDate =
+    // appointmentService.getAppointmentsByDateRange(startDate, endDate);
+    //
+    // // Gửi dữ liệu sang view
+    // modelMap.addAttribute("appointmentsByDate", appointmentsByDate);
+    // modelMap.addAttribute("startDate", startDate);
+    // modelMap.addAttribute("endDate", endDate);
+    //
+    // return "appointmentsByDate"; // Tên view JSP hoặc Thymeleaf
+    // }
+    // @RequestMapping("/statisticManagement/{year}")
+    // public String generateChartAppointmentByYear(
+    // ModelMap modelMap,
+    // @PathVariable String year,
+    // Authentication authentication,
+    // HttpSession session,
+    // Model model,
+    // @RequestParam(required = false) String startDate,
+    // @RequestParam(required = false) String endDate) {
+    //
+    // // Xử lý thông tin người dùng (giữ nguyên như bạn đã viết)
+    // authentication = SecurityContextHolder.getContext().getAuthentication();
+    // Object principal = authentication.getPrincipal();
+    // if (principal instanceof UserDetails) {
+    // User user = (User) principal;
+    // String username = user.getUsername();
+    // Account account = accountService.findByUsername(username);
+    // com.example.Booking_Care_Web.Models.Entities.User user_normal =
+    // userServiceImpl.findById(account.getAccountId());
+    // session.setAttribute("user", user_normal);
+    // session.setAttribute("userID", user_normal.getUserId());
+    // session.setAttribute("authentication", authentication);
+    // model.addAttribute("user", user_normal);
+    // }
+    //
+    // // Dữ liệu biểu đồ theo năm
+    // List<Map<String, Object>> canvajsDataList =
+    // appointmentService.getAppointmentsByYear(year);
+    // modelMap.addAttribute("canvajsDataList", canvajsDataList);
+    // modelMap.addAttribute("year", year);
+    //
+    // // Xử lý dữ liệu biểu đồ theo ngày (nếu có startDate và endDate)
+    // if (startDate != null && endDate != null) {
+    // List<Map<String, Object>> appointmentsByDate =
+    // appointmentService.getAppointmentsByDateRange(startDate, endDate);
+    // modelMap.addAttribute("appointmentsByDate", appointmentsByDate);
+    // modelMap.addAttribute("startDate", startDate);
+    // modelMap.addAttribute("endDate", endDate);
+    // } else {
+    // // Thiết lập giá trị mặc định nếu không có ngày
+    // modelMap.addAttribute("startDate", "2024-01-01");
+    // modelMap.addAttribute("endDate", "2024-12-31");
+    // modelMap.addAttribute("appointmentsByDate", new ArrayList<>()); // Dữ liệu
+    // trống
+    // }
+    //
+    // return "admin/statisticManagement";
+    // }
 
+    // @RequestMapping("/appointmentByYear/{year}")
+    // public String abc(ModelMap modelMap, @PathVariable String year) {
+    // List<Map<String, Object>> canvajsDataList =
+    // appointmentService.getAppointmentsByYear(year);
+    // System.out.println("Data sent to view: " + canvajsDataList);
+    // modelMap.addAttribute("canvajsDataList", canvajsDataList);
+    // modelMap.addAttribute("year", year);
+    // return "admin/statisticManagement"; // Đổi trả về file statisticManagement
+    // }
 
+    @GetMapping("/VNPay/{total}")
+    public String VNPay(ModelMap modelMap, @PathVariable String total) {
+        modelMap.addAttribute("total", total);
+        return "orderCreate";
+    }
 
-
-//    @RequestMapping("/appointmentByYear/{year}")
-//    public String abc(ModelMap modelMap, @PathVariable String year) {
-//        List<Map<String, Object>> canvajsDataList = appointmentService.getAppointmentsByYear(year);
-//        System.out.println("Data sent to view: " + canvajsDataList);
-//        modelMap.addAttribute("canvajsDataList", canvajsDataList);
-//        modelMap.addAttribute("year", year);
-//        return "admin/statisticManagement"; // Đổi trả về file statisticManagement
-//    }
 }

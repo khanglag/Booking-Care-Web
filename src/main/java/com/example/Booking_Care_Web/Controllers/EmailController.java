@@ -7,12 +7,14 @@ import com.example.Booking_Care_Web.Services.EmailService;
 import com.example.Booking_Care_Web.Services.UserServiceImpl;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.SecureRandom;
 import java.util.Optional;
 
-@RestController
+@Controller
 public class EmailController {
 
     @Autowired
@@ -31,21 +33,28 @@ public class EmailController {
     }
 
     @PostMapping("/reset-password")
-    @ResponseBody
-    public String resetPassword(@RequestParam String email)  {
+    public String resetPassword(@RequestParam String email, Model model)  {
         try {
             User user = userService.findByEmail(email);
             if (user == null) {
-                return "User not found";
+                model.addAttribute("message", "User not found");
+                return "reset-password-failed";
+            }else {
+                Account account = accountService.findAccountById(user.getUserId());
+                if (account == null) {
+                    model.addAttribute("message", "Người dùng không có tài khoản");
+                    return "reset-password-failed";
+                }
+                String newPassword = generateNewPassword();
+                accountService.changePassword(account.getUsername(), newPassword);
+                emailService.sendNewPasswordEmail(email,user.getName(),newPassword);
+                return "reset-password-success";
             }
-            Account account = accountService.findAccountById(user.getUserId());
-            String newPassword = generateNewPassword();
-            accountService.changePassword(account.getUsername(), newPassword);
-            emailService.sendNewPasswordEmail(email,user.getName(),newPassword);
-            return "Password reset successfully";
+
         }catch (MessagingException e) {
             e.printStackTrace();
-            return "Email could not be sent";
+            model.addAttribute("message", "Email không thể gửi được");
+            return "reset-password-failed";
         }
     }
 

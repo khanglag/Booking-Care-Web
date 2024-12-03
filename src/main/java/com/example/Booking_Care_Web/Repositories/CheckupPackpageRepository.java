@@ -18,4 +18,7 @@ public interface CheckupPackpageRepository extends JpaRepository<CheckupPackpage
     @Query(value = "INSERT INTO checkuppackpage (package_id, name, description, amount) VALUES (:package_id, :name, :description, :amount)", nativeQuery = true)
     void insertCheckupPackage(String package_id, String name, String description, Double amount);
 
+    @Query("SELECT cp.packageId  FROM CheckupPackpage cp WHERE cp.packageId LIKE 'pg%' ORDER BY cp.packageId DESC LIMIT 1")
+    String findMaxCP();
+
 }

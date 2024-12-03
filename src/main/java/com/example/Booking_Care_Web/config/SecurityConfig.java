@@ -55,7 +55,9 @@ public class SecurityConfig {
                                 "/api/appointments-by-date",
                                 "/appointments-by-year/**",
                                 "/appointmentByYear/**",
-                                "/appointmentByYear"
+                                "/appointmentByYear",
+                                "/reset-password-success",
+                                "/reset-password-failed"
                         ).permitAll() // Cấu hình các URL không yêu cầu xác thực
                         .anyRequest().authenticated() // Tất cả các URL khác đều yêu cầu đăng nhập
                 )

@@ -1,7 +1,7 @@
 steps:
   - name: 'gcr.io/cloud-builders/mvn'
     args: [ 'clean', 'package' ]
-    dir: 'src'
+    dir: '.'
     env:
       - 'API_CHAT_GPT=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'
       - 'API_KEY=AIzaSyCd6hHOheF2XJQ8kVlLHTiY3LE0eNLOSgI'
@@ -15,7 +15,7 @@ steps:
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: [ 'app', 'deploy' ]
-    dir: 'src'
+    dir: '.'
     env:
       - 'API_CHAT_GPT=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'
       - 'API_KEY=AIzaSyCd6hHOheF2XJQ8kVlLHTiY3LE0eNLOSgI'

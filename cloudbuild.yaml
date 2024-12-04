@@ -5,3 +5,6 @@ steps:
     args: ['app', 'deploy', 'target/app-name-0.0.1-SNAPSHOT.jar']
 
 timeout: 900s
+
+options:
+  default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET

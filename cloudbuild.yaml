@@ -1,6 +1,6 @@
 steps:
   - name: 'gcr.io/cloud-builders/mvn'
-    args: ['clean', 'package']
+    args: [ 'clean', 'package' ]
     dir: 'src'
     env:
       - 'API_CHAT_GPT=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'
@@ -14,18 +14,19 @@ steps:
       - 'GOOGLE_CLIENT_ID=426281130009-dn3galpcckg0hc69t6nkbhgpbg74a0f2.apps.googleusercontent.com'
 
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['app', 'deploy']
+    args: [ 'app', 'deploy' ]
     dir: 'src'
     env:
-      - 'API_CHAT_GPT=${_API_CHAT_GPT}'
-      - 'API_KEY=${_API_KEY}'
-      - 'FACEBOOK_APP_ID=${_FACEBOOK_APP_ID}'
-      - 'FACEBOOK_CLIENT_SECRET=${_FACEBOOK_CLIENT_SECRET}'
-      - 'GITHUB_CLIENT_ID=${_GITHUB_CLIENT_ID}'
-      - 'GITHUB_CLIENT_SECRET=${_GITHUB_CLIENT_SECRET}'
-      - 'GOOGLE_CLIENT_SECRET=${_GOOGLE_CLIENT_SECRET}'
-      - 'GOOGLE_GEMINI_API=${_GOOGLE_GEMINI_API}'
-      - 'GOOGLE_CLIENT_ID=${_GOOGLE_CLIENT_ID}'
+      - 'API_CHAT_GPT=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'
+      - 'API_KEY=AIzaSyCd6hHOheF2XJQ8kVlLHTiY3LE0eNLOSgI'
+      - 'FACEBOOK_APP_ID=1105327677714308'
+      - 'FACEBOOK_CLIENT_SECRET=5921e8e13c8d63e6025706a49d6d4579'
+      - 'GITHUB_CLIENT_ID=Ov23liUMGAx4yXfrosd1'
+      - 'GITHUB_CLIENT_SECRET=1de3e68d4f654c740c8238d13941888f97ef3627'
+      - 'GOOGLE_CLIENT_SECRET=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'
+      - 'GOOGLE_GEMINI_API=AIzaSyCkNtatkrbLH91yrUPMdY1YgoeCpAj3Z1M'
+      - 'GOOGLE_CLIENT_ID=426281130009-dn3galpcckg0hc69t6nkbhgpbg74a0f2.apps.googleusercontent.com'
+
 
 timeout: 900s
 

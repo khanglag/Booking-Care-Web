@@ -3,32 +3,56 @@ steps:
     args: ['clean', 'package']
     dir: '.'
     secretEnv:
-      - GOOGLE_CLIENT_ID
-      - GOOGLE_CLIENT_SECRET
-      - FACEBOOK_APP_ID
-      - FACEBOOK_CLIENT_SECRET
-      - GITHUB_CLIENT_ID
-      - GITHUB_CLIENT_SECRET
+      - 'API_CHAT_GPT'
+      - 'API_KEY'
+      - 'FACEBOOK_APP_ID'
+      - 'FACEBOOK_CLIENT_SECRET'
+      - 'GITHUB_CLIENT_ID'
+      - 'GITHUB_CLIENT_SECRET'
+      - 'GOOGLE_CLIENT_SECRET'
+      - 'GOOGLE_GEMINI_API'
+      - 'GOOGLE_CLIENT_ID'
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['app', 'deploy']
     dir: '.'
     secretEnv:
-      - GOOGLE_CLIENT_ID
-      - GOOGLE_CLIENT_SECRET
-      - FACEBOOK_APP_ID
-      - FACEBOOK_CLIENT_SECRET
-      - GITHUB_CLIENT_ID
-      - GITHUB_CLIENT_SECRET
+      - 'API_CHAT_GPT'
+      - 'API_KEY'
+      - 'FACEBOOK_APP_ID'
+      - 'FACEBOOK_CLIENT_SECRET'
+      - 'GITHUB_CLIENT_ID'
+      - 'GITHUB_CLIENT_SECRET'
+      - 'GOOGLE_CLIENT_SECRET'
+      - 'GOOGLE_GEMINI_API'
+      - 'GOOGLE_CLIENT_ID'
+
+timeout: 900s
+options:
+  default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
 
 secrets:
-  - secretEnv:
-      GOOGLE_CLIENT_ID: "GOOGLE_CLIENT_ID"
-      GOOGLE_CLIENT_SECRET: "GOOGLE_CLIENT_SECRET"
-      FACEBOOK_APP_ID: "FACEBOOK_APP_ID"
-      FACEBOOK_CLIENT_SECRET: "FACEBOOK_CLIENT_SECRET"
-      GITHUB_CLIENT_ID: "GITHUB_CLIENT_ID"
-      GITHUB_CLIENT_SECRET: "GITHUB_CLIENT_SECRET"
-    secretManager:
+  - secretManager:
       secret: "GOOGLE_CLIENT_ID"
-      version: "latest"
+      versions:
+        latest: true
+  - secretManager:
+      secret: "GOOGLE_CLIENT_SECRET"
+      versions:
+        latest: true
+  - secretManager:
+      secret: "FACEBOOK_APP_ID"
+      versions:
+        latest: true
+  - secretManager:
+      secret: "FACEBOOK_CLIENT_SECRET"
+      versions:
+        latest: true
+  - secretManager:
+      secret: "GITHUB_CLIENT_ID"
+      versions:
+        latest: true
+  - secretManager:
+      secret: "GITHUB_CLIENT_SECRET"
+      versions:
+        latest: true

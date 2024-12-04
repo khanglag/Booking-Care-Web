@@ -92,6 +92,9 @@
                   <span th:text="${appointment.status}" style="color: #25a7d2; font-weight: bold"></span>
                 </div>
               </div>
+              <button class="btn btn-success" onclick="payment(this)" th:attr="
+                              data-name=${user.name},
+                              data-price=${appointment.packagePrice}">Thanh toán</button>
             </div>
           </div>
           <div th:if="${appointments.size() == 0}">
@@ -103,6 +106,7 @@
   </div>
 </div>
 <footer th:replace="index :: footer"></footer>
+<script th:src="@{/assets/js/appointment.js}"></script>
 <script
         src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

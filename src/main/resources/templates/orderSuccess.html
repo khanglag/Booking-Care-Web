@@ -11,35 +11,43 @@
 <!-- back to top -->
 
 <!-- start body -->
-<div class="body py-5">
+<div class="body py-5" style="background-color: #f8f9fa; font-family: 'Arial', sans-serif;">
     <div class="container">
-        <div class="w-50 m-auto">
-            <!-- Thêm lớp "my-4" để tạo ra khoảng cách trên và dưới tiêu đề trang -->
-            <h1 class="my-3 text-success text-center">Thanh toán thành công</h1>
-            <!-- Sử dụng lớp "alert" và "alert-danger" để tạo ra thông báo lỗi -->
-            <h2 class="my-2">Chi tiết đơn hàng</h2>
-            <!-- Sử dụng lớp "table" và "table-bordered" để tạo ra bảng hiển thị thông tin chi tiết đơn hàng -->
-            <table class="table table-bordered">
-                <tbody>
+        <div class="w-75 m-auto shadow-lg p-4 rounded bg-white">
+            <!-- Tiêu đề chính -->
+            <h1 class="mb-4 text-success text-center" style="font-weight: bold; font-size: 2.5rem;">Thanh toán thành công</h1>
+            <p class="text-center text-muted mb-4" style="font-size: 1.2rem;">Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!</p>
+
+            <!-- Chi tiết đơn hàng -->
+            <h2 class="my-3" style="color: #333; font-weight: bold; text-align: center">Chi tiết đơn hàng</h2>
+            <table class="table table-bordered text-center" style="background-color: #ffffff; border-radius: 8px; overflow: hidden;">
+                <tbody style="font-size: 1.1rem;">
                 <tr>
-                    <td>Thông tin đơn hàng:</td>
-                    <td><span th:text="${orderId}">[order ID]</span></td>
+                    <td class="text-muted" style="font-weight: bold;">Thông tin đơn hàng:</td>
+                    <td style="color: #333;"><span >Thanh toán dịch vụ chăm sóc sức khỏe</span></td>
                 </tr>
                 <tr>
-                    <td>Tổng tiền:</td>
-                    <td><span th:text="${totalPrice}">[total price]</span></td>
+                    <td class="text-muted" style="font-weight: bold;">Tổng tiền:</td>
+                    <td style="color: #28a745; font-weight: bold;"><span th:text="${totalPrice}">[total price]</span></td>
                 </tr>
                 <tr>
-                    <td>Thời gian thanh toán:</td>
-                    <td><span th:text="${paymentTime}">[payment time]</span></td>
+                    <td class="text-muted" style="font-weight: bold;">Thời gian thanh toán:</td>
+                    <td style="color: #333;"><span th:text="${paymentTime}">[payment time]</span></td>
                 </tr>
                 <tr>
-                    <td>Mã giao dịch:</td>
-                    <td><span th:text="${transactionId}">[transaction ID]</span></td>
+                    <td class="text-muted" style="font-weight: bold;">Mã giao dịch:</td>
+                    <td style="color: #007bff;"><span th:text="${transactionId}">[transaction ID]</span></td>
                 </tr>
                 </tbody>
             </table>
-            <a href="/index" class="btn btn-primary">Về trang chủ</a>
+
+            <!-- Nút quay lại -->
+            <div class="text-center mt-4">
+                <a href="/index" class="btn btn-primary btn-lg px-5"
+                   style="border-radius: 25px; font-weight: bold; font-size: 1.2rem;">
+                    Về trang chủ
+                </a>
+            </div>
         </div>
     </div>
 </div>

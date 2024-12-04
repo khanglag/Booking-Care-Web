@@ -71,7 +71,17 @@
                   <td>
                     <span class="badge badge-warning" th:text="${appointment.status}"></span>
                   </td>
-                  <td>
+                  <td class="d-flex">
+                    <button class="btn btn-danger mr-3"   th:attr="
+                              data-id=${appointment.appointmentId},
+                              data-patient=${appointment.patientAppointment},
+                              data-doctor=${appointment.doctorAppointment},
+                              data-available-datetime=${appointment.availableDatetime},
+                              data-package=${appointment.packageField},
+                              data-examination-day=${appointment.examinationDay},
+                              data-note=${appointment.note},
+                              data-status=${appointment.status}"
+                            onclick="handleCancel(this)">Hủy</button>
                     <button
                             class="btn btn-success btn-sm action-btn"
                             th:attr="

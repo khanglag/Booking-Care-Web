@@ -123,6 +123,7 @@ public class ProfileController {
                 apmData.put("doctorAppointment", userDT.getName());
                 apmData.put("availableDatetime", availableDatetime);
                 apmData.put("packageField", checkupPackpage.getName());
+                apmData.put("packagePrice",checkupPackpage.getAmount());
                 apmData.put("examinationDay", appointment.getExaminationDay());
                 apmData.put("timeId", appointment.getTimeId());
                 apmData.put("note",appointment.getNote());

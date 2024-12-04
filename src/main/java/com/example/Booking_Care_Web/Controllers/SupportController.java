@@ -154,12 +154,24 @@ public class SupportController {
 
 
     @PostMapping(value = "/supportReview",consumes = "application/json")
-    public String updateAppointment(@RequestBody Map<String, Object> requestData, Model model) {
+    public String updateApproveAppointment(@RequestBody Map<String, Object> requestData, Model model) {
         String id = (String) requestData.get("id");
         int intId = Integer.parseInt(id);
        Appointment appointment = new Appointment();
         appointment = appointmentService.findAppointmentById(intId);
          appointment.setStatus("ĐÃ DUYỆT");
+        appointmentServiceImpl.updateAppointment(appointment);
+        return "supportReview";
+    }
+
+
+    @PostMapping(value = "/supportCancel",consumes = "application/json")
+    public String updateCancelAppointment(@RequestBody Map<String, Object> requestData, Model model) {
+        String id = (String) requestData.get("id");
+        int intId = Integer.parseInt(id);
+        Appointment appointment = new Appointment();
+        appointment = appointmentService.findAppointmentById(intId);
+        appointment.setStatus("ĐÃ HỦY");
         appointmentServiceImpl.updateAppointment(appointment);
         return "supportReview";
     }

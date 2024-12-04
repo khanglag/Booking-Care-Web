@@ -1,32 +1,27 @@
 steps:
   - name: 'gcr.io/cloud-builders/mvn'
-    args: ['clean', 'package']
+    args: [ 'clean', 'package' ]
     dir: '.'
-    secretEnv:
-      - 'API_CHAT_GPT=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'
-      - 'API_KEY=AIzaSyCd6hHOheF2XJQ8kVlLHTiY3LE0eNLOSgI'
-      - 'FACEBOOK_APP_ID=801997552024473'
-      - 'FACEBOOK_CLIENT_SECRET=fbaea7e1e4426c3da6e9fdcd50736048'
-      - 'GITHUB_CLIENT_ID=Ov23liUKNugKLHjpRZEF'
-      - 'GITHUB_CLIENT_SECRET=be2fd885f1dfec969c3657a7a3754fbb3ebd2ea9'
-      - 'GOOGLE_CLIENT_SECRET=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'
-      - 'GOOGLE_GEMINI_API=AIzaSyCkNtatkrbLH91yrUPMdY1YgoeCpAj3Z1M'
-      - 'GOOGLE_CLIENT_ID=426281130009-dn3galpcckg0hc69t6nkbhgpbg74a0f2.apps.googleusercontent.com'
-
+    env:
+        - 'GOOGLE_CLIENT_ID=426281130009-dn3galpcckg0hc69t6nkbhgpbg74a0f2.apps.googleusercontent.com'
+        - 'GOOGLE_CLIENT_SECRET=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'
+        - 'FACEBOOK_APP_ID=801997552024473'
+        - 'FACEBOOK_CLIENT_SECRET=fbaea7e1e4426c3da6e9fdcd50736048'
+        - 'GITHUB_CLIENT_ID=Ov23liUKNugKLHjpRZEF'
+        - 'GITHUB_CLIENT_SECRET=be2fd885f1dfec969c3657a7a3754fbb3ebd2ea9'
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['app', 'deploy']
+    args: [ 'app', 'deploy' ]
     dir: '.'
-    secretEnv:
-      - 'API_CHAT_GPT'
-      - 'API_KEY'
-      - 'FACEBOOK_APP_ID'
-      - 'FACEBOOK_CLIENT_SECRET'
-      - 'GITHUB_CLIENT_ID'
-      - 'GITHUB_CLIENT_SECRET'
-      - 'GOOGLE_CLIENT_SECRET'
-      - 'GOOGLE_GEMINI_API'
-      - 'GOOGLE_CLIENT_ID'
+    env:
+        - 'GOOGLE_CLIENT_ID=426281130009-dn3galpcckg0hc69t6nkbhgpbg74a0f2.apps.googleusercontent.com'
+        - 'GOOGLE_CLIENT_SECRET=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'
+        - 'FACEBOOK_APP_ID=801997552024473'
+        - 'FACEBOOK_CLIENT_SECRET=fbaea7e1e4426c3da6e9fdcd50736048'
+        - 'GITHUB_CLIENT_ID=Ov23liUKNugKLHjpRZEF'
+        - 'GITHUB_CLIENT_SECRET=be2fd885f1dfec969c3657a7a3754fbb3ebd2ea9'
 
 timeout: 900s
+
+
 options:
   default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET

@@ -3,56 +3,32 @@ steps:
     args: ['clean', 'package']
     dir: '.'
     secretEnv:
-      - 'GOOGLE_CLIENT_ID'
-      - 'GOOGLE_CLIENT_SECRET'
-      - 'FACEBOOK_APP_ID'
-      - 'FACEBOOK_CLIENT_SECRET'
-      - 'GITHUB_CLIENT_ID'
-      - 'GITHUB_CLIENT_SECRET'
+      - GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET
+      - FACEBOOK_APP_ID
+      - FACEBOOK_CLIENT_SECRET
+      - GITHUB_CLIENT_ID
+      - GITHUB_CLIENT_SECRET
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['app', 'deploy']
     dir: '.'
     secretEnv:
-      - 'GOOGLE_CLIENT_ID'
-      - 'GOOGLE_CLIENT_SECRET'
-      - 'FACEBOOK_APP_ID'
-      - 'FACEBOOK_CLIENT_SECRET'
-      - 'GITHUB_CLIENT_ID'
-      - 'GITHUB_CLIENT_SECRET'
-
-timeout: 900s
-options:
-  default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
+      - GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET
+      - FACEBOOK_APP_ID
+      - FACEBOOK_CLIENT_SECRET
+      - GITHUB_CLIENT_ID
+      - GITHUB_CLIENT_SECRET
 
 secrets:
   - secretEnv:
       GOOGLE_CLIENT_ID: "GOOGLE_CLIENT_ID"
-    secretManager:
-      secret: "GOOGLE_CLIENT_ID"
-      version: "latest"
-  - secretEnv:
       GOOGLE_CLIENT_SECRET: "GOOGLE_CLIENT_SECRET"
-    secretManager:
-      secret: "GOOGLE_CLIENT_SECRET"
-      version: "latest"
-  - secretEnv:
       FACEBOOK_APP_ID: "FACEBOOK_APP_ID"
-    secretManager:
-      secret: "FACEBOOK_APP_ID"
-      version: "latest"
-  - secretEnv:
       FACEBOOK_CLIENT_SECRET: "FACEBOOK_CLIENT_SECRET"
-    secretManager:
-      secret: "FACEBOOK_CLIENT_SECRET"
-      version: "latest"
-  - secretEnv:
       GITHUB_CLIENT_ID: "GITHUB_CLIENT_ID"
-    secretManager:
-      secret: "GITHUB_CLIENT_ID"
-      version: "latest"
-  - secretEnv:
       GITHUB_CLIENT_SECRET: "GITHUB_CLIENT_SECRET"
     secretManager:
-      secret: "GITHUB_CLIENT_SECRET"
+      secret: "GOOGLE_CLIENT_ID"
       version: "latest"

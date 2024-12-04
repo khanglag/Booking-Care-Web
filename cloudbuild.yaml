@@ -3,37 +3,36 @@ steps:
     args: ['clean', 'package']
     dir: '.'
     secretEnv:
-      - 'API_CHAT_GPT'
-      - 'API_KEY'
+      - 'GOOGLE_CLIENT_ID'
+      - 'GOOGLE_CLIENT_SECRET'
       - 'FACEBOOK_APP_ID'
       - 'FACEBOOK_CLIENT_SECRET'
       - 'GITHUB_CLIENT_ID'
       - 'GITHUB_CLIENT_SECRET'
-      - 'GOOGLE_CLIENT_SECRET'
-      - 'GOOGLE_GEMINI_API'
-      - 'GOOGLE_CLIENT_ID'
 
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['app', 'deploy']
     dir: '.'
     secretEnv:
-      - 'API_CHAT_GPT'
-      - 'API_KEY'
+      - 'GOOGLE_CLIENT_ID'
+      - 'GOOGLE_CLIENT_SECRET'
       - 'FACEBOOK_APP_ID'
       - 'FACEBOOK_CLIENT_SECRET'
       - 'GITHUB_CLIENT_ID'
       - 'GITHUB_CLIENT_SECRET'
-      - 'GOOGLE_CLIENT_SECRET'
-      - 'GOOGLE_GEMINI_API'
-      - 'GOOGLE_CLIENT_ID'
 
 timeout: 900s
 options:
   default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
 
-# Định nghĩa secrets từ Google Secret Manager
 secrets:
-  - secretManager:
+  - secretEnv:
+      GOOGLE_CLIENT_ID: "GOOGLE_CLIENT_ID"
+      GOOGLE_CLIENT_SECRET: "GOOGLE_CLIENT_SECRET"
+      FACEBOOK_APP_ID: "FACEBOOK_APP_ID"
+      FACEBOOK_CLIENT_SECRET: "FACEBOOK_CLIENT_SECRET"
+      GITHUB_CLIENT_ID: "GITHUB_CLIENT_ID"
+      GITHUB_CLIENT_SECRET: "GITHUB_CLIENT_SECRET"
+    secretManager:
       secret: "SOCIAL_OAUTH_SECRETS"
-      versions:
-        latest: true
+      version: "latest"

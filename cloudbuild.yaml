@@ -1,6 +1,6 @@
 steps:
   - name: 'gcr.io/cloud-builders/mvn'
-    args: [ 'clean', 'package' ]
+    args: ['clean', 'package']
     dir: '.'
     secretEnv:
       - 'API_CHAT_GPT'
@@ -14,7 +14,7 @@ steps:
       - 'GOOGLE_CLIENT_ID'
 
   - name: 'gcr.io/cloud-builders/gcloud'
-    args: [ 'app', 'deploy' ]
+    args: ['app', 'deploy']
     dir: '.'
     secretEnv:
       - 'API_CHAT_GPT'
@@ -31,7 +31,9 @@ timeout: 900s
 options:
   default_logs_bucket_behavior: REGIONAL_USER_OWNED_BUCKET
 
+# Định nghĩa secrets từ Google Secret Manager
 secrets:
   - secretManager:
-      version: "latest"
       secret: "SOCIAL_OAUTH_SECRETS"
+      versions:
+        latest: true

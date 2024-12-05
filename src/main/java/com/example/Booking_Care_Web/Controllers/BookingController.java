@@ -105,7 +105,7 @@ public class BookingController {
 
         User patient = userService.findById(appointment.getPatient_id());
         User doctor = userService.findById(appointment.getDoctor_id());
-//       emailService.sendAppointmentConfirmationEmail(patient.getEmail(),patient.getName(),examinationDayStr, doctor.getName(),doctor.getPhoneNumber());
+       emailService.sendAppointmentConfirmationEmail(patient.getEmail(),patient.getName(),examinationDayStr, doctor.getName(),doctor.getPhoneNumber());
         CheckupPackpage packageField = checkupPackpageServiceImpl.findById(appointment.getPackage_id());
         TimeFrame timeFrame = timeFrameServiceImpl.findById(appointment.getTime_id());
         apm.setPatient(patient);

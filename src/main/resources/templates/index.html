@@ -22,6 +22,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
     />
+
 </head>
 <body>
 <header id="header" th:fragment="header" class="header">
@@ -214,7 +215,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="statistical mt-3">
                 <p class="statistical-title d-flex justify-content-center mb-2">
                     THỐNG KÊ
@@ -247,14 +247,23 @@
                     </div>
                 </div>
             </div>
-
+            <div class="map-container">
+                <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.4591792089863!2d106.68196311533464!3d10.762622092327946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1973e8b9e5%3A0xd18a7da163b034df!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBTw6BpIEbDvG4!5e0!3m2!1svi!2s!4v1699290541334!5m2!1svi!2s"
+                        width="90%"
+                        height="500"
+                        style="border:0;"
+                        allowfullscreen=""
+                        loading="lazy">
+                </iframe>
+            </div>
         </div>
         <footer id="footer"  th:fragment="footer" class="row">
             <div class="footer_info col-md-4">
                 <h4>Thông tin liên lạc</h4>
-                <p>Địa chỉ: 123 Đường ABC, Quận XYZ, Thành phố</p>
+                <p>Địa chỉ: 273 An Dương Vương phường 14 Quận 5, TpHCM</p>
                 <p>Điện thoại: 0336065760</p>
-                <p>Email: xuanhoang@gmail.com</p>
+                <p>Email: hoangdztv001@gmail.com</p>
             </div>
             <div class="footer_work_day col-md-4">
                 <h4>Lịch làm việc</h4>
@@ -285,6 +294,7 @@
                 <a target="_blank">| Zalo: 0336065760</a>
             </div>
         </footer>
+
 
         <script th:src="@{/assets/js/index.js}"></script>
         <script

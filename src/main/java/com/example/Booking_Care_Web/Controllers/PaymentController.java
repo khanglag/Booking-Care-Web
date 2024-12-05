@@ -61,7 +61,7 @@ public String processPayment(
         @RequestParam("price") String price,
         Model model) {
     try {
-        // Chuyển price từ String sang Double để xử lý số có phần thập phân
+
         double priceValue = Double.parseDouble(price);
 
         // Chuyển giá trị thành số nguyên (làm tròn xuống)

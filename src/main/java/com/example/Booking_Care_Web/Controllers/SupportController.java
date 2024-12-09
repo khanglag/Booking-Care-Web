@@ -1,5 +1,6 @@
 package com.example.Booking_Care_Web.Controllers;
 
+import com.example.Booking_Care_Web.Models.Dtos.AppointmentDTO;
 import com.example.Booking_Care_Web.Models.Entities.Account;
 import com.example.Booking_Care_Web.Models.Entities.Appointment;
 import com.example.Booking_Care_Web.Models.Entities.CheckupPackpage;
@@ -110,7 +111,8 @@ public class SupportController {
         com.example.Booking_Care_Web.Models.Entities.User user = userServiceImpl.findById(userID);
         model.addAttribute("userInfo",user);
         model.addAttribute("nameOfUser",user.getName());
-        List<Appointment> appointments = appointmentServiceImpl.findApppontmentByStatus("CHƯA DUYỆT");
+//        List<Appointment> appointments = appointmentServiceImpl.findApppontmentByStatus("CHƯA DUYỆT");
+        List<AppointmentDTO> appointments = appointmentServiceImpl.findAll();
         com.example.Booking_Care_Web.Models.Entities.User userPT ;
         com.example.Booking_Care_Web.Models.Entities.User userDT ;
         CheckupPackpage checkupPackpage;
@@ -119,19 +121,19 @@ public class SupportController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
         if (appointments != null && !appointments.isEmpty()) {
-            for (Appointment appointment : appointments) {
+            for (AppointmentDTO appointment : appointments) {
                 Map<String, Object> apmData = new HashMap<>();
-                userPT = userService.findById(appointment.getPatientId());
-                userDT   = userService.findById(appointment.getDoctorId());
-                checkupPackpage = checkupPackpageServiceImpl.findById(appointment.getPackageId());
-                String availableDatetime = appointment.getAvailableDatetime().format(formatter);
+                userPT = userService.findById(appointment.getPatient_id());
+                userDT   = userService.findById(appointment.getDoctor_id());
+                checkupPackpage = checkupPackpageServiceImpl.findById(appointment.getPackage_id());
+                String availableDatetime = appointment.getAvailable_datetime().format(formatter);
                 apmData.put("appointmentId", appointment.getAppointmentId());
                 apmData.put("patientAppointment",userPT.getName());
                 apmData.put("doctorAppointment", userDT.getName());
                 apmData.put("availableDatetime", availableDatetime);
                 apmData.put("packageField", checkupPackpage.getName());
-                apmData.put("examinationDay", appointment.getExaminationDay());
-                apmData.put("timeId", appointment.getTimeId());
+                apmData.put("examinationDay", appointment.getExamination_date());
+                apmData.put("timeId", appointment.getTime_id());
                 apmData.put("note",appointment.getNote());
                 apmData.put("status",appointment.getStatus());
                 appointmentData.add(0,apmData);

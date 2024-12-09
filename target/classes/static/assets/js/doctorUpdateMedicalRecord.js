@@ -39,3 +39,26 @@ function handleUpdate(button) {
             console.error('Đã xảy ra lỗi:', error);
         });
 }
+function filterMedicalRecords() {
+    const filterValue = document.getElementById("filterInput").value.toLowerCase().trim();
+    const records = document.querySelectorAll(".record-container");
+    let hasMatch = false;
+    records.forEach((record) => {
+        const patientID = record.querySelector(".record-patient-id")?.innerText.toLowerCase();
+        const patientName = record.querySelector(".record-patient-name")?.innerText.toLowerCase();
+        const doctorName = record.querySelector(".record-doctor-name")?.innerText.toLowerCase();
+        if (
+            patientID.includes(filterValue) ||
+            patientName.includes(filterValue) ||
+            doctorName.includes(filterValue)
+        ) {
+            record.style.display = "";
+            hasMatch = true;
+        } else {
+            record.style.display = "none";
+        }
+    });
+    if (!hasMatch) {
+        console.log("Không tìm thấy hồ sơ phù hợp.");
+    }
+}

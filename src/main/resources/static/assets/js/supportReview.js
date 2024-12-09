@@ -85,3 +85,31 @@ function handleCancel(button) {
             });
     }
 }
+
+function filterAppointments() {
+    const chosenDate = document.getElementById("chooseDate").value;
+    const tableBody = document.getElementById("appointmentBody");
+    const rows = tableBody.getElementsByClassName("appointment-row");
+    const noAppointmentsRow = document.querySelector(".no-appointments");
+
+    let hasAppointments = false;
+
+    Array.from(rows).forEach((row) => {
+        const fullExaminationDay = row.querySelector("td:nth-child(6)").innerText.trim();
+        const examinationDay = fullExaminationDay.split(" ")[0];
+
+        if (chosenDate === examinationDay) {
+            row.style.display = "";
+            hasAppointments = true;
+        } else {
+            row.style.display = "none";
+        }
+    });
+
+
+    if (hasAppointments) {
+        noAppointmentsRow.style.display = "none";
+    } else {
+        noAppointmentsRow.style.display = "";
+    }
+}

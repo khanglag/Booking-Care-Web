@@ -2,13 +2,9 @@ function payment(button){
 
     const name = button.getAttribute('data-name');
     const price = button.getAttribute('data-price');
-
-    // Tạo form động
     const form = document.createElement('form');
-    form.method = 'POST'; // Chuyển dữ liệu bằng POST
+    form.method = 'POST';
     form.action = '/payment';
-
-    // Thêm các input ẩn để chứa dữ liệu
     const nameInput = document.createElement('input');
     nameInput.type = 'hidden';
     nameInput.name = 'name';
@@ -22,7 +18,6 @@ function payment(button){
     form.appendChild(nameInput);
     form.appendChild(priceInput);
 
-    // Gắn form vào body và submit
     document.body.appendChild(form);
     form.submit();
 }

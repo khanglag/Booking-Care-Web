@@ -43,8 +43,13 @@
         </div>
         <div class="content_post">
           <div class=" ">
+            <div class="d-flex">
+               <p style="font-weight: bold">Lọc theo ngày </p>
+              <input type="date" id="chooseDate" name="chooseDate" class="form-control" onchange="filterAppointments()" />
+            </div>
+
             <div class="table-responsive custom-table-container">
-              <table class="table custom-table">
+              <table class="table custom-table" id="appointmentTable">
                 <thead>
                 <tr>
                   <th>ID Lịch hẹn</th>
@@ -58,9 +63,11 @@
                   <th>Action</th>
                 </tr>
                 </thead>
-                <tbody>
-                <!-- Lặp qua danh sách -->
-                <tr th:each="appointment : ${appointments}">
+                <tbody id="appointmentBody">
+                <tr class="no-appointments" style="display: none;">
+                  <td colspan="9" style="text-align: center; color: red;">Không có lịch khám</td>
+                </tr>
+                <tr th:each="appointment : ${appointments}" class="appointment-row">
                   <td th:text="${appointment.appointmentId}"></td>
                   <td th:text="${appointment.patientAppointment}"></td>
                   <td th:text="${appointment.doctorAppointment}"></td>

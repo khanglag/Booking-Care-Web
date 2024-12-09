@@ -1,5 +1,6 @@
 package com.example.Booking_Care_Web.Controllers;
 
+import com.example.Booking_Care_Web.Models.Dtos.MedicalRecordDTO;
 import com.example.Booking_Care_Web.Models.Entities.Account;
 import com.example.Booking_Care_Web.Models.Entities.MedicalRecord;
 import com.example.Booking_Care_Web.Services.*;
@@ -50,6 +51,9 @@ public class DoctorController {
 
     @Autowired
     private MedicalRecordServiceImp medicalRecordServiceImpl;
+
+    @Autowired
+    private MedicalRecordService medicalRecordService;
     @GetMapping("/doctorPage")
     public String gdoctorPage(Model model, Authentication authentication, HttpSession session) {
         authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -107,20 +111,21 @@ public class DoctorController {
 
         com.example.Booking_Care_Web.Models.Entities.User userPT ;
         com.example.Booking_Care_Web.Models.Entities.User userDT ;
-        List<MedicalRecord> medicalRecords = medicalRecordServiceImpl.findMedicalRecordsByDoctorIdAndIncompleteFields(userID);
+      //  List<MedicalRecord> medicalRecords = medicalRecordServiceImpl.findMedicalRecordsByDoctorIdAndIncompleteFields(userID);
+        List<MedicalRecordDTO> medicalRecords = medicalRecordService.getAllMedicalRecords();
         List<Map<String, Object>> medicalRecordData = new ArrayList<>();
         if (medicalRecords != null && !medicalRecords.isEmpty()) {
-            for (MedicalRecord record : medicalRecords) {
+            for (MedicalRecordDTO record : medicalRecords) {
                 Map<String, Object> recordData = new HashMap<>();
                 userPT  = userService.findById(record.getPatientId());
                 userDT   = userService.findById(record.getDoctorId());
-                recordData.put("id", record.getId());
+                recordData.put("id", record.getRecordId());
                 recordData.put("patientID", userPT.getUserId());
                 recordData.put("doctorID", userDT.getUserId());
                 recordData.put("patientMedicalRecords",userPT.getName());
                 recordData.put("doctorMedicalRecords", userDT.getName());
                 recordData.put("description", record.getDescription());
-                recordData.put("createAt", record.getCreateAt());
+                recordData.put("createAt", record.getCreatedAt());
                 recordData.put("updateAt", record.getUpdatedAt());
                 recordData.put("diagnosis", record.getDiagnosis());
                 recordData.put("treatmentPlan",record.getTreatmentPlan());

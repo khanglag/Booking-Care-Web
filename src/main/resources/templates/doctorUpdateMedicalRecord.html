@@ -43,26 +43,36 @@
         </div>
         <div class="content_post">
           <div class="container mt-2">
+            <div class="mb-3 d-flex">
+              <p style="font-weight: bold">Lọc hồ sơ</p>
+              <input
+                      type="text"
+                      id="filterInput"
+                      name="filterInput"
+                      class="form-control"
+                      placeholder="Nhập ID bệnh nhân, tên bệnh nhân hoặc bác sĩ"
+                      oninput="filterMedicalRecords()" />
+            </div>
             <div th:each="record : ${medicalRecords}" class="record-container">
               <div class="record-field  d-none">
                 <div class="record-label mr-2">ID record</div>
-                <div th:text="${record.id}"></div>
+                <div th:text="${record.id}" class="record-id"></div>
               </div>
               <div class="record-field  d-none">
-                <div class="record-label mr-2">DOCtor id</div>
-                <div th:text="${record.doctorID}"></div>
+                <div class="record-label mr-2">Doctor id</div>
+                <div th:text="${record.doctorID}" class="record-doctor-id"></div>
               </div>
               <div class="record-field d-flex">
                 <div class="record-label mr-2">ID bệnh nhân</div>
-                <div th:text="${record.patientID}"></div>
+                <div th:text="${record.patientID}" class="record-patient-id"></div>
               </div>
               <div class="record-field d-flex">
                 <div class="record-label mr-2">Họ tên bệnh nhân</div>
-                <div th:text="${record.patientMedicalRecords}"></div>
+                <div th:text="${record.patientMedicalRecords}" class="record-patient-name"></div>
               </div>
               <div class="record-field d-flex">
                 <div class="record-label mr-2">Bác sĩ</div>
-                <div th:text="${record.doctorMedicalRecords}"></div>
+                <div th:text="${record.doctorMedicalRecords}" class="record-doctor-name"></div>
               </div>
               <div class="record-field">
                 <div class="record-label">Mô tả bệnh của bệnh nhân</div>

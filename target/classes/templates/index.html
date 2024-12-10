@@ -257,6 +257,14 @@
                         loading="lazy">
                 </iframe>
             </div>
+            <div class="chatBot">
+                <iframe
+                        src="https://www.chatbase.co/chatbot-iframe/xVS-1hTlz4DUyDqgPnUlH"
+                        width="100%"
+                        style="height: 100%; min-height: 700px"
+                        frameborder="0"
+                ></iframe>
+            </div>
         </div>
         <footer id="footer"  th:fragment="footer" class="row">
             <div class="footer_info col-md-4">
@@ -297,6 +305,18 @@
 
 
         <script th:src="@{/assets/js/index.js}"></script>
+        <script>
+            window.embeddedChatbotConfig = {
+                chatbotId: "xVS-1hTlz4DUyDqgPnUlH",
+                domain: "www.chatbase.co"
+            }
+        </script>
+        <script
+                src="https://www.chatbase.co/embed.min.js"
+                chatbotId="xVS-1hTlz4DUyDqgPnUlH"
+                domain="www.chatbase.co"
+                defer>
+        </script>
         <script
                 src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                 integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
